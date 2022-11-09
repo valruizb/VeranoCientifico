@@ -18,11 +18,13 @@ class AdminSeeder extends Seeder
     public function run()
     {
         $perfil = Role::where('name', 'Administrador')->first();
+        $profe = Role::where('name', 'Profesor')->first();
         $alum = Role::where('name', 'Alumno')->first();
 
         // Cobertura de visibilidad completa
         $perfil->givePermissionTo(Permission::where('module_key', 'modulo')->get());
         $perfil->givePermissionTo(Permission::where('module_key', 'cat')->get());
+        //$profe->givePermissionTo(Permission::where('module_key', 'cat')->get());
 
         /*$cap->givePermissionTo(Permission::where('name', 'modulo.catalogos')->get());
         $cap->givePermissionTo(Permission::where('name', 'convocatoria.index')->get());

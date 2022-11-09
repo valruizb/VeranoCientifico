@@ -18,6 +18,7 @@ class PermisosSeeder extends Seeder
     {
         //CREAMOS LO MÓDULOS DEL SISTEMA
         Permission::create(['name' => 'modulo.catalogos', 'guard_name' => 'web', 'description' => 'Catálogos del Sistema', 'module_key' => 'modulo']);
+        Permission::create(['name' => 'modulo.profesores', 'guard_name' => 'web', 'description' => 'Profesores', 'module_key' => 'modulo']);
         Permission::create(['name' => 'modulo.seguridad', 'guard_name' => 'web', 'description' => 'Administración de Seguridad', 'module_key' => 'modulo']);
 
 
@@ -62,7 +63,10 @@ class PermisosSeeder extends Seeder
         Permission::create(['name' => 'documento.update', 'guard_name' => 'web', 'description' => 'Actualizar Registros', 'module_key' => 'cat']);
         Permission::create(['name' => 'documento.delete', 'guard_name' => 'web', 'description' => 'Eliminar Registros', 'module_key' => 'cat']);
 
-        
+        Permission::create(['name' => 'proyectos.index', 'guard_name' => 'web', 'description' => 'Leer Registros', 'module_key' => 'cat']);
+        Permission::create(['name' => 'proyectos.store', 'guard_name' => 'web', 'description' => 'Leer Registros', 'module_key' => 'cat']);
+        Permission::create(['name' => 'proyectos.update', 'guard_name' => 'web', 'description' => 'Leer Registros', 'module_key' => 'cat']);
+        Permission::create(['name' => 'proyectos.delete', 'guard_name' => 'web', 'description' => 'Leer Registros', 'module_key' => 'cat']);
 
     }
 }

@@ -3,12 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Registro;
+use App\Models\User;
 use App\Models\tematica;
 use App\Models\subtematica;
 use App\Models\Instituciones;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 use App\Http\Requests\StoreRegistroRequest;
 use App\Http\Requests\UpdateRegistroRequest;
+use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+use Inertia\Response;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Hash;
 
@@ -20,13 +25,18 @@ class RegistroController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+    protected string $routeName;
     protected string $source;
+    protected string $module = 'usuarios';
+    protected User $model;
 
     public function __construct()
     {
+        $this->routeName = "usuarios.";
         $this->source    = "Auth/";
-    }
+        $this->model     = new User();
 
+    }
 
     public function index()
     {
@@ -39,13 +49,19 @@ class RegistroController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        
+    {  
         return Inertia::render("{$this->source}Register", [
             'tematica'=>tematica::orderBy('name')->get(),
-            'roles' =>Role::orderBy('name')->get(),
             'instituto' =>Instituciones::orderBy('id')->get(),
-            'subtematica' =>Subtematica::orderBy('id')->get(),
+            'roles'=> Role::with('permissions:id,name,description,module_key')->orderBy('name')->select('id', 'name', 'description')->get(),
+             /*'subtematica' => tematica::subtematica()->get(),
+           'sub1' =>Subtematica::orderBy('id')->where('id_tematica', '=' ,'1')->get(),
+            'sub2' =>Subtematica::orderBy('id')->where('id_tematica', '=' ,'2')->get(),
+            'sub3' =>Subtematica::orderBy('id')->where('id_tematica', '=' ,'3')->get(),
+            'sub4' =>Subtematica::orderBy('id')->where('id_tematica', '=' ,'4')->get(),
+            'sub5' =>Subtematica::orderBy('id')->where('id_tematica', '=' ,'5')->get(),
+            'sub6' =>Subtematica::orderBy('id')->where('id_tematica', '=' ,'6')->get(),
+            'sub7' =>Subtematica::orderBy('id')->where('id_tematica', '=' ,'7')->get(),*/
         ]);
     }
 
@@ -55,10 +71,15 @@ class RegistroController extends Controller
      * @param  \App\Http\Requests\StoreRegistroRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreRegistroRequest $request)
+    public function store(StoreRegistroRequest $request): RedirectResponse
     {
-        registro::create($request->validated());
-        //return redirect()->route('login')->with('success', 'Usuario registrado!');
+        
+        $fields= $request->validated();
+        $fields['password'] = Hash::make($fields['password']);
+        $usuario = $this->model::create($fields);
+        $roles = Role::where('id', $request->tipouser)->get();
+        $usuario->syncRoles($roles);
+        return redirect()->route('register')->with('success', 'Usuario registrado!');
     }
 
     /**

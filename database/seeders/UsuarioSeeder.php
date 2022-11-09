@@ -31,7 +31,18 @@ class UsuarioSeeder extends Seeder
             'telefono' => '7772341881',
             'institucionproced' => 'Cenidet',
             'password' => Hash::make('Password'),
-            'password_confirmation' => Hash::make('Password'),
+        ]);
+
+        DB::table('users')->insert([
+            'nombre' => 'Enrique', 
+            'apellidop' => 'Hernandez', 
+            'apellidom' => 'Gomez', 
+            'tipouser' => '2', 
+            'correo' => 'kike@gmail.com',
+            'correocon' => 'kike@gmail.com',
+            'telefono' => '7773415872',
+            'institucionproced' => 'Cenidet',
+            'password' => Hash::make('Password'),
         ]);
         //DB::table('users')->insert(['nombre' => 'Noé Castro Sánchez', 'tipouser' => '1', 'correo' => 'noe@gmail.com', 'password' => Hash::make('Password'),]);
 
@@ -42,7 +53,8 @@ class UsuarioSeeder extends Seeder
         $alumn = Role::create(['name' => 'Alumno', 'description' => 'Busca proyectos de su interes']);
 
         // Asignar ROLES a usuarios
-        //User::find(1)->assignRole($adm);
+        User::find(1)->assignRole($adm);
+        User::find(2)->assignRole($prof);
         //User::find(2)->assignRole($alumn);
     }
 }

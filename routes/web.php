@@ -9,6 +9,7 @@ use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\PerfilesController;
 use App\Http\Controllers\PermisosController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\ProyectosController;
 use App\Http\Controllers\ConvocatoriaController;
 use App\Http\Controllers\EventoController;
 use App\Http\Controllers\CalendarioConvocatoriaController;
@@ -27,6 +28,7 @@ use App\Http\Controllers\DocumentoController;
 
 //Rutas publicas
 Route::resource('registro', RegistroController::class);
+Route::resource('proyectos', ProyectosController::class);
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -60,6 +62,7 @@ Route::middleware([
     Route::resource('evento', EventoController::class)->parameters(['evento' => 'evento']);
     Route::resource('calendario', CalendarioConvocatoriaController::class)->parameters(['calendario' => 'calendario']);
     Route::resource('documento', DocumentoController::class)->parameters(['documento' => 'documento']);
+    
     
 });
 

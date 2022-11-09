@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('tipouser');
             $table->string('nombre');
             $table->string('apellidop');
@@ -34,7 +34,6 @@ return new class extends Migration
             $table->string('constancia')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('password_confirmation');
             $table->rememberToken();
             //$table->foreignId('current_team_id')->nullable();
             //$table->string('profile_photo_path', 2048)->nullable();

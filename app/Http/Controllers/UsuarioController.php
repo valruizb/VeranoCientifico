@@ -53,7 +53,7 @@ class UsuarioController extends Controller
         ]);
 
     }
-    public function create():Response
+    public function create(): Response
     {
         /* $permissions = Cache::rememberForever('permissions', function () {
             return Permission::get(['id', 'name', 'description', 'module_key'])->groupBy('module_key')->toArray();

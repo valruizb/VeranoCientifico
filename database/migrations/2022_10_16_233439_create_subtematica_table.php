@@ -14,9 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('subtematica', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('name');
-            $table->string('id_tematica');
+            $table->unsignedBigInteger('id_tematica');
+            $table->foreign('id_tematica')->references('id')->on('tematica');
             $table->timestamps();
         });
     }

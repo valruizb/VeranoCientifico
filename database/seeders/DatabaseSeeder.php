@@ -23,8 +23,8 @@ class DatabaseSeeder extends Seeder
             EventoSeeder::class,
             CalendarioConvocatoriaSeeder::class,
             DocumentoSeeder::class,
-            SubTematicaSeeder::class, 
             TematicaSeeder::class,
+            SubTematicaSeeder::class, 
             InstitucionesSeeder::CLass,
         ]);
     }
