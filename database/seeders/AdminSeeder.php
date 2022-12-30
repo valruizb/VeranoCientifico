@@ -24,6 +24,8 @@ class AdminSeeder extends Seeder
         // Cobertura de visibilidad completa
         $perfil->givePermissionTo(Permission::where('module_key', 'modulo')->get());
         $perfil->givePermissionTo(Permission::where('module_key', 'cat')->get());
+        $profe->givePermissionTo(Permission::where('name', 'modulo.profesores')->get());
+        $profe->givePermissionTo(Permission::where('name', 'proyectos.index')->get());
         //$profe->givePermissionTo(Permission::where('module_key', 'cat')->get());
 
         /*$cap->givePermissionTo(Permission::where('name', 'modulo.catalogos')->get());

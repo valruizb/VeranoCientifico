@@ -64,9 +64,20 @@ class PermisosSeeder extends Seeder
         Permission::create(['name' => 'documento.delete', 'guard_name' => 'web', 'description' => 'Eliminar Registros', 'module_key' => 'cat']);
 
         Permission::create(['name' => 'proyectos.index', 'guard_name' => 'web', 'description' => 'Leer Registros', 'module_key' => 'cat']);
-        Permission::create(['name' => 'proyectos.store', 'guard_name' => 'web', 'description' => 'Leer Registros', 'module_key' => 'cat']);
-        Permission::create(['name' => 'proyectos.update', 'guard_name' => 'web', 'description' => 'Leer Registros', 'module_key' => 'cat']);
-        Permission::create(['name' => 'proyectos.delete', 'guard_name' => 'web', 'description' => 'Leer Registros', 'module_key' => 'cat']);
+        Permission::create(['name' => 'proyectos.store', 'guard_name' => 'web', 'description' => 'Crear Registros', 'module_key' => 'cat']);
+        Permission::create(['name' => 'proyectos.update', 'guard_name' => 'web', 'description' => 'Actualizar Registros', 'module_key' => 'cat']);
+        Permission::create(['name' => 'proyectos.delete', 'guard_name' => 'web', 'description' => 'Eliminar Registros', 'module_key' => 'cat']);
+
+        Permission::create(['name' => 'instituciones.index', 'guard_name' => 'web', 'description' => 'Leer Registros', 'module_key' => 'cat']);
+        Permission::create(['name' => 'instituciones.store', 'guard_name' => 'web', 'description' => 'Leer Registros', 'module_key' => 'cat']);
+        Permission::create(['name' => 'instituciones.update', 'guard_name' => 'web', 'description' => 'Leer Registros', 'module_key' => 'cat']);
+        Permission::create(['name' => 'instituciones.delete', 'guard_name' => 'web', 'description' => 'Leer Registros', 'module_key' => 'cat']);
+
+        Permission::create(['name' => 'tematicas.index', 'guard_name' => 'web', 'description' => 'Leer Registros', 'module_key' => 'cat']);
+        Permission::create(['name' => 'tematicas.store', 'guard_name' => 'web', 'description' => 'Leer Registros', 'module_key' => 'cat']);
+        Permission::create(['name' => 'tematicas.update', 'guard_name' => 'web', 'description' => 'Leer Registros', 'module_key' => 'cat']);
+        Permission::create(['name' => 'tematicas.delete', 'guard_name' => 'web', 'description' => 'Leer Registros', 'module_key' => 'cat']);
+
 
     }
 }

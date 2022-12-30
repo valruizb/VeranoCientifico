@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Instituciones;
 use App\Http\Requests\StoreInstitucionesRequest;
 use App\Http\Requests\UpdateInstitucionesRequest;
+use Inertia\Inertia;
 
 class InstitucionesController extends Controller
 {
@@ -13,6 +14,21 @@ class InstitucionesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+        protected string $routeName;
+        protected string $source;
+        protected string $module = 'instituciones';
+        protected Instituciones $model;
+    
+        public function __construct()
+        {
+            $this->routeName = "instituciones.";
+            $this->source    = "Instituciones/";
+            $this->model     = new Instituciones();
+            $this->middleware("permission:{$this->module}.index")->only(['index', 'show']);
+            $this->middleware("permission:{$this->module}.store")->only(['store', 'create']);
+            $this->middleware("permission:{$this->module}.update")->only(['update', 'edit']);
+            $this->middleware("permission:{$this->module}.delete")->only(['destroy', 'edit']); 
+        }
     public function index()
     {
         //
@@ -25,7 +41,11 @@ class InstitucionesController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render("{$this->source}Create", [
+            'titulo'=>'Agregar Institución',
+            'routeName'=>$this->routeName,
+            'instituciones'=>instituciones::orderBy('id')->get(),
+        ]);
     }
 
     /**
@@ -36,7 +56,8 @@ class InstitucionesController extends Controller
      */
     public function store(StoreInstitucionesRequest $request)
     {
-        //
+        $this->model::create($request->validated());
+        return redirect()->route('instituciones.index')->with('success', 'Permiso guardado con éxito!');
     }
 
     /**
@@ -58,7 +79,7 @@ class InstitucionesController extends Controller
      */
     public function edit(Instituciones $instituciones)
     {
-        //
+        abort(405);
     }
 
     /**

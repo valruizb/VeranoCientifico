@@ -7,6 +7,8 @@ use App\Http\Requests\StoreProyectosRequest;
 use App\Http\Requests\UpdateProyectosRequest;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+use App\Models\tematica;
+use App\Models\subtematica;
 
 class ProyectosController extends Controller
 {
@@ -14,6 +16,7 @@ class ProyectosController extends Controller
     private Proyectos $model;
     private string $source;
     private string $routeName;
+    private string $module = 'proyectos';
 
     /**
      * Display a listing of the resource.
@@ -26,6 +29,12 @@ class ProyectosController extends Controller
         $this->source = 'Proyectos/';
         $this->model = new Proyectos();
         $this->routeName = 'proyectos.';
+/* 
+
+        $this->middleware("permission:{$this->module}.index")->only(['index', 'show']);
+        $this->middleware("permission:{$this->module}.store")->only(['store', 'create']);
+        $this->middleware("permission:{$this->module}.update")->only(['update', 'edit']);
+        $this->middleware("permission:{$this->module}.delete")->only(['destroy', 'edit']); */
     }
     public function index(Request $request)
     {
@@ -33,14 +42,14 @@ class ProyectosController extends Controller
         $records = $request->status == '0' ? $this->model->onlyTrashed() : $this->model;
         $records = $records->when($request->search, function ($query, $search) {
             if ($search != '') {
-                $query->where('nombre', 'LIKE', '%' . $search . '%')
-                    ->orWhere('descripcion', 'LIKE', '%' . $search . '%');
+                $query->where('titulo', 'LIKE', '%' . $search . '%')
+                    ->orWhere('objectgeneral', 'LIKE', '%' . $search . '%');
             }
         });
         return Inertia::render("Proyectos/Index", [
             'titulo'          => 'Proyectos',
             'routeName'      => $this->routeName,
-            'proyectos'=>Proyectos::orderBy('titulo')->get(),
+            'proyectos'=>  $records->paginate(3),
             'loadingResults' => false,
             'search'         => $request->search ?? '',
             'status'         => (bool) $request->status,
@@ -54,7 +63,12 @@ class ProyectosController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render("{$this->source}Create", [
+            'titulo'          => 'Agregar Módulos',
+            'routeName'      => $this->routeName,
+            'tem'=>tematica::orderBy('name')->get(),
+            'subtem'=>subtematica::orderBy('name')->get(),
+        ]);
     }
 
     /**
@@ -65,7 +79,8 @@ class ProyectosController extends Controller
      */
     public function store(StoreProyectosRequest $request)
     {
-        //
+        //dd($request);
+        Proyectos::create($request->validated());
     }
 
     /**
@@ -87,7 +102,11 @@ class ProyectosController extends Controller
      */
     public function edit(Proyectos $proyectos)
     {
-        //
+        return Inertia::render("{$this->source}Edit", [
+            'titulo'          => 'Editar Módulos',
+            'routeName'      => $this->routeName,
+            'proyectos' => $proyectos
+        ]);
     }
 
     /**

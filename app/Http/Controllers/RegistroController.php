@@ -73,7 +73,9 @@ class RegistroController extends Controller
      */
     public function store(StoreRegistroRequest $request): RedirectResponse
     {
-        
+        if($request -> hasFile(key:'constancia')){
+            $filename = $request -> constancia -> getOriginalClientName();
+        }
         $fields= $request->validated();
         $fields['password'] = Hash::make($fields['password']);
         $usuario = $this->model::create($fields);

@@ -4,6 +4,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\ModuloController;
+use App\Http\Controllers\AcercaVeranoController;
 use App\Http\Controllers\RegistroController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\PerfilesController;
@@ -14,6 +15,8 @@ use App\Http\Controllers\ConvocatoriaController;
 use App\Http\Controllers\EventoController;
 use App\Http\Controllers\CalendarioConvocatoriaController;
 use App\Http\Controllers\DocumentoController;
+use App\Http\Controllers\InstitucionesController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -28,7 +31,9 @@ use App\Http\Controllers\DocumentoController;
 
 //Rutas publicas
 Route::resource('registro', RegistroController::class);
-Route::resource('proyectos', ProyectosController::class);
+Route::resource('acercaverano', AcercaVeranoController::class);
+
+
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -62,6 +67,8 @@ Route::middleware([
     Route::resource('evento', EventoController::class)->parameters(['evento' => 'evento']);
     Route::resource('calendario', CalendarioConvocatoriaController::class)->parameters(['calendario' => 'calendario']);
     Route::resource('documento', DocumentoController::class)->parameters(['documento' => 'documento']);
+    Route::resource('proyectos', ProyectosController::class)->parameters(['proyectos' => 'proyectos']);
+    Route::resource('instituciones', InstitucionesController::class)->parameters(['instituciones' => 'instituciones']);
     
     
 });

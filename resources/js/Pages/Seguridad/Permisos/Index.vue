@@ -44,8 +44,8 @@
               </div>
             </div>
 
-            <div class="d-flex flex-row bd-highlight pt-2">
-              <table class="table table-striped">
+            <div class="table-responsive">
+              <table class="table table-dark table-striped">
                 <thead>
                   <tr>
                         <th style="width: 5%;"></th>

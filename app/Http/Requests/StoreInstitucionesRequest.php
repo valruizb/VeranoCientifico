@@ -13,7 +13,7 @@ class StoreInstitucionesRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,14 @@ class StoreInstitucionesRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'nombre' => 'max:255',
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'nombre' => 'Nombre',
         ];
     }
 }

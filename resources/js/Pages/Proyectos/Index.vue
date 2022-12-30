@@ -58,38 +58,26 @@
               </select>
             </div>
 
-            <div class="d-flex flex-row bd-highlight pt-2">
-              <table class="table table-striped">
+            <div class="table-responsive">
+              <table class="table table-dark table-bordered">
                 <thead>
                   <tr>
-                    <th scope="col">Módulo</th>
+                    <th scope="col">Titulo</th>
                     <th scope="col">Descripción</th>
                     <th scope="col">Clave</th>
-                    <th scope="col">Acciones</th>
+                    <th scope="col">Editar</th>
+                    <th scope="col">Eliminar</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr v-for="item in proyectos.data" :key="item.id">
+                    <td>{{ item.titulo }}</td>
+                    <td>{{ item.tematica }}</td>
+                    <td>{{ item.key }}</td>
                     <td>
-                      <Link
-                        :href="route('proyectos.edit', item.id)"
-                        class="d-flex text-decoration-none text-reset"
-                        >{{ item.titulo }}</Link
-                      >
-                    </td>
-                    <td>
-                      <Link
-                        :href="route('proyectos.edit', item.id)"
-                        class="d-flex text-decoration-none text-reset"
-                        >{{ item.tematica }}</Link
-                      >
-                    </td>
-                    <td>
-                      <Link
-                        :href="route('proyectos.edit', item.id)"
-                        class="d-flex text-decoration-none text-reset"
-                        >{{ item.key }}</Link
-                      >
+                      <Link :href="route('proyectos.edit', item.id)">
+                       <i class="bi bi-pencil" ></i> 
+                      </Link>
                     </td>
                     <td>
                       <Link
@@ -132,7 +120,7 @@
         props: {
             titulo: { type: String, required: true },
             routeName: { type: String, required: true },
-            proyectos: { type: String, required: true },
+            proyectos: { type: Object, required: true },
             loadingResults: { type: Boolean, required: true, default: true },
             search: { type: String, required: true },
             status: { type: Boolean, required: true, default: true },
@@ -141,6 +129,7 @@
             AppLayout,
             Link,
             RecordsHelper,
+            Pagination,
             Input,
         },
         setup(props) {

@@ -110,6 +110,7 @@ import {useCan} from '@/Hooks/usePermissions';
         { name: "evento.index", description: "Eventos", icon: "bi-calendar-event-fill" },
         { name: "calendario.index", description: "Calendario", icon: "bi bi-calendar-date" },
         { name: "documentos.index", description: "Documentos", icon: "bi bi-file-text-fill" },
+
       ]);
 
       const profesores = ref([

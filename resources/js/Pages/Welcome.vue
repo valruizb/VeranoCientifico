@@ -1,163 +1,587 @@
 <template>
-  <Head title="Welcome" />
+    <head lang="en"><meta charset="UTF-8"><title>Registro</title>
+    <!-- Viewport -->
+      <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <div>
-    <div class="container-fluid fixed-top p-4">
-      <div class="col-12">
-        <div v-if="canLogin" class="d-flex justify-content-end">
-          <div>
-            <Link v-if="$page.props.user" :href="route('dashboard')" class="text-muted">
-              Menú Principal
-            </Link>
+  <!-- Favicon and Touch Icons -->
+      <link rel="icon" type="image/png" sizes="32x32" href="../../../public/img/TecNM_logo.png">
+      <link rel="icon" type="image/png" sizes="16x16" href="../../../public/img/TecNM_logo.png">
+      <link rel="manifest" href="../assets/favicon/site.webmanifest">
+      <link rel="mask-icon" href="../assets/favicon/safari-pinned-tab.svg" color="#6366f1">
+      <link rel="shortcut icon" href="../assets/favicon/favicon.ico">
+      <meta name="msapplication-TileColor" content="#080032">
+      <meta name="msapplication-config" content="../assets/favicon/browserconfig.xml">
+      <meta name="theme-color" content="#ffffff">
+      
 
-            <template v-else>
-              <Link :href="route('login')" class="text-muted">
-                Inciar Sesión
-              </Link>
+      <!-- Vendor Styles -->
+      <link rel="stylesheet" media="screen" href="../assets/vendor/boxicons/css/boxicons.min.css"/>
+      
+      <link rel="stylesheet" href="../../../public/assets/vendor/swiper/swiper-bundle.min.css" />
+      <link rel="stylesheet" media="screen" href="../assets/vendor/prismjs/themes/prism.css"/>
+      <link rel="stylesheet" media="screen" href="../assets/vendor/prismjs/plugins/toolbar/prism-toolbar.css"/>
+      <link rel="stylesheet" media="screen" href="../assets/vendor/prismjs/plugins/line-numbers/prism-line-numbers.css"/>
 
-              <Link  :href="route('registro.create')" class="ms-4 text-muted">
-                Regístrate
-              </Link>
-            </template>
-          </div>
-        </div>
-        
-        
+      <!-- Main Theme Styles + Bootstrap -->
+      <link rel="stylesheet" media="screen" href="../assets/css/theme.min.css">
+    
+    </head>
+  <header class="header navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+    <div class="container">
+      <a class="navbar-brand" id="logo">
+        <img src="../../../public/img/logo.png" width="47" alt="Silicon">
+        TecNM/Cenidet 
+      </a>
+      <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse2" aria-expanded="false">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="form-check form-switch mode-switch order-lg-2 ms-4 ms-lg-auto me-lg-4" data-bs-toggle="mode">
+        <input type="checkbox" class="form-check-input" id="theme-mode">
+        <label class="form-check-label d-none d-sm-block d-lg-none d-xl-block" for="theme-mode">Light</label>
+        <label class="form-check-label d-none d-sm-block d-lg-none d-xl-block" for="theme-mode">Dark</label>
       </div>
+      <a id="btn" :href="route('login')" class="btn btn-secondary btn-sm fs-sm rounded order-lg-3 my-3 d-none d-lg-inline-flex">
+        <i id="boxi" class='bx bx-user bx-flashing' ></i>
+        Acceder al sistema
+      </a>
+      <nav id="navegador" class="collapse navbar-collapse">
+        <hr class="d-lg-none mt-3 mb-2">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a id="lista" :href="route('proyectos.create')" class="nav-link">Proyectos</a>
+          </li>
+          <li class="nav-item">
+            <a id="lista" :href="route('registro.create')" class="nav-link">Investigadores</a>
+          </li>
+          <li class="nav-item">
+            <a id="lista" :href="route('acercaverano.index')" class="nav-link">Acerca del Verano</a>
+          </li>
+          <li class="dropdown" id="cont">
+            <a id="text" class="dropdown-item" data-bs-toggle="dropdown" aria-expanded="false">Registro</a>
+              <ul class="dropdown-menu" id="menu">
+                <li><a id="opt" class="dropdown-item" :href="route('registro.create')">Registrate aquí</a></li>
+              </ul>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header><br><br><br><br>
+
+
+
+<!-- Hero slider + BG parallax -->
+  <section class="jarallax dark-mode bg-dark py-xxl-5" data-jarallax data-speed="0.4">
+
+    <!-- Swiper tabs -->
+    <div class="swiper-tabs position-absolute top-0 start-0 w-100 h-100 bg-gradient-dark-translucent">
+        <div id="image1" class="position-absolute top-0 start-0 w-100 h-100 bg-position-center bg-repeat-0 bg-size-cover swiper-tab active" style="background-image: url(../../../public/img/campus.jpg);">
+            <span class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-35"></span>
+        </div>
+        <div id="image-2" class="position-absolute top-0 start-0 w-100 h-100 bg-position-center bg-repeat-0 bg-size-cover swiper-tab" style="background-image: url(../../../public/img/campus.jpg);">
+            <span class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-35"></span>
+        </div>
+        <div id="image-3" class="position-absolute top-0 start-0 w-100 h-100 bg-position-center bg-repeat-0 bg-size-cover swiper-tab" style="background-image: url(../../../public/img/campus.jpg);">
+            <span class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-35"></span>
+        </div>
     </div>
 
-    <div class="container-fluid my-5 pt-5 px-5">
-      <div class="row justify-content-center px-4">
-        <div class="col-md-12 col-lg-9">
-          <svg viewBox="0 0 651 192" fill="none" xmlns="http://www.w3.org/2000/svg" class="my-4" style="width: 271px">
-            <g clip-path="url(#clip0)" fill="#EF3B2D">
-              <path d="M248.032 44.676h-16.466v100.23h47.394v-14.748h-30.928V44.676zM337.091 87.202c-2.101-3.341-5.083-5.965-8.949-7.875-3.865-1.909-7.756-2.864-11.669-2.864-5.062 0-9.69.931-13.89 2.792-4.201 1.861-7.804 4.417-10.811 7.661-3.007 3.246-5.347 6.993-7.016 11.239-1.672 4.249-2.506 8.713-2.506 13.389 0 4.774.834 9.26 2.506 13.459 1.669 4.202 4.009 7.925 7.016 11.169 3.007 3.246 6.609 5.799 10.811 7.66 4.199 1.861 8.828 2.792 13.89 2.792 3.913 0 7.804-.955 11.669-2.863 3.866-1.908 6.849-4.533 8.949-7.875v9.021h15.607V78.182h-15.607v9.02zm-1.431 32.503c-.955 2.578-2.291 4.821-4.009 6.73-1.719 1.91-3.795 3.437-6.229 4.582-2.435 1.146-5.133 1.718-8.091 1.718-2.96 0-5.633-.572-8.019-1.718-2.387-1.146-4.438-2.672-6.156-4.582-1.719-1.909-3.032-4.152-3.938-6.73-.909-2.577-1.36-5.298-1.36-8.161 0-2.864.451-5.585 1.36-8.162.905-2.577 2.219-4.819 3.938-6.729 1.718-1.908 3.77-3.437 6.156-4.582 2.386-1.146 5.059-1.718 8.019-1.718 2.958 0 5.656.572 8.091 1.718 2.434 1.146 4.51 2.674 6.229 4.582 1.718 1.91 3.054 4.152 4.009 6.729.953 2.577 1.432 5.298 1.432 8.162-.001 2.863-.479 5.584-1.432 8.161zM463.954 87.202c-2.101-3.341-5.083-5.965-8.949-7.875-3.865-1.909-7.756-2.864-11.669-2.864-5.062 0-9.69.931-13.89 2.792-4.201 1.861-7.804 4.417-10.811 7.661-3.007 3.246-5.347 6.993-7.016 11.239-1.672 4.249-2.506 8.713-2.506 13.389 0 4.774.834 9.26 2.506 13.459 1.669 4.202 4.009 7.925 7.016 11.169 3.007 3.246 6.609 5.799 10.811 7.66 4.199 1.861 8.828 2.792 13.89 2.792 3.913 0 7.804-.955 11.669-2.863 3.866-1.908 6.849-4.533 8.949-7.875v9.021h15.607V78.182h-15.607v9.02zm-1.432 32.503c-.955 2.578-2.291 4.821-4.009 6.73-1.719 1.91-3.795 3.437-6.229 4.582-2.435 1.146-5.133 1.718-8.091 1.718-2.96 0-5.633-.572-8.019-1.718-2.387-1.146-4.438-2.672-6.156-4.582-1.719-1.909-3.032-4.152-3.938-6.73-.909-2.577-1.36-5.298-1.36-8.161 0-2.864.451-5.585 1.36-8.162.905-2.577 2.219-4.819 3.938-6.729 1.718-1.908 3.77-3.437 6.156-4.582 2.386-1.146 5.059-1.718 8.019-1.718 2.958 0 5.656.572 8.091 1.718 2.434 1.146 4.51 2.674 6.229 4.582 1.718 1.91 3.054 4.152 4.009 6.729.953 2.577 1.432 5.298 1.432 8.162 0 2.863-.479 5.584-1.432 8.161zM650.772 44.676h-15.606v100.23h15.606V44.676zM365.013 144.906h15.607V93.538h26.776V78.182h-42.383v66.724zM542.133 78.182l-19.616 51.096-19.616-51.096h-15.808l25.617 66.724h19.614l25.617-66.724h-15.808zM591.98 76.466c-19.112 0-34.239 15.706-34.239 35.079 0 21.416 14.641 35.079 36.239 35.079 12.088 0 19.806-4.622 29.234-14.688l-10.544-8.158c-.006.008-7.958 10.449-19.832 10.449-13.802 0-19.612-11.127-19.612-16.884h51.777c2.72-22.043-11.772-40.877-33.023-40.877zm-18.713 29.28c.12-1.284 1.917-16.884 18.589-16.884 16.671 0 18.697 15.598 18.813 16.884h-37.402zM184.068 43.892c-.024-.088-.073-.165-.104-.25-.058-.157-.108-.316-.191-.46-.056-.097-.137-.176-.203-.265-.087-.117-.161-.242-.265-.345-.085-.086-.194-.148-.29-.223-.109-.085-.206-.182-.327-.252l-.002-.001-.002-.002-35.648-20.524a2.971 2.971 0 00-2.964 0l-35.647 20.522-.002.002-.002.001c-.121.07-.219.167-.327.252-.096.075-.205.138-.29.223-.103.103-.178.228-.265.345-.066.089-.147.169-.203.265-.083.144-.133.304-.191.46-.031.085-.08.162-.104.25-.067.249-.103.51-.103.776v38.979l-29.706 17.103V24.493a3 3 0 00-.103-.776c-.024-.088-.073-.165-.104-.25-.058-.157-.108-.316-.191-.46-.056-.097-.137-.176-.203-.265-.087-.117-.161-.242-.265-.345-.085-.086-.194-.148-.29-.223-.109-.085-.206-.182-.327-.252l-.002-.001-.002-.002L40.098 1.396a2.971 2.971 0 00-2.964 0L1.487 21.919l-.002.002-.002.001c-.121.07-.219.167-.327.252-.096.075-.205.138-.29.223-.103.103-.178.228-.265.345-.066.089-.147.169-.203.265-.083.144-.133.304-.191.46-.031.085-.08.162-.104.25-.067.249-.103.51-.103.776v122.09c0 1.063.568 2.044 1.489 2.575l71.293 41.045c.156.089.324.143.49.202.078.028.15.074.23.095a2.98 2.98 0 001.524 0c.069-.018.132-.059.2-.083.176-.061.354-.119.519-.214l71.293-41.045a2.971 2.971 0 001.489-2.575v-38.979l34.158-19.666a2.971 2.971 0 001.489-2.575V44.666a3.075 3.075 0 00-.106-.774zM74.255 143.167l-29.648-16.779 31.136-17.926.001-.001 34.164-19.669 29.674 17.084-21.772 12.428-43.555 24.863zm68.329-76.259v33.841l-12.475-7.182-17.231-9.92V49.806l12.475 7.182 17.231 9.92zm2.97-39.335l29.693 17.095-29.693 17.095-29.693-17.095 29.693-17.095zM54.06 114.089l-12.475 7.182V46.733l17.231-9.92 12.475-7.182v74.537l-17.231 9.921zM38.614 7.398l29.693 17.095-29.693 17.095L8.921 24.493 38.614 7.398zM5.938 29.632l12.475 7.182 17.231 9.92v79.676l.001.005-.001.006c0 .114.032.221.045.333.017.146.021.294.059.434l.002.007c.032.117.094.222.14.334.051.124.088.255.156.371a.036.036 0 00.004.009c.061.105.149.191.222.288.081.105.149.22.244.314l.008.01c.084.083.19.142.284.215.106.083.202.178.32.247l.013.005.011.008 34.139 19.321v34.175L5.939 144.867V29.632h-.001zm136.646 115.235l-65.352 37.625V148.31l48.399-27.628 16.953-9.677v33.862zm35.646-61.22l-29.706 17.102V66.908l17.231-9.92 12.475-7.182v33.841z"/>
-            </g>
-          </svg>
 
-          <div class="card shadow-sm">
-            <div class="row">
-              <div class="col-md-6 pe-0">
-                <div class="card-body border-right border-bottom p-3 h-100">
-                  <div class="d-flex flex-row bd-highlight pt-2">
-                    <div>
-                      <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="text-muted" width="32"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+    <div class="position-relative text-center zindex-5 overflow-hidden pt-4 py-md-5">
+        <!-- Slider controls (Prev / next) -->
+        <button type="button" id="hero-prev" class="btn btn-prev btn-icon btn-xl bg-transparent shadow-none position-absolute top-50 start-0 translate-middle-y d-none d-md-inline-flex ms-n3 ms-lg-2">
+            <i class="bx bx-chevron-left fs-1"></i>
+        </button>
+        <button type="button" id="hero-next" class="btn btn-next btn-icon btn-xl bg-transparent shadow-none position-absolute top-50 end-0 translate-middle-y d-none d-md-inline-flex me-n3 me-lg-2">
+            <i class="bx bx-chevron-right fs-1"></i>
+        </button>
+
+        <!-- Slider -->
+        <div class="container text-center py-xl-5">
+            <div class="row justify-content-center pt-lg-5">
+                <div class="col-xl-8 col-lg-9 col-md-10 col-11">
+                    <div class="swiper pt-5 pb-4 py-md-5" data-swiper-options='{
+              "effect": "fade",
+              "speed": 500,
+               "tabs": true,
+              "autoplay": {
+                "delay": 5500,
+                "disableOnInteraction": false
+              },
+              "pagination": {
+                "el": ".swiper-pagination",
+                "clickable": true
+              },
+              "navigation": {
+                "prevEl": "#hero-prev",
+                "nextEl": "#hero-next"
+              }
+            }'>
+                        <div class="swiper-wrapper">
+
+                            <!-- Item -->
+                            <div class="swiper-slide" data-swiper-tab="#image1">
+                                <h2 class="display-2 from-start mb-lg-4">2.° Verano Nacional de Investigación</h2>
+                                <div class="from-end">
+                                    <p class="fs-xl text-light opacity-70 pb-2 mb-lg-5">en Ciencia y Tecnología del Tecnológico Nacional de México 2023</p>
+                                </div>
+                                <div class="scale-up delay-1">
+                                    <!-- <a href="<?= base_url() ?>/Login/RegisterCongreso" class="btn btn-primary shadow-primary btn-lg">Descarga las Convocatorias</a> -->
+                                    <button class="btn btn-primary shadow-primary btn-lg" title="Descargar Convocatorias" type="button" onclick="onChange()" data-toggle="tooltip" data-placement="bottom"><i class='bx bxs-archive-in fs-lg me-2'></i>Descargar Convocatorias
+                                    </button>
+                                </div>
+
+                            </div>
+
+                            <!-- Item -->
+                            <div class="swiper-slide" data-swiper-tab="#image-2">
+                                <h4 class="display-2 from-start mb-lg-4">El evento se llevará a cabo del 19 de Junio al 25 de Julio de 2023</h4>
+                                <div class="scale-up delay-1">
+                                    <!-- <a href="https://veranocientifico.cenidet.tecnm.mx/content/convocatorias/Convocatoria_congreso.pdf" class="btn btn-primary shadow-primary btn-lg" target="_blank">Descarga las Convocatorias</a> -->
+                                    <button class="btn btn-primary shadow-primary btn-lg" title="Descargar Convocatorias" type="button" onclick="onChange()" data-toggle="tooltip" data-placement="bottom"><i class='bx bxs-archive-in fs-lg me-2'></i>Descargar Convocatorias
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Item -->
+                            <div class="swiper-slide" data-swiper-tab="#image-3">
+                                <h2 class="display-2 from-start mb-lg-4">Mesas Temáticas</h2>
+                                <div class="from-end">
+                                    <p class="fs-xl text-light opacity-70 pb-2 mb-lg-5">Área I. Física, Matemáticas y Ciencias de la Tierra. Área II. Biología y Química. Área III. Medicina y Salud. Área IV. Biotecnología y Ciencias Agropecuarias. Área V. Tecnología 4.0. Área VI. Ingeniería e Industria. Área VII. Ciencias Sociales y Administrativas. Área VIII. Cadena de valor de litio.</p>
+                                </div>
+                                <div class="scale-up delay-1">
+                                    <!-- <a href="https://veranocientifico.cenidet.tecnm.mx/content/convocatorias/Convocatoria_congreso.pdf" class="btn btn-primary shadow-primary btn-lg" target="_blank">Descarga las Convocatorias</a> -->
+                                    <button class="btn btn-primary shadow-primary btn-lg" title="Descargar Convocatorias" type="button" onclick="onChange()" data-toggle="tooltip" data-placement="bottom"><i class='bx bxs-archive-in fs-lg me-2'></i>Descargar Convocatorias
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pagination (bullets) -->
+                        <div class="swiper-pagination position-relative d-md-none pt-2 mt-5"></div>
                     </div>
-                    <div class="ps-3">
-                      <div class="mb-2">
-                        <a href="https://laravel.com/docs" class="h5 font-weight-bolder text-dark">Documentation</a>
-                      </div>
-                      <p class="text-muted small">
-                        Laravel has wonderful, thorough documentation covering every aspect of the framework. Whether you are new to the framework or have previous experience with Laravel, we recommend reading all of the documentation from beginning to end.
-                      </p>
-                    </div>
-                  </div>
                 </div>
+            </div>
+        </div>
+    </div>
+  </section>
+  
+
+  <div class="contsistema container ">
+
+<br><br>
+
+    <!---<a target="blank" href="https://api.whatsapp.com/send?phone=7774525374&text=Hola,%20%C2%BFme%20puedes%20apoyar?" class="circulo"><i class='bx bxl-whatsapp'></i></a>-->
+
+        <h1 class="h1 text-center pb-3 pb-md-0 mb-md-5">¿Cómo opera nuestro sistema?</h1>
+        <div class="steps">
+          <div class="step pt-0 pt-md-3 pb-5">
+            <div class="step-number">
+              <div class="step-number-inner">1</div>
+            </div>
+            <div class="step-body d-flex align-items-center ps-xl-5">
+              <div class="d-none d-lg-block flex-shrink-0 mx-4 mx-xl-5" data-jarallax-element="10" data-disable-parallax-down="lg">
+                <img src="assets/img/landing/online-courses/steps/01-dark.svg" class="d-dark-mode-none" width="306" alt="Illustration">
+                <img src="assets/img/landing/online-courses/steps/01-light.svg" class="d-none d-dark-mode-block" width="306" alt="Illustration">
               </div>
-              <div class="col-md-6 ps-0">
-                <div class="card-body border-bottom p-3 h-100">
-                  <div class="d-flex flex-row bd-highlight pt-2">
-                    <div>
-                      <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="text-muted" width="32"><path d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                    </div>
-                    <div class="ps-3">
-                      <div class="mb-2">
-                        <a href="https://laracasts.com" class="h5 font-weight-bolder text-dark">Laracasts</a>
-                      </div>
-                      <p class="text-muted small">
-                        Laracasts offers thousands of video tutorials on Laravel, PHP, and JavaScript development. Check them out, see for yourself, and massively level up your development skills in the process.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6 pe-0">
-                <div class="card-body border-right p-3 h-100">
-                  <div class="d-flex flex-row bd-highlight pt-2">
-                    <div>
-                      <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="text-muted" width="32"><path d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path></svg>
-                    </div>
-                    <div class="ps-3 text-sm">
-                      <div class="mb-2">
-                        <a href="https://laravel-news.com/" class="h5 font-weight-bolder text-dark">Laravel News</a>
-                      </div>
-                      <p class="text-muted small">
-                        Laravel News is a community driven portal and newsletter aggregating all of the latest and most important news in the Laravel ecosystem, including new package releases and tutorials.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6 ps-0">
-                <div class="card-body p-3 h-100">
-                  <div class="d-flex flex-row bd-highlight pt-2">
-                    <div>
-                      <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="text-muted" width="32"><path d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    </div>
-                    <div class="ps-3">
-                      <div class="mb-2">
-                        <span class="h5 font-weight-bolder text-dark">Vibrant Ecosystem</span>
-                      </div>
-                      <p class="text-muted small">
-                        Laravel's robust library of first-party tools and libraries, such as <a href="https://forge.laravel.com" class="text-muted">Forge</a>, <a href="https://vapor.laravel.com" class="text-muted">Vapor</a>, <a href="https://nova.laravel.com" class="text-muted">Nova</a>, and <a href="https://envoyer.io" class="text-muted">Envoyer</a> help you take your projects to the next level. Pair them with powerful open source libraries like <a href="https://laravel.com/docs/billing" class="text-muted">Cashier</a>, <a href="https://laravel.com/docs/dusk" class="text-muted">Dusk</a>, <a href="https://laravel.com/docs/broadcasting" class="text-muted">Echo</a>, <a href="https://laravel.com/docs/horizon" class="text-muted">Horizon</a>, <a href="https://laravel.com/docs/sanctum" class="text-muted">Sanctum</a>, <a href="https://laravel.com/docs/telescope" class="text-muted">Telescope</a>, and more.
-                      </p>
-                    </div>
-                  </div>
-                </div>
+              <div class="ps-md-4 ps-xl-5" data-jarallax-element="-10" data-disable-parallax-down="lg">
+                <h3 class="subtitulo">Las y los investigadores registran propuestas de proyectos de investigación</h3>
+                <p id="operasis" class="mb-0">Las y los investigadores pueden ingresar directamente al portal con su ID del TecNM; si son de reciente ingreso, pueden solicitar su registro desde la misma plataforma. Crearán sus proyectos de investigación y estos serán visibles para nuestra comunidad estudiantil.</p>
               </div>
             </div>
           </div>
-
-          <div class="d-flex justify-content-between mt-3">
-            <div class="text-sm text-muted">
-              <div class="flex align-content-center">
-                <svg fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor" class="text-muted" style="width: 18px">
-                  <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                </svg>
-
-                <a href="https://laravel.bigcartel.com" class="text-muted">
-                  Shop
-                </a>
-
-                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="ms-4 text-muted" style="width: 18px">
-                  <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-                </svg>
-
-                <a href="https://github.com/sponsors/taylorotwell" class="text-muted">
-                  Sponsor
-                </a>
+          <div class="step pt-0 pt-md-4 pb-5">
+            <div class="step-number">
+              <div class="step-number-inner">2</div>
+            </div>
+            <div class="step-body d-flex align-items-center ps-xl-5">
+              <div class="d-none d-lg-block flex-shrink-0 mx-4 mx-xl-5" data-jarallax-element="25" data-disable-parallax-down="lg">
+                <img src="assets/img/landing/online-courses/steps/02-dark.svg" class="d-dark-mode-none" width="306" alt="Illustration">
+                <img src="assets/img/landing/online-courses/steps/02-light.svg" class="d-none d-dark-mode-block" width="306" alt="Illustration">
+              </div>
+              <div class="ps-md-4 ps-xl-5" data-jarallax-element="-25" data-disable-parallax-down="lg">
+                <h3 class="subtitulo">Los y las estudiantes eligen los proyectos de investigación de su interés</h3>
+                <p id="operasis" class="mb-0">Los y las estudiantes se registran en el portal para elegir los proyectos de investigación de su interés y desarrollarlo bajo asesoría de una o un investigador.</p>
               </div>
             </div>
-
-            <div class="text-sm text-muted">
-              Laravel v{{ laravelVersion }} (PHP v{{ phpVersion }})
+          </div>
+          <div class="step pt-0 pt-md-4 pb-5">
+            <div class="step-number">
+              <div class="step-number-inner">3</div>
+            </div>
+            <div class="step-body d-flex align-items-center ps-xl-5">
+              <div class="d-none d-lg-block flex-shrink-0 mx-4 mx-xl-5" data-jarallax-element="10" data-disable-parallax-down="lg">
+                <img src="assets/img/landing/online-courses/steps/03-dark.svg" class="d-dark-mode-none" width="306" alt="Illustration">
+                <img src="assets/img/landing/online-courses/steps/03-light.svg" class="d-none d-dark-mode-block" width="306" alt="Illustration">
+              </div>
+              <div class="ps-md-4 ps-xl-5" data-jarallax-element="-10" data-disable-parallax-down="lg">
+                <h3 class="subtitulo">Las y los revisores institucionales validan los Expedientes</h3>
+                <p id="operasis" class="mb-0">Los Revisores Institucionales evalúan la correcta conformación de los expedientes académicos que los estudiantes cargan en la plataforma como requisito para ser elegibles para desarrollar un proyecto de investigación.</p>
+              </div>
+            </div>
+          </div>
+          <div class="step pt-0 pt-md-4 pb-5">
+            <div class="step-number">
+              <div class="step-number-inner">4</div>
+            </div>
+            <div class="step-body d-flex align-items-center ps-xl-5">
+              <div class="d-none d-lg-block flex-shrink-0 mx-4 mx-xl-5" data-jarallax-element="25" data-disable-parallax-down="lg">
+                <img src="assets/img/landing/online-courses/steps/04-dark.svg" class="d-dark-mode-none" width="306" alt="Illustration">
+                <img src="assets/img/landing/online-courses/steps/04-light.svg" class="d-none d-dark-mode-block" width="306" alt="Illustration">
+              </div>
+              <div class="ps-md-4 ps-xl-5" data-jarallax-element="-25" data-disable-parallax-down="lg">
+                <h3 class="subtitulo">Se asignan los proyectos a las y los estudiantes considerando sus perfiles académicos</h3>
+                <p id="operasis" class="mb-0">Las y los investigadores evalúan los perfiles académicos de los estudiantes para asignarles los proyectos adecuados a sus aptitudes e intereses de investigación.</p>
+              </div>
             </div>
           </div>
         </div>
+      </div><br><br><br><br><br><br>
+      
+    <div class="redessociales">
+      <h1 class="redes">Visita Nuestra Redes Sociales</h1>
+      <p class="siguenos">¡Síguenos y mantente al día con las noticias más recientes!</p><br><br>
+      <div class="facebook">
+        <a target="blank" href="https://www.facebook.com/TecNMCenidet.mx" class="facebook2" >
+          <i class='bx bxl-facebook'></i>
+        </a>
+            <h5>Facebook</h5>
+            <p id="pcenidet">Cenidet</p>
+      </div>
+      <div class="twitter">
+        <a target="blank" href="https://twitter.com/CENIDET" class="twitter2">
+          <i class="bx bxl-twitter"></i>
+        </a>
+          <h5>Twitter</h5>
+          <p id="pcenidet">Cenidet</p>
+      </div>
+      <div class="youtube">
+        <a target="blank" href="https://www.youtube.com/channel/UCppsS5lV2CKqImeHeLt5zgw" class="youtube2">
+          <i class="bx bxl-youtube"></i>
+        </a>
+          <h5>Youtube</h5>
+          <p id="pcenidet">Cenidet</p>
+      </div>
+      <div class="insta">
+        <a target="blank" href="https://www.instagram.com/cenidet_oficial/" class="insta2" >
+          <i class="bx bxl-instagram"></i>
+        </a> 
+          <h5>Instagram</h5>
+          <p id="pcenidet">Cenidet</p>
+      </div>
+    </div><br><br><hr><br><br><br><br>
+
+  
+
+  <div class="pie">
+          <h1>Accede a Nuestro Sistema o </h1>
+          <h1>Suscríbete</h1><br>
+          <p>© Todos los derechos Reservados. Hecho con por el <i class='bx bxs-heart bx-flashing' style="color:#f30909" ></i> <a id="linktec" target="blank" href="https://cenidet.tecnm.mx/">TecNM/Cenidet</a></p><br><br>
+  </div>
+   
+
+<!----<div id="my-carousel" class="carousel" data-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item d" v-for="slide in slides">
+      <img class="d-block w-100" :src="slide">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Title</h5>
+        <p>Text</p>
       </div>
     </div>
   </div>
+</div>--->
 </template>
 
-<style scoped>
-
-</style>
-
 <script>
+import Carousel from "../../../public/assets/carousel/Carousel.vue"
 import { defineComponent } from "vue"
 import { Head, Link } from '@inertiajs/inertia-vue3';
+import { Swiper, SwiperSlide } from "swiper/vue";
+
+
+
 
 export default defineComponent({
   components: {
     Head,
     Link,
+    Carousel,
+    Swiper,
+    SwiperSlide,
   },
+
 
   props: {
     canLogin: Boolean,
     canRegister: Boolean,
     laravelVersion: String,
     phpVersion: String,
-  }
-})
+  },
+  
+});
 </script>
+
+<style scoped>
+
+
+  /*Barra de navegación*/
+  .header{
+      position: fixed;
+      background-color: #ffffff;
+    }
+
+    i[id="boxi"]{
+      font-size: 19px;
+      padding: 5px;
+    }
+
+    .navbar{
+      width: 100%;
+      z-index: 100;
+    }
+
+    a[id="text"]{
+      font-size: bold;
+      padding-top: 10px;
+      display: block;
+    }
+
+    nav[id="navegador"]{
+    font-size: 18px;
+    color: #092252; 
+    margin-left: 2%;
+    }
+
+    li{
+      padding: 10px;
+    }
+
+    a[id="logo"]{
+      margin-left: -8%;
+      height: 80px;
+    }
+
+    a[id="lista"]:hover{
+      background-color:rgba(195, 197, 214, 0.795);
+      border-radius: 15px;
+    }
+
+
+    a[id="opt"]:hover{
+      background-color:rgba(230, 231, 240, 0.932);
+      color: #092252; 
+      border-radius: 12px;
+    }
+
+    a[id="opt"]{
+      cursor: pointer;
+      background-color:rgb(255, 255, 255);
+      color: #092252; 
+      padding-top: 5px;
+      border-radius: 10px;
+    }
+
+    li[id="cont"]::after, li[id="cont"]::before{
+      content: '';
+      position: absolute;
+      background-color: rgb(22, 9, 82);
+      width: 3px;
+      height: 12px;
+      top: 27px;
+      border-radius: 5px;
+      transition: all 0.3s;
+    }
+
+    li[id="cont"]{
+      min-height: 45px;
+      position: relative;
+      width: 150px;
+      margin-left: -10px;
+      text-align: center;
+      cursor: pointer;
+      color: #092252; 
+    }
+
+    li[id="cont"]::after{
+      transform: rotate(45deg);
+      left:85%;
+    }
+
+    li[id="cont"]::before{
+      transform: rotate(-45deg);
+      left:89%;
+    }
+
+    li[id="cont"]:hover::after{
+      transform: rotate(135deg);
+    }
+
+    li[id="cont"]:hover::before{
+      transform: rotate(-135deg);
+    }
+
+    a[id="linktec"]{
+      text-decoration:underline;
+    }
+
+    [id="btn"]:hover{
+      background-color: rgba(6, 42, 107, 0.986);
+      color: rgb(255, 255, 255);
+      font-style: bold;
+    }
+
+    [id="btn"]{
+      background-color: #092252;
+      color: rgb(255, 255, 255);
+      width: 16%;
+      border-radius: 10px;
+      padding: 12px;
+      margin-left: 40px;
+      margin-right: -8%;
+    }
+
+    i[id="boxi2"]{
+      font-size: 21px;
+      padding: 5px;
+    }
+
+    i[id="boxi3"]{
+      font-size: 17px;
+      padding: 1px;
+    }
+
+    /*Footer*/
+
+    .pie{
+      text-align: center;
+    }
+
+    .circulo{
+      margin-left: 90%;
+      position: fixed;
+      width: 70px;
+      height: 70px;
+      line-height: 70px;
+      bottom: 30px;
+      right: 30px;
+      background-color: #08f808;
+      color: #ffffff;
+      border-radius: 70px;
+      text-align: center;
+      font-size: 35px;
+      box-shadow: 14px 14px 20px #b2b5b8, -12px -14px 20px rgba(158, 156, 156, 0.137);
+    }
+
+    .circulo:hover{
+      margin-left: 90%;
+      position: fixed;
+      width: 70px;
+      height: 70px;
+      line-height: 70px;
+      bottom: 30px;
+      right: 30px;
+      background-color: #ffffff;
+      color: #08f808;
+      border-radius: 70px;
+      text-align: center;
+      font-size: 35px;
+    }
+
+    /*Cómo opera nuestro sistema */
+    p[id="operasis"]{
+      text-align: justify;
+      font-size: 17px;
+    }
+
+    .subtitulo{
+      font-size: 27px;
+      text-align: justify;
+    }
+
+    .contsistema{
+      position: relative;
+    }
+
+    /*Redes sociales*/
+
+    .facebook2, .twitter2, .youtube2, .insta2{
+      margin-left: 2%;
+      line-height: 70px;
+      background-color: aliceblue;
+      color: #4e4e4e;
+      border-radius: 10px;
+      text-align: center;
+      font-size: 45px;
+      margin-top: 2%;
+      box-shadow: 14px 14px 20px #b2b5b8, -2px -1px 2px rgba(216, 213, 213, 0.137);
+    }
+
+    .facebook2:hover{
+      background-color: #2b08a7;
+      color: #ffffff;
+    }
+
+    .twitter2:hover{
+      background-color: #1ea6cf;
+      color: #ffffff;
+    }
+
+    .youtube2:hover{
+      background-color: #d40a0a;
+      color: #ffffff;
+    }
+
+    .insta2:hover{
+      background: rgb(134,12,221);
+      background: linear-gradient(47deg, rgba(134,12,221,1) 0%, rgba(227,18,64,1) 35%, rgba(233,183,29,1) 80%);
+      color: #ffffff;
+    }
+
+    .facebook, .twitter, .youtube, .insta{
+      width: 290px;
+      height: 180px;
+      line-height: 130px;
+      margin-left: 2%;
+      text-align: center;
+      display: inline-block;
+    }
+
+    
+     .twitter, .youtube, .insta{
+      border-left: 1px solid #8886867c;
+    }
+
+    p[id="pcenidet"]{
+      text-align: center;
+      margin-top: -21%;
+      margin-left: 41%;
+      background-color: #08f808;
+      width:10%;
+      height: -0%;;
+      
+    }
+
+    .redessociales{
+      margin-left: 70px;
+    }
+
+    .redes{
+      text-align: center;
+      font-size: 45px;
+    }
+
+    .siguenos{
+      text-align: center;
+      font-size: 20px;
+    }
+
+    h5{
+      margin-left: 37%;
+      margin-top: -10%;
+      width: 10%;
+    }
+
+</style>
+
+
+

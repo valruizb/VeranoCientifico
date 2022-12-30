@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+//
 use App\Models\perfiles;
 use App\Http\Requests\StoreperfilesRequest;
 use App\Http\Requests\UpdateperfilesRequest;
@@ -15,16 +15,19 @@ use App\Models\modulo;
 
 class PerfilesController extends Controller
 {
-    protected string $routeName;
-    protected string $source;
-    protected string $module = 'perfiles';
-    protected Role $model;
+    //Variables
+    protected string $routeName;//nombre de la ruta
+    protected string $source;//ruta de las vistas
+    protected string $module = 'perfiles';//modulo
+    protected Role $model; //Modelo usado
 
     public function __construct()
     {
+        //Asignación de valores
         $this->routeName = "perfiles.";
         $this->source    = "Seguridad/Perfiles/";
         $this->model     = new Role();
+        //usamos middleware para que solo los usuarios con este permiso tengan acceso a los metodos de este controlador
         $this->middleware("permission:{$this->module}.index")->only(['index', 'show']);
         $this->middleware("permission:{$this->module}.store")->only(['store', 'create']);
         $this->middleware("permission:{$this->module}.update")->only(['update', 'edit']);
@@ -32,21 +35,18 @@ class PerfilesController extends Controller
     }
     public function index(Request $request): Response
     {
-    
-        return Inertia::render("{$this->source}Index", [
-            'titulo'          => 'Catálogo de Roles',
-            'records'        =>$this->model::orderBy('id')->paginate(15),
-            'routeName'      => $this->routeName,
+    //Renderizamos a la vista de Index de perfiles los  
+        return Inertia::render("{$this->source}Index", [//definimos la viasta a que va a renderizar
+            'titulo'          => 'Catálogo de Roles',//En la variable titulo ponemos el valor del titulo
+            'records'        =>$this->model::orderBy('id')->paginate(15),//hacemos una consulta de los roles ordenados por ID con una paginación de 15 registros
+            'routeName'      => $this->routeName,//mandamos el nombre de la ruta
             'loadingResults' => false
         ]);
     }
 
     public function create():Response
     {
-        /* $permissions = Cache::rememberForever('permissions', function () {
-            return Permission::get(['id', 'name', 'description', 'module_key'])->groupBy('module_key')->toArray();
-        }); */
-        return Inertia::render("{$this->source}Create", [
+        return Inertia::render("{$this->source}Create", [ 
             'titulo'    => 'Agregar Roles',
             'routeName'      => $this->routeName,
             'modulos'  => modulo::orderBy('key')->get(['id', 'nombre', 'descripcion', 'key']),
@@ -56,7 +56,7 @@ class PerfilesController extends Controller
 
     public function store(StoreperfilesRequest $request)
     {
-        $perfil= Role::create($request->validated());
+        $perfil= Role::create($request->validated()); 
         $permisos = Permission::whereIn('id', $request->permisos)->get();
         $perfil->syncPermissions($permisos);
         return redirect()->route('perfiles.index')->with('Rol guardado con éxito');
@@ -69,12 +69,6 @@ class PerfilesController extends Controller
 
     public function edit(Role $perfiles)
     {
-        /* $perfiles = Cache::rememberForever("profile.{$perfiles->id}", function () use ($perfiles) {
-            return $perfiles->load('permissions:id,name,description,module_key');
-        });
-        $permissions = Cache::rememberForever('permissions', function () {
-            return Permission::get(['id', 'name', 'description', 'module_key'])->groupBy('module_key')->toArray();
-        }); */
         return Inertia::render("{$this->source}Edit", [
             'titulo'    => 'Editar Roles.',
             'perfil'   => $perfiles->load('permissions:id,name,description,module_key'),

@@ -10,5 +10,5 @@ class Instituciones extends Model
     use HasFactory;
     protected $table = 'instituciones';
 
-    protected $fillable = ['name'];
+    protected $fillable = ['nombre'];
 }

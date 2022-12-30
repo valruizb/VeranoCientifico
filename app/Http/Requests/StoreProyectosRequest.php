@@ -13,7 +13,7 @@ class StoreProyectosRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,25 @@ class StoreProyectosRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'titulo' => 'required',
+            'numalumn' => 'required',
+            'tematica'=> "required",
+            'subtematica'=> "required",
+            'objectgeneral'=> "required",
+            'modalidad'=> "required",
+            'requisitos'=> "required",
+        ];
+    }
+    public function attributes(): array
+    {
+        return [
+            'titulo' => 'Titulo del proyecto',
+            'numalumn' => 'Numero de alumnos',
+            'tematica'=> "Tematica",
+            'subtematica'=> "Subtematica",
+            'objectgeneral'=> "Objetivo General",
+            'modalidad'=> "Modalidad",
+            'requisitos'=> "Requisitos del proyecto",
         ];
     }
 }
