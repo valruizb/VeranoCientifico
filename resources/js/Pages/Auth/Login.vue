@@ -1,9 +1,8 @@
 <template>
-  <head lang="en"><meta charset="UTF-8"><title>Registro</title>
-    <!-- Viewport -->
+ <!---<head lang="en"><meta charset="UTF-8"><title>Iniciar sesión</title>
+  
       <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Favicon and Touch Icons -->
       <link rel="icon" type="image/png" sizes="32x32" href="../../../../public/img/TecNM_logo.png">
       <link rel="icon" type="image/png" sizes="16x16" href="../../../../public/img/TecNM_logo.png">
       <link rel="manifest" href="../assets/favicon/site.webmanifest">
@@ -13,10 +12,9 @@
       <meta name="msapplication-config" content="../assets/favicon/browserconfig.xml">
       <meta name="theme-color" content="#ffffff">
 
-      <!-- Vendor Styles -->
       <link rel="stylesheet" media="screen" href="../assets/vendor/boxicons/css/boxicons.min.css"/>
 
-      <!-- Main Theme Styles + Bootstrap -->
+
       <link rel="stylesheet" media="screen" href="../assets/css/theme.min.css">
     
     </head>
@@ -59,33 +57,40 @@
         </ul>
       </nav>
     </div>
-  </header>
+  </header>-->
 
-  <jet-authentication-card>
-    <template #logo>
-      <jet-authentication-card-logo />
-    </template>
 
-    <div class="card-body">
+ 
+<body>
+  <div class="container rounded shadow">
+    <div class="row align-items-stretch">
+      <div class="col bg d-none d-lg-block col-md-5 col-lg-5 col-xl-6 rounded">
+
+      </div>
+    <div class="col bg-white pd-5 rounded-end">
+    
+      <div class="card-body">
+        <h1>Bienvenidos</h1>
 
       <jet-validation-errors class="mb-3" />
 
       <div v-if="status" class="alert alert-success mb-3 rounded-0" role="alert">
         {{ status }}
       </div>
-
+      
       <form @submit.prevent="submit">
-        <div class="mb-3">
-          <jet-label for="correo" value="Correo:" />
-          <jet-input id="" type="email" v-model="form.correo" required autofocus />
+        <h2>Iniciar sesión</h2>
+        <div class="mb-4">
+          <jet-label id="email" for="correo" value="Correo:" />
+          <jet-input id="email" type="email" v-model="form.correo" required autofocus />
         </div>
 
-        <div class="mb-3">
-          <jet-label for="password" value="Constraseña:" />
+        <div class="mb-4">
+          <jet-label id="password" for="password" value="Constraseña:" />
           <jet-input id="password" type="password" v-model="form.password" required autocomplete="current-password" />
         </div>
 
-        <div class="mb-3">
+        <div class="mb-4">
           <div class="custom-control custom-checkbox">
             <jet-checkbox id="remember_me" name="remember" v-model:checked="form.remember" />
 
@@ -95,30 +100,44 @@
           </div>
         </div>
 
-        <div class="mb-0">
+        <div class="d-grid">
+          <jet-button class="ms-4" :class="{ 'text-white-50': form.processing }" :disabled="form.processing">
+              <div v-show="form.processing" class="spinner-border spinner-border-sm" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+              Ingresar
+            </jet-button>
+        </div>
+
+        <div class="my-3">
+          <div class="d-flex justify-content-end align-items-baseline">
+            <p>¿No tienes cuenta? </p> 
+            <Link v-if="canResetPassword" :href="route('password.request')" class="text-muted me-3">
+               Registrate
+            </Link>
+          </div>
+         </div>
+         <div class="my-3">
           <div class="d-flex justify-content-end align-items-baseline">
             <Link v-if="canResetPassword" :href="route('password.request')" class="text-muted me-3">
               ¿Has olvidado tu contraseña?
             </Link>
-
-            <jet-button class="ms-4" :class="{ 'text-white-50': form.processing }" :disabled="form.processing">
-              <div v-show="form.processing" class="spinner-border spinner-border-sm" role="status">
-                <span class="visually-hidden">Loading...</span>
-              </div>
-
-              Ingresar
-            </jet-button>
           </div>
         </div>
-      </form>
+        </form>
+        </div>
+      </div>
     </div>
-  </jet-authentication-card>
+  </div>
+  
      <!-- <div class="pie">
           <h1>Accede a Nuestro Sistema o </h1>
           <h1>Suscríbete</h1><br>
           <p>© Todos los derechos Reservados. Hecho con por el <i class='bx bxs-heart bx-flashing' style='color:#f30909' ></i> <a id="linktec" target="blank" href="https://cenidet.tecnm.mx/">TecNM/Cenidet</a></p><br><br>
      </div> -->
+    </body>
 </template>
+
 
 <script>
 import { defineComponent } from 'vue'
@@ -175,20 +194,62 @@ export default defineComponent({
 </script>
 
 <style scoped>
-    /*Barra de navegacion */
-    .header{
-      position: fixed;
+
+  :root{
+      --main-color: rgb(23, 33, 123);
+      --second-color:rgba(29, 43, 172, 0.795);
+      --black: #000000;
+      --white: #ffffff;
     }
 
-    i[id="boxi"]{
+    /*Form inicio*/
+
+  .bg{
+      background-image: url(../../../../public/img/login.jpg);
+      background-position: center center;
+  }
+
+  .container{
+    width: 75%;
+    margin-top: 5px;
+  }
+
+  h1{
+    font-weight: bold;
+    text-align: center;
+    padding-top: 5px;
+    margin-bottom: 5rem;
+  }
+
+  input[id="email"], [id="password"]{
+    width: 85%;
+    padding: 8px;
+    margin-left: 15px;
+  }
+
+  label[id="email"]{
+    margin-left: 15px;
+  }
+
+  h2{
+    text-align: center;
+    margin-top: 9 5px;
+  }
+
+    /*Barra de navegacion */
+  .header{
+      position: fixed;
+  }
+
+  i[id="boxi"]{
       font-size: 19px;
       padding: 5px;
-    }
+  }
 
    
-    .navbar{
+  .navbar{
       width: 100%;
-    }
+  }
 
     a[id="text"]{
       font-size: bold;
