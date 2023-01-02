@@ -52,9 +52,11 @@
       </a>
     </li>
       <ul class="dropdown-menu" id="menu">
-        <jet-dropdown-link as="button">
-            Salir del Sistema
-        </jet-dropdown-link>>
+        <form @submit.prevent="logout">
+                  <jet-dropdown-link as="button">
+                    Salir del Sistema
+                  </jet-dropdown-link>
+                </form>
       </ul>
         </div>
       </ul>
@@ -71,7 +73,7 @@
           <div class="card-body border-right border-bottom p-3 h-100">
             <form class="row g-3 needs-validation" @submit.prevent="guardar">
               <div class="col-md-8">
-                <jet-label id="titulo" for="Nombre del Proyecto" value="Nombre del Proyecto:" /><br>
+                <jet-label id="titulo" for="Nombre del Proyecto" value="*Nombre del Proyecto:" /><br>
                 <jet-input 
                   type="text" 
                   v-model="form.titulo" 
@@ -82,7 +84,7 @@
               </div>
 
               <div class="col-md-8">
-                <jet-label for="Numero de alumnos" value="Número de alumnos:" />
+                <jet-label for="Numero de alumnos" value="*Número de alumnos:" />
                 <jet-input
                   type="number"
                   v-model="form.numalumn"
@@ -93,7 +95,7 @@
               </div>
 
               <div class="col-md-8">
-                <label for="tematica" >*Tematica</label><br>
+                <label for="tematica" >*Temática</label><br>
                 <select id="tematica" :class="{'is-invalid':form.errors.tematica}" v-model="form.tematica">
                   <option disabled value="">Seleccione un elemento</option>
                   <option v-for="tema in tem"  v-bind:value="tema.id" v-bind:key="tema.id">{{ tema.name }}</option>
@@ -101,7 +103,7 @@
               </div>
 
               <div class="col-md-8">
-                <label for="Sub Tematica">*Sub Tematica</label><br>
+                <label for="Sub Tematica">*SubTemática</label><br>
                 <select id="sutematica" :class="{'is-invalid':form.errors.subtematica}" v-model="form.subtematica">
                   <option disabled value="">Seleccione un elemento</option>
                   <option v-for="sub in subtem" v-bind:value="sub.id" v-bind:key="sub.id">{{ sub.name }}</option>
@@ -109,7 +111,7 @@
               </div>
 
               <div class="col-md-8">
-                <jet-label for="Objetivo General" value="Objetivo general:" />
+                <jet-label for="Objetivo General" value="*Objetivo general:" />
                 <jet-input
                   v-model="form.objectgeneral"
                   :class="{ 'is-invalid': form.errors.objectgeneral }"
@@ -120,7 +122,7 @@
               </div>
 
               <div class="col-md-8">
-                <jet-label for="Modalidad" value="Modalidad:" /><br>
+                <jet-label for="Modalidad" value="*Modalidad:" /><br>
                 <select id="modalidad" :class="{'is-invalid':form.errors.modalidad}" v-model="form.modalidad">
                   <option disabled value="">Seleccione un elemento</option>
                   <option value="Presencial">Presencial</option>
@@ -130,7 +132,7 @@
               </div>
 
               <div class="col-md-8">
-                <jet-label for="Requisitos" value="Requisitos:" />
+                <jet-label for="Requisitos" value="*Requisitos:" />
                 <jet-input
                   v-model="form.requisitos"
                   :class="{ 'is-invalid': form.errors.requisitos }"
@@ -143,12 +145,12 @@
               <div class="px-6 py-4">
                 <Link
                   :href="route(`${routeName}index`)"
-                  class="btn btn-outline-secondary btn-sm me-2">
+                  class="btncancelar btn btn-outline-secondary me-4">
                   <i class="bi bi-chevron-left"></i> Cancelar
                 </Link>
                 <jet-button
                   @click="guardar"
-                  class="btn btn-outline-secondary btn-sm"
+                  class="btnguardar btn btn-outline-secondary "
                   :class="{ 'text-white-50': form.processing }"
                   :disabled="form.processing">
                   <i class="bi bi-save"></i> Guardar
@@ -195,6 +197,7 @@ export default {
     JetInput,
     JetInputError,
     JetButton,
+    JetDropdownLink,
   },
   setup(props) {
     const form = useForm({ 
@@ -235,6 +238,16 @@ export default {
 
   /* FORMULARIO */
 
+  .btncancelar{
+    background-color: #920707;
+    color: #ffffff;
+  }
+
+  .btnguardar{
+    background-color: #092252;
+    color: #ffffff;
+  }
+
   form label{
     margin: 18px;
     width: 45%;
@@ -255,7 +268,7 @@ export default {
   form select{
       border-color: rgba(39, 38, 38, 0.363);
       background-color:#f6f7f800  ;
-      width: 50%;
+      width: 55%;
       padding: 15px;
       border-radius: 6px;
       margin-left: 5%;
