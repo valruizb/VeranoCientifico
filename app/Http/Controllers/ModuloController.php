@@ -85,7 +85,7 @@ class ModuloController extends Controller
      */
     public function show(modulo $modulo)
     {
-        abort(405);
+            
     }
 
     /**

@@ -56,7 +56,7 @@
                   <jet-dropdown-link as="button">
                     Salir del Sistema
                   </jet-dropdown-link>
-                </form>
+                </form> 
       </ul>
         </div>
       </ul>
@@ -180,6 +180,7 @@ import JetInputError from "@/Jetstream/InputError.vue";
 import JetButton from "@/Jetstream/Button.vue";
 import { useForm } from "@inertiajs/inertia-vue3";
 import { ref } from "vue";
+import JetDropdownLink from '@/Jetstream/DropdownLink.vue'
 
 
 export default {
@@ -483,8 +484,6 @@ export default {
   .pie{
     text-align: center;
   }
-
-
 </style>
 
 

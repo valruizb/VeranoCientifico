@@ -29,9 +29,9 @@ class ProyectosController extends Controller
         $this->source = 'Proyectos/';
         $this->model = new Proyectos();
         $this->routeName = 'proyectos.';
-/* 
 
-        $this->middleware("permission:{$this->module}.index")->only(['index', 'show']);
+
+       /* $this->middleware("permission:{$this->module}.index")->only(['index', 'show']);
         $this->middleware("permission:{$this->module}.store")->only(['store', 'create']);
         $this->middleware("permission:{$this->module}.update")->only(['update', 'edit']);
         $this->middleware("permission:{$this->module}.delete")->only(['destroy', 'edit']); */
@@ -91,7 +91,7 @@ class ProyectosController extends Controller
      */
     public function show(Proyectos $proyectos)
     {
-        //
+        abort(405);
     }
 
     /**
@@ -103,7 +103,7 @@ class ProyectosController extends Controller
     public function edit(Proyectos $proyectos)
     {
         return Inertia::render("{$this->source}Edit", [
-            'titulo'          => 'Editar Módulos',
+            'titulo'          => 'Editar proyecto',
             'routeName'      => $this->routeName,
             'proyectos' => $proyectos
         ]);
@@ -118,7 +118,8 @@ class ProyectosController extends Controller
      */
     public function update(UpdateProyectosRequest $request, Proyectos $proyectos)
     {
-        //
+        $proyectos->update($request->validated());
+        return redirect()->route('proyectos.index')->with('success', 'Módulo actualizado correctamente!');
     }
 
     /**
@@ -129,6 +130,8 @@ class ProyectosController extends Controller
      */
     public function destroy(Proyectos $proyectos)
     {
-        //
+        //dd($proyectos);
+        $proyectos->delete();
+        return redirect()->route('proyectos.index')->with('success', 'Proyecto eliminado con éxito');
     }
 }
