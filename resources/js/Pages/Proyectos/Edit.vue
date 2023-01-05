@@ -81,7 +81,7 @@
                     <jet-input-error :message="form.errors.titulo" />
                   </div>
     
-                  <div class="col-md-8">
+                  <div class="">
                     <jet-label for="Numero" value="*Número de alumnos:" /><jet-label for="modalidad" value="*Modalidad:" />
                     <jet-input
                       type="number"
@@ -100,23 +100,25 @@
                     </select>
                   </div>
     
-                  <div class="col-md-8">
-                    <label for="tematica" >*Temática</label><label for="subtematica">*SubTemática</label><br>
+                  <div class="profesor">
+                    <label for="tematica" >*Temática</label><label for="subtematica">*SubTemática</label>
                     <select id="tematica" :class="{'is-invalid':form.errors.tematica}" v-model="form.tematica">
                       <option disabled value="">Seleccione un elemento</option>
                       <option v-for="tema in tem"  v-bind:value="tema.id" v-bind:key="tema.id">{{ tema.name }}</option>
                     </select>
 
                     
-                    <select id="sutematica" :class="{'is-invalid':form.errors.subtematica}" v-model="form.subtematica">
+                    <select id="subtematica" :class="{'is-invalid':form.errors.subtematica}" v-model="form.subtematica">
                       <option disabled value="">Seleccione un elemento</option>
                       <option v-for="sub in subtem" v-bind:value="sub.id" v-bind:key="sub.id">{{ sub.name }}</option>
                     </select>
                   </div>
     
                   <div class="col-md-8">
-                    <jet-label for="Objetivo General" value="*Objetivo general:" />
+                    <jet-label for="objetivo" value="*Objetivo general:" />
                     <jet-input
+                      id="objetivo"
+                      type="text" 
                       v-model="form.objectgeneral"
                       :class="{ 'is-invalid': form.errors.objectgeneral }"
                       required
@@ -126,8 +128,10 @@
                   </div>
     
                   <div class="col-md-8">
-                    <jet-label for="Requisitos" value="*Requisitos:" />
+                    <jet-label for="requisitos" value="*Requisitos:" />
                     <jet-input
+                      id="requisitos"
+                      type="text" 
                       v-model="form.requisitos"
                       :class="{ 'is-invalid': form.errors.requisitos }"
                       required
@@ -140,14 +144,14 @@
                     <Link
                       :href="route(`${routeName}index`)"
                       class="btncancelar btn btn-outline-secondary me-4">
-                      <i class="bi bi-chevron-left"></i> Cancelar
+                      <i class="bi bi-chevron-left"></i> CANCELAR
                     </Link>
                     <jet-button
                       @click="guardar"
                       class="btnguardar btn btn-outline-secondary "
                       :class="{ 'text-white-50': form.processing }"
                       :disabled="form.processing">
-                      <i class="bi bi-save"></i> Guardar
+                      <i class="bi bi-save"></i>  Guardar
                     </jet-button>
                   </div>
                 </form>
@@ -221,23 +225,25 @@
         background-color: #092252;
         color: #ffffff;
       }
-    
-      form input[type="text"],[type="number"], select{
+
+      form input[type="number"], select{
       display: inline;
-      border-color: rgba(39, 38, 38, 0.363);
-      background-color:#f6f7f800  ;
-      width: 30%;
+      border-color: rgba(3, 3, 3, 0.466);
+      background-color:#2b4f7400  ;
+      color: #000000;
+      width: 45%;
       padding: 11px;
-      margin: 17px;
+      margin: 15px;
       margin-top: -28px;
       border-radius: 6px;
     }
 
-    form input[id="nombre"]{
+    form input[id="objetivo"], [id="requisitos"], [id="nombre"] {
       display: inline;
-      border-color: rgba(39, 38, 38, 0.363);
-      background-color:#f6f7f800  ;
-      width: 90%;
+      border-color: rgba(3, 3, 3, 0.466);
+      background-color:#2b4f7400  ;
+      color: #000000;
+      width: 55rem;
       padding: 11px;
       margin: 17px;
       margin-top: -28px;
@@ -245,77 +251,53 @@
     }
 
     form select[id="tematica"], [id="subtematica"]{
-      border-color: rgba(39, 38, 38, 0.363);
+        display: inline;
+      border-color: rgba(3, 3, 3, 0.466);
+      background-color:#2b4f7400  ;
+      color: #000000;
       width: 45%;
-      padding: 0px 120px 0px 0px;
-      padding: 15px;
-      margin: 18px;
+      padding: 11px;
+      margin: 15px;
       margin-top: -28px;
       border-radius: 6px;
     }
 
-    form label[for="subareaconoc"],[for="areaconoc"], [for="subarea"]{
+    form label[for="modalidad"],[for="Numero"], [for="objetivo"], [for="requisitos"], [for="nombre"], [for="tematica"], [for="subtematica"]{
+      padding: 0px;
       margin: 18px;
-      width: 45%;
+      width: 30%;
+      margin-left: 20px;
+      margin-right: 150px;
       font-weight:bold;
-      color: black;
+      color: #092252;
       font-size: 16px;
     }
 
-    .profesor{
-      margin-top: -10%;
-      padding: 0px 10px 10px 365px;
-      margin-left: 5px;
-    }
-
-    .revisorins{
-      margin-top: -10%;
-      padding: 0px 10px 10px 365px;
-      margin-left: 5px;
-    }
-
-    form label[for="modalidad"],[for="Numero"], [for="tematica"], [for="subtematica"], [for="nombre"], [for="constancia"], [for="password_confirmation"], [for="password"], [for="curp"], [for="correo"],[for="correocon"],[for="telefono"],[for="rfc"], [for="institucionproced"], [for="extension"], [for="nivelsni"], [for="gradomax"], [for="lineainv"]{
-      padding: 0px 257px 0px 0px;
-      padding: 0;
-      margin: 19px;
+    form label[for="tematica"], [for="subtematica"]{
+      padding: 0px;
+      margin: 18px;
       width: 30%;
-      margin-left: 15px;
+      margin-left: 20px;
+      margin-right: 155px;
       font-weight:bold;
-      color: black;
+      color: #092252;
       font-size: 16px;
     }
 
       .forma1{
-      width: 75%;
+      width: 65%;
       border-radius: 20px;
       box-sizing: border-box;
       background-color: #ffffff;
       margin-top: 10%;
-      margin-left: 13%;
-      box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px rgba(216, 213, 213, 0.137);
+      margin-left: 17%;
+      box-shadow: 10px 14px 14px 20px #cbced1, -14px -14px 20px rgba(216, 213, 213, 0.137);
       }
     
       .contenido{
         background-color: #ffffff;
       }
     
-      .forma{
-        padding: 0px;
-      }
-    
-      /*FOOTER */
-      .info{
-        margin-left: -17px;
-        padding: 10px 0px 5px 0px;
-      }
-    
-      a{
-        text-decoration: none;
-      }
-    
-      a[id="linktec"]{
-        text-decoration:underline;
-      }
     
       [id="cuenta"]:hover{
         background-color: #c90c0cec;
@@ -474,20 +456,9 @@
         transform: rotate(-135deg);
       }
     
-      .alumno, .revisor, .profesor2{
-        text-align: center;
-      }
-    
       p{
         margin-bottom: 0 ;
         font-size: 18px;
       }
-    
-      .h2pro{
-        margin-bottom: 0;
-      }
-    
-      .pie{
-        text-align: center;
-      }
+
     </style>

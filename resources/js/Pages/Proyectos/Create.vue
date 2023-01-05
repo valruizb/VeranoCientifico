@@ -66,101 +66,100 @@
 
 
     <div class="contenido">
-        <div class="forma1">
-          <h2 class="h4 font-weight-bold">
-            <i class="bi bi-bricks"></i> {{ titulo }}
-          </h2>
-          <div class="card-body border-right border-bottom p-3 h-100">
-            <form class="row g-3 needs-validation" @submit.prevent="guardar">
-              <div class="col-md-8">
-                <jet-label id="titulo" for="Nombre del Proyecto" value="*Nombre del Proyecto:" /><br>
-                <jet-input 
-                  type="text" 
-                  v-model="form.titulo" 
-                  :class="{ 'is-invalid': form.errors.titulo }" 
-                  required 
-                  placeholder="Nombre del proyecto"   />
-                <jet-input-error :message="form.errors.titulo" />
-              </div>
+            <div class="forma1">
+              <h2 class="h4 font-weight-bold text-center">
+                <br><i class="bi bi-bricks"></i> {{ titulo }}
+              </h2>
+              <div class="card-body border-right border-bottom p-3 h-100">
+                <form class="row g-3 needs-validation" @submit.prevent="guardar">
+                  <div class="col-md-8">
+                    <jet-label id="titulo" for="nombre" value="*Nombre del Proyecto:" /><br>
+                    <jet-input id="nombre"
+                      type="text" 
+                      v-model="form.titulo" 
+                      :class="{ 'is-invalid': form.errors.titulo }" 
+                      required 
+                      placeholder="Nombre del proyecto"   />
+                    <jet-input-error :message="form.errors.titulo" />
+                  </div>
+    
+                  <div class="">
+                    <jet-label for="Numero" value="*Número de alumnos:" /><jet-label for="modalidad" value="*Modalidad:" />
+                    <jet-input
+                      type="number"
+                      v-model="form.numalumn"
+                      :class="{ 'is-invalid': form.errors.numalumn }"
+                      required
+                      placeholder="Número de alumnos" />
+                    <jet-input-error :message="form.errors.numalumn" />
 
-              <div class="col-md-8">
-                <jet-label for="Numero de alumnos" value="*Número de alumnos:" />
-                <jet-input
-                  type="number"
-                  v-model="form.numalumn"
-                  :class="{ 'is-invalid': form.errors.numalumn }"
-                  required
-                  placeholder="Número de alumnos" />
-                <jet-input-error :message="form.errors.numalumn" />
-              </div>
+                    
+                    <select id="modalidad" :class="{'is-invalid':form.errors.modalidad}" v-model="form.modalidad">
+                      <option disabled value="">Seleccione un elemento</option>
+                      <option value="Presencial">Presencial</option>
+                      <option value="Virtual">Virtual</option>
+                      <option value="Mixta">Mixta</option>
+                    </select>
+                  </div>
+    
+                  <div class="profesor">
+                    <label for="tematica" >*Temática</label><label for="subtematica">*SubTemática</label>
+                    <select id="tematica" :class="{'is-invalid':form.errors.tematica}" v-model="form.tematica">
+                      <option disabled value="">Seleccione un elemento</option>
+                      <option v-for="tema in tem"  v-bind:value="tema.id" v-bind:key="tema.id">{{ tema.name }}</option>
+                    </select>
 
-              <div class="col-md-8">
-                <label for="tematica" >*Temática</label><br>
-                <select id="tematica" :class="{'is-invalid':form.errors.tematica}" v-model="form.tematica">
-                  <option disabled value="">Seleccione un elemento</option>
-                  <option v-for="tema in tem"  v-bind:value="tema.id" v-bind:key="tema.id">{{ tema.name }}</option>
-                </select>
-              </div>
-
-              <div class="col-md-8">
-                <label for="Sub Tematica">*SubTemática</label><br>
-                <select id="sutematica" :class="{'is-invalid':form.errors.subtematica}" v-model="form.subtematica">
-                  <option disabled value="">Seleccione un elemento</option>
-                  <option v-for="sub in subtem" v-bind:value="sub.id" v-bind:key="sub.id">{{ sub.name }}</option>
-                </select>
-              </div>
-
-              <div class="col-md-8">
-                <jet-label for="Objetivo General" value="*Objetivo general:" />
-                <jet-input
-                  v-model="form.objectgeneral"
-                  :class="{ 'is-invalid': form.errors.objectgeneral }"
-                  required
-                  placeholder="Objetivo General"
-                />
-                <jet-input-error :message="form.errors.objectgeneral" />
-              </div>
-
-              <div class="col-md-8">
-                <jet-label for="Modalidad" value="*Modalidad:" /><br>
-                <select id="modalidad" :class="{'is-invalid':form.errors.modalidad}" v-model="form.modalidad">
-                  <option disabled value="">Seleccione un elemento</option>
-                  <option value="Presencial">Presencial</option>
-                  <option value="Virtual">Virtual</option>
-                  <option value="Mixta">Mixta</option>
-                </select>
-              </div>
-
-              <div class="col-md-8">
-                <jet-label for="Requisitos" value="*Requisitos:" />
-                <jet-input
-                  v-model="form.requisitos"
-                  :class="{ 'is-invalid': form.errors.requisitos }"
-                  required
-                  placeholder="Requisitos"
-                />
-                <jet-input-error :message="form.errors.requisitos" />
-              </div>
-
-              <div class="px-6 py-4">
-                <Link
-                  :href="route(`${routeName}index`)"
-                  class="btncancelar btn btn-outline-secondary me-4">
-                  <i class="bi bi-chevron-left"></i> Cancelar
-                </Link>
-                <jet-button
-                  @click="guardar"
-                  class="btnguardar btn btn-outline-secondary "
-                  :class="{ 'text-white-50': form.processing }"
-                  :disabled="form.processing">
-                  <i class="bi bi-save"></i> Guardar
-                </jet-button>
-              </div>
-
-            </form>
-          </div>
+                    
+                    <select id="subtematica" :class="{'is-invalid':form.errors.subtematica}" v-model="form.subtematica">
+                      <option disabled value="">Seleccione un elemento</option>
+                      <option v-for="sub in subtem" v-bind:value="sub.id" v-bind:key="sub.id">{{ sub.name }}</option>
+                    </select>
+                  </div>
+    
+                  <div class="col-md-8">
+                    <jet-label for="objetivo" value="*Objetivo general:" />
+                    <jet-input
+                      id="objetivo"
+                      type="text" 
+                      v-model="form.objectgeneral"
+                      :class="{ 'is-invalid': form.errors.objectgeneral }"
+                      required
+                      placeholder="Objetivo General"
+                    />
+                    <jet-input-error :message="form.errors.objectgeneral" />
+                  </div>
+    
+                  <div class="col-md-8">
+                    <jet-label for="requisitos" value="*Requisitos:" />
+                    <jet-input
+                      id="requisitos"
+                      type="text" 
+                      v-model="form.requisitos"
+                      :class="{ 'is-invalid': form.errors.requisitos }"
+                      required
+                      placeholder="Requisitos"
+                    />
+                    <jet-input-error :message="form.errors.requisitos" />
+                  </div>
+    
+                  <div class="px-6 py-4">
+                    <Link
+                      :href="route(`${routeName}index`)"
+                      class="btncancelar btn btn-outline-secondary me-4">
+                      <i class="bi bi-chevron-left"></i> Cancelar
+                    </Link>
+                    <jet-button
+                      @click="guardar"
+                      class="btnguardar btn btn-outline-secondary "
+                      :class="{ 'text-white-50': form.processing }"
+                      :disabled="form.processing">
+                      <i class="bi bi-save"></i> Guardar
+                    </jet-button>
+                  </div>
+                </form>
+            </div>
+          </div>             
         </div>
-      </div>
 </template>
 
 <script>
@@ -229,261 +228,261 @@ export default {
 </script>
 
 <style scoped>
+    
+      :root{
+        --main-color: rgb(23, 33, 123);
+        --second-color:rgba(29, 43, 172, 0.795);
+        --black: #000000;
+        --white: #ffffff;
+      }
+    
+      /* FORMULARIO */
+    
+      .btncancelar{
+        background-color: #920707;
+        color: #ffffff;
+      }
+    
+      .btnguardar{
+        background-color: #092252;
+        color: #ffffff;
+      }
 
-  :root{
-    --main-color: rgb(23, 33, 123);
-    --second-color:rgba(29, 43, 172, 0.795);
-    --black: #000000;
-    --white: #ffffff;
-  }
-
-  /* FORMULARIO */
-
-  .btncancelar{
-    background-color: #920707;
-    color: #ffffff;
-  }
-
-  .btnguardar{
-    background-color: #092252;
-    color: #ffffff;
-  }
-
-  form label{
-    margin: 18px;
-    width: 45%;
-    font-weight:bold;
-    color: rgb(28, 4, 117);
-    font-size: 18px;
-  }
-
-  form input{
-      border-color: rgba(39, 38, 38, 0.363);
-      background-color:#f6f7f800  ;
-      width: 90%;
-      padding: 15px;
+      form input[type="number"], select{
+      display: inline;
+      border-color: rgba(3, 3, 3, 0.466);
+      background-color:#2b4f7400  ;
+      color: #000000;
+      width: 45%;
+      padding: 11px;
+      margin: 15px;
+      margin-top: -28px;
       border-radius: 6px;
-      margin-left: 5%;
     }
 
-  form select{
-      border-color: rgba(39, 38, 38, 0.363);
-      background-color:#f6f7f800  ;
-      width: 55%;
-      padding: 15px;
+    form input[id="objetivo"], [id="requisitos"], [id="nombre"] {
+      display: inline;
+      border-color: rgba(3, 3, 3, 0.466);
+      background-color:#2b4f7400  ;
+      color: #000000;
+      width: 55rem;
+      padding: 11px;
+      margin: 17px;
+      margin-top: -28px;
       border-radius: 6px;
-      margin-left: 5%;
     }
 
-  form message{
-    color: #000000;
-  }
+    form select[id="tematica"], [id="subtematica"]{
+        display: inline;
+      border-color: rgba(3, 3, 3, 0.466);
+      background-color:#2b4f7400  ;
+      color: #000000;
+      width: 45%;
+      padding: 11px;
+      margin: 15px;
+      margin-top: -28px;
+      border-radius: 6px;
+    }
 
-  .forma1{
-  width: 75%;
-  border-radius: 20px;
-  box-sizing: border-box;
-  background-color: #ffffff;
-  margin-top: 10%;
-  margin-left: 13%;
-  box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px rgba(216, 213, 213, 0.137);
-  }
+    form label[for="modalidad"],[for="Numero"], [for="objetivo"], [for="requisitos"], [for="nombre"], [for="tematica"], [for="subtematica"]{
+      padding: 0px;
+      margin: 18px;
+      width: 30%;
+      margin-left: 20px;
+      margin-right: 150px;
+      font-weight:bold;
+      color: #092252;
+      font-size: 16px;
+    }
 
-  .contenido{
-    background-color: #ffffff;
-  }
+    form label[for="tematica"], [for="subtematica"]{
+      padding: 0px;
+      margin: 18px;
+      width: 30%;
+      margin-left: 20px;
+      margin-right: 155px;
+      font-weight:bold;
+      color: #092252;
+      font-size: 16px;
+    }
 
-  .forma{
-    padding: 0px;
-  }
+      .forma1{
+      width: 65%;
+      border-radius: 20px;
+      box-sizing: border-box;
+      background-color: #ffffff;
+      margin-top: 10%;
+      margin-left: 17%;
+      box-shadow: 19px 14px 14px 20px #cbced1, -14px -14px 20px rgba(216, 213, 213, 0.137);
+      }
+    
+      .contenido{
+        background-color: #ffffff;
+      }
+    
+    
+      [id="cuenta"]:hover{
+        background-color: #c90c0cec;
+        color: rgb(255, 255, 255);
+        font-style: bold;
+      }
+    
+      [id="btn"]:hover, [id="guardar"]:hover{
+        background-color: rgba(6, 42, 107, 0.986);
+        color: rgb(255, 255, 255);
+        font-style: bold;
+      }
+    
+      [id="btn"]{
+        background-color: #092252;
+        color: rgb(255, 255, 255);
+        width: 16%;
+        border-radius: 10px;
+        padding: 12px;
+        margin-left: 40px;
+        margin-right: -8%;
+      }
+    
+      [id="guardar"]{
+        background-color: #092252;
+        color: rgb(255, 255, 255);
+        width: 16%;
+        padding: 12px;
+        margin-left:10%;
+        border-radius: 10px;
+        margin-right: -8%;
+        outline: none;
+        border: #092252;
+      }
+    
+      i[id="boxi2"]{
+        font-size: 21px;
+        padding: 5px;
+      }
+    
+      i[id="boxi3"]{
+        font-size: 17px;
+        padding: 1px;
+      }
+    
+      [id="guardar"]:hover{
+        background-color: rgba(6, 42, 107, 0.986);
+        color: rgb(255, 255, 255);
+        font-style: bold;
+      }
+    
+      /*Barra de navegacion */
+      .header{
+        position: fixed;
+      }
+    
+      i[id="boxi"]{
+        font-size: 19px;
+        padding: 5px;
+      }
+    
+     
+      .navbar{
+        width: 100%;
+      }
+    
+      a[id="text"]{
+        font-size: bold;
+        padding-top: 10px;
+        display: block;
+      }
+    
+      nav[id="navegador"]{
+      font-size: 18px;
+      color: #092252; 
+      margin-left: 2%;
+      }
+    
+      li{
+        padding: 18px;
+      }
+    
+      a[id="logo"]{
+        margin-left: -8%;
+        height: 80px;
+      }
+    
+      a[id="lista"]:hover{
+        background-color:rgba(195, 197, 214, 0.795);
+        border-radius: 15px;
+      }
+    
+    
+      a[id="opt"]:hover{
+        background-color:rgba(230, 231, 240, 0.932);
+        color: #092252; 
+        border-radius: 12px;
+      }
+    
+      a[id="opt"]{
+        cursor: pointer;
+        background-color:rgb(255, 255, 255);
+        color: #092252; 
+        padding-top: 5px;
+        border-radius: 10px;
+      }
+    
+      li[id="cont"]::after, li[id="cont"]::before{
+        content: '';
+        position: absolute;
+        background-color: rgb(22, 9, 82);
+        width: 3px;
+        height: 11px;
+        top: 35px;
+        border-radius: 5px;
+        transition: all 0.3s;
+      }
+    
+      div[id="auth"]{
+        left: 330px;
+      }
+    
+      p[id="auth_user"]{
+        position: absolute;
+        left: 50px;
+        width: 220px;
+        font-size: 15px;
+        color: #092352a8;
+      }
+    
+      li[id="cont"]{
+        min-height: 45px;
+        position: relative;
+        width: 150px;
+        margin-left: -10px;
+        text-align: center;
+        cursor: pointer;
+        color: #092252; 
+      }
+    
+      li[id="cont"]::after{
+        transform: rotate(45deg);
+        left:171%;
+      }
+    
+      li[id="cont"]::before{
+        transform: rotate(-45deg);
+        left:175%;
+      }
+    
+      li[id="cont"]:hover::after{
+        transform: rotate(135deg);
+      }
+    
+      li[id="cont"]:hover::before{
+        transform: rotate(-135deg);
+      }
+    
+      p{
+        margin-bottom: 0 ;
+        font-size: 18px;
+      }
 
-  /*FOOTER */
-  .info{
-    margin-left: -17px;
-    padding: 10px 0px 5px 0px;
-  }
-
-  a{
-    text-decoration: none;
-  }
-
-  a[id="linktec"]{
-    text-decoration:underline;
-  }
-
-  [id="cuenta"]:hover{
-    background-color: #c90c0cec;
-    color: rgb(255, 255, 255);
-    font-style: bold;
-  }
-
-  [id="btn"]:hover, [id="guardar"]:hover{
-    background-color: rgba(6, 42, 107, 0.986);
-    color: rgb(255, 255, 255);
-    font-style: bold;
-  }
-
-  [id="btn"]{
-    background-color: #092252;
-    color: rgb(255, 255, 255);
-    width: 16%;
-    border-radius: 10px;
-    padding: 12px;
-    margin-left: 40px;
-    margin-right: -8%;
-  }
-
-  [id="guardar"]{
-    background-color: #092252;
-    color: rgb(255, 255, 255);
-    width: 16%;
-    padding: 12px;
-    margin-left:10%;
-    border-radius: 10px;
-    margin-right: -8%;
-    outline: none;
-    border: #092252;
-  }
-
-  i[id="boxi2"]{
-    font-size: 21px;
-    padding: 5px;
-  }
-
-  i[id="boxi3"]{
-    font-size: 17px;
-    padding: 1px;
-  }
-
-  [id="guardar"]:hover{
-    background-color: rgba(6, 42, 107, 0.986);
-    color: rgb(255, 255, 255);
-    font-style: bold;
-  }
-
-  /*Barra de navegacion */
-  .header{
-    position: fixed;
-  }
-
-  i[id="boxi"]{
-    font-size: 19px;
-    padding: 5px;
-  }
-
- 
-  .navbar{
-    width: 100%;
-  }
-
-  a[id="text"]{
-    font-size: bold;
-    padding-top: 10px;
-    display: block;
-  }
-
-  nav[id="navegador"]{
-  font-size: 18px;
-  color: #092252; 
-  margin-left: 2%;
-  }
-
-  li{
-    padding: 18px;
-  }
-
-  a[id="logo"]{
-    margin-left: -8%;
-    height: 80px;
-  }
-
-  a[id="lista"]:hover{
-    background-color:rgba(195, 197, 214, 0.795);
-    border-radius: 15px;
-  }
-
-
-  a[id="opt"]:hover{
-    background-color:rgba(230, 231, 240, 0.932);
-    color: #092252; 
-    border-radius: 12px;
-  }
-
-  a[id="opt"]{
-    cursor: pointer;
-    background-color:rgb(255, 255, 255);
-    color: #092252; 
-    padding-top: 5px;
-    border-radius: 10px;
-  }
-
-  li[id="cont"]::after, li[id="cont"]::before{
-    content: '';
-    position: absolute;
-    background-color: rgb(22, 9, 82);
-    width: 3px;
-    height: 11px;
-    top: 35px;
-    border-radius: 5px;
-    transition: all 0.3s;
-  }
-
-  div[id="auth"]{
-    left: 330px;
-  }
-
-  p[id="auth_user"]{
-    position: absolute;
-    left: 50px;
-    width: 220px;
-    font-size: 15px;
-    color: #092352a8;
-  }
-
-  li[id="cont"]{
-    min-height: 45px;
-    position: relative;
-    width: 150px;
-    margin-left: -10px;
-    text-align: center;
-    cursor: pointer;
-    color: #092252; 
-  }
-
-  li[id="cont"]::after{
-    transform: rotate(45deg);
-    left:171%;
-  }
-
-  li[id="cont"]::before{
-    transform: rotate(-45deg);
-    left:175%;
-  }
-
-  li[id="cont"]:hover::after{
-    transform: rotate(135deg);
-  }
-
-  li[id="cont"]:hover::before{
-    transform: rotate(-135deg);
-  }
-
-  .alumno, .revisor, .profesor2{
-    text-align: center;
-  }
-
-  p{
-    margin-bottom: 0 ;
-    font-size: 18px;
-  }
-
-  .h2pro{
-    margin-bottom: 0;
-  }
-
-  .pie{
-    text-align: center;
-  }
-</style>
+    </style>
 
 
