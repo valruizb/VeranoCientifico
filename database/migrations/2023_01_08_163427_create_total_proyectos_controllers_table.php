@@ -13,9 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('instituciones', function (Blueprint $table) {
+        Schema::create('total_proyectos_controllers', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
             $table->timestamps();
         });
     }
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('instituciones');
+        Schema::dropIfExists('total_proyectos_controllers');
     }
 };

@@ -13,13 +13,16 @@ class Proyectos extends Model
     use HasRoles; 
 
     protected $fillable = [
-        'titulo',
-        'numalumn',
-        'tematica',
-        'subtematica',
-        'objectgeneral',
-        'modalidad',
-        'requisitos',
+        'title',
+        'studentnum',
+        'thematic_id',
+        'subthematic_id',
+        'generalobject',
+        'modality',
+        'requirements',
+        'keywords',
+        'institution_id',
+        'user_id',
     ];
 
 }

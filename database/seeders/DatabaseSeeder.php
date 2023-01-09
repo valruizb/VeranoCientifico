@@ -15,6 +15,9 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
+            TematicaSeeder::class,
+            SubTematicaSeeder::class, 
+            InstitucionesSeeder::class,
             UsuarioSeeder::class,
             ModuloSeeder::class,
             PermisosSeeder::class,
@@ -23,9 +26,7 @@ class DatabaseSeeder extends Seeder
             EventoSeeder::class,
             CalendarioConvocatoriaSeeder::class,
             DocumentoSeeder::class,
-            TematicaSeeder::class,
-            SubTematicaSeeder::class, 
-            InstitucionesSeeder::CLass,
+            
         ]);
     }
 }

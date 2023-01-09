@@ -11,8 +11,9 @@ use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
-use Spatie\Permission\Traits\HasRoles; //SE COPIA DE SPATIE PARA RELACIONAR USUARIOS CON
-//PERMISOS Y ROLES
+use Spatie\Permission\Traits\HasRoles; 
+use Illuminate\Auth\Notifications\VerifyEmail;
+
 
 class User extends Authenticatable
 {
@@ -30,8 +31,8 @@ class User extends Authenticatable
      * @var string[]
      */
     protected $fillable = [
-        'tipouser','nombre','apellidop','apellidom','curp','correo','correocon','telefono','institucionproced',
-        'formatosolicitud','areaconoc','subareaconoc','nivelsni','gradomax','lineainv','puesto','constancia',
+        'tipouser','nombre','apellidop','apellidom','curp','correo','correocon','telefono','institution_id',
+        'formatosolicitud','thematic_id','subthematic_id','nivelsni','gradomax','lineainv','puesto','constancia',
         'password', 'password_confirmation', 
     ];
 
@@ -107,4 +108,6 @@ class User extends Authenticatable
             return [$permission['name'] => true];
         });
     }
+
+    
 }

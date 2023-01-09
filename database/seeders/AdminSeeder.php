@@ -26,6 +26,7 @@ class AdminSeeder extends Seeder
         $perfil->givePermissionTo(Permission::where('module_key', 'cat')->get());
         $profe->givePermissionTo(Permission::where('name', 'modulo.profesores')->get());
         $profe->givePermissionTo(Permission::where('name', 'proyectos.index')->get());
+        $profe->givePermissionTo(Permission::where('name', 'proyectos.edit')->get());
         //$profe->givePermissionTo(Permission::where('module_key', 'cat')->get());
 
         /*$cap->givePermissionTo(Permission::where('name', 'modulo.catalogos')->get());

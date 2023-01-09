@@ -9,6 +9,7 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Models\tematica;
 use App\Models\subtematica;
+use Illuminate\Support\Facades\Auth;
 
 class ProyectosController extends Controller
 {
@@ -38,21 +39,26 @@ class ProyectosController extends Controller
     }
     public function index(Request $request)
     {
-        $request->status = $request->status === null ? true : $request->status;
+        $usid = Auth::id();
+       // $request->status = $request->status === null ? true : $request->status;
         $records = $request->status == '0' ? $this->model->onlyTrashed() : $this->model;
+        $records= 
         $records = $records->when($request->search, function ($query, $search) {
             if ($search != '') {
-                $query->where('titulo', 'LIKE', '%' . $search . '%')
-                    ->orWhere('objectgeneral', 'LIKE', '%' . $search . '%');
+                $query->where('title', 'LIKE', '%' . $search . '%')
+                    ->orWhere('generalobject', 'LIKE', '%' . $search . '%');
             }
+            
         });
         return Inertia::render("Proyectos/Index", [
-            'titulo'          => 'Proyectos',
+            'title '          => 'Proyectos',
             'routeName'      => $this->routeName,
-            'proyectos'=>  $records->paginate(3),
+            'proyectos'=>  $records->where('user_id', $usid)->paginate(3),
             'loadingResults' => false,
             'search'         => $request->search ?? '',
             'status'         => (bool) $request->status,
+            
+             
         ]);
     }
 
@@ -64,10 +70,12 @@ class ProyectosController extends Controller
     public function create()
     {
         return Inertia::render("{$this->source}Create", [
-            'titulo'          => 'Agregar Módulos',
+            'titulo'          => 'Agregar Proyecto',
             'routeName'      => $this->routeName,
             'tem'=>tematica::orderBy('name')->get(),
             'subtem'=>subtematica::orderBy('name')->get(),
+            'idlog' => Auth::id(),
+            'idinstlog' => Auth::user()->institution_id,    
         ]);
     }
 
@@ -79,8 +87,12 @@ class ProyectosController extends Controller
      */
     public function store(StoreProyectosRequest $request)
     {
+        //dd($request -> title);
+    
+       
         //dd($request);
         Proyectos::create($request->validated());
+            
     }
 
     /**

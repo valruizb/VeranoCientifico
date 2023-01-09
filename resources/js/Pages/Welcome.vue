@@ -1,4 +1,5 @@
 <template>
+  
     <head lang="en"><meta charset="UTF-8"><title>Registro</title>
     <!-- Viewport -->
       <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,6 +27,7 @@
       <link rel="stylesheet" media="screen" href="../assets/css/theme.min.css">
     
     </head>
+    
   <header class="header navbar navbar-expand-lg navbar-light bg-light shadow-sm">
     <div class="container">
       <a class="navbar-brand" id="logo">
@@ -48,7 +50,7 @@
         <hr class="d-lg-none mt-3 mb-2">
         <ul class="navbar-nav me-auto">
           <li class="nav-item">
-            <a id="lista" :href="route('proyectos.create')" class="nav-link">Proyectos</a>
+            <a id="lista" :href="route('registro.create')" class="nav-link">Proyectos</a>
           </li>
           <li class="nav-item">
             <a id="lista" :href="route('registro.create')" class="nav-link">Investigadores</a>
@@ -67,103 +69,87 @@
     </div>
   </header><br><br><br><br>
 
-
-
-<!-- Hero slider + BG parallax -->
+  
   <section class="jarallax dark-mode bg-dark py-xxl-5" data-jarallax data-speed="0.4">
+    
+        <span class="position-absolute top-0 start-0 w-100 h-100 bg-gradient-dark-translucent"></span>
+        <div class="jarallax-img" style="background-image: url(assets/img/landing/software-company/hero-bg.jpg);"></div>
+        <div class="position-relative text-center zindex-5 overflow-hidden pt-4 py-md-5">
 
-    <!-- Swiper tabs -->
-    <div class="swiper-tabs position-absolute top-0 start-0 w-100 h-100 bg-gradient-dark-translucent">
-        <div id="image1" class="position-absolute top-0 start-0 w-100 h-100 bg-position-center bg-repeat-0 bg-size-cover swiper-tab active" style="background-image: url(../../../public/img/campus.jpg);">
-            <span class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-35"></span>
-        </div>
-        <div id="image-2" class="position-absolute top-0 start-0 w-100 h-100 bg-position-center bg-repeat-0 bg-size-cover swiper-tab" style="background-image: url(../../../public/img/campus.jpg);">
-            <span class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-35"></span>
-        </div>
-        <div id="image-3" class="position-absolute top-0 start-0 w-100 h-100 bg-position-center bg-repeat-0 bg-size-cover swiper-tab" style="background-image: url(../../../public/img/campus.jpg);">
-            <span class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-35"></span>
-        </div>
-    </div>
-
-
-    <div class="position-relative text-center zindex-5 overflow-hidden pt-4 py-md-5">
-        <!-- Slider controls (Prev / next) -->
-        <button type="button" id="hero-prev" class="btn btn-prev btn-icon btn-xl bg-transparent shadow-none position-absolute top-50 start-0 translate-middle-y d-none d-md-inline-flex ms-n3 ms-lg-2">
+          <!-- Slider controls (Prev / next) -->
+          <button type="button" id="hero-prev" class="btn btn-prev btn-icon btn-xl bg-transparent shadow-none position-absolute top-50 start-0 translate-middle-y d-none d-md-inline-flex ms-n3 ms-lg-2">
             <i class="bx bx-chevron-left fs-1"></i>
-        </button>
-        <button type="button" id="hero-next" class="btn btn-next btn-icon btn-xl bg-transparent shadow-none position-absolute top-50 end-0 translate-middle-y d-none d-md-inline-flex me-n3 me-lg-2">
+          </button>
+          <button type="button" id="hero-next" class="btn btn-next btn-icon btn-xl bg-transparent shadow-none position-absolute top-50 end-0 translate-middle-y d-none d-md-inline-flex me-n3 me-lg-2">
             <i class="bx bx-chevron-right fs-1"></i>
-        </button>
+          </button>
 
-        <!-- Slider -->
-        <div class="container text-center py-xl-5">
+          <!-- Slider -->
+          <div class="container text-center py-xl-5">
             <div class="row justify-content-center pt-lg-5">
-                <div class="col-xl-8 col-lg-9 col-md-10 col-11">
-                    <div class="swiper pt-5 pb-4 py-md-5" data-swiper-options='{
-              "effect": "fade",
-              "speed": 500,
-               "tabs": true,
-              "autoplay": {
-                "delay": 5500,
-                "disableOnInteraction": false
-              },
-              "pagination": {
-                "el": ".swiper-pagination",
-                "clickable": true
-              },
-              "navigation": {
-                "prevEl": "#hero-prev",
-                "nextEl": "#hero-next"
-              }
-            }'>
-                        <div class="swiper-wrapper">
+              <div class="col-xl-8 col-lg-9 col-md-10 col-11">
+                <div class="swiper pt-5 pb-4 py-md-5" data-swiper-options='{
+                  "effect": "fade",
+                  "speed": 500,
+                  "autoplay": {
+                    "delay": 5500,
+                    "disableOnInteraction": false
+                  },
+                  "pagination": {
+                    "el": ".swiper-pagination",
+                    "clickable": true
+                  },
+                  "navigation": {
+                    "prevEl": "#hero-prev",
+                    "nextEl": "#hero-next"
+                  }
+                }'>
+                  <div class="swiper-wrapper">
 
-                            <!-- Item -->
-                            <div class="swiper-slide" data-swiper-tab="#image1">
-                                <h2 class="display-2 from-start mb-lg-4">2.° Verano Nacional de Investigación</h2>
-                                <div class="from-end">
-                                    <p class="fs-xl text-light opacity-70 pb-2 mb-lg-5">en Ciencia y Tecnología del Tecnológico Nacional de México 2023</p>
-                                </div>
-                                <div class="scale-up delay-1">
-                                    <!-- <a href="<?= base_url() ?>/Login/RegisterCongreso" class="btn btn-primary shadow-primary btn-lg">Descarga las Convocatorias</a> -->
-                                    <button class="btn btn-primary shadow-primary btn-lg" title="Descargar Convocatorias" type="button" onclick="onChange()" data-toggle="tooltip" data-placement="bottom"><i class='bx bxs-archive-in fs-lg me-2'></i>Descargar Convocatorias
-                                    </button>
-                                </div>
+                    <!-- Item -->
+                    <div class="swiper-slide">
+                      <h2 class="display-2 from-start mb-lg-4">The Best IT Solutions for Your Business</h2>
+                      <div class="from-end">
+                        <p class="fs-xl text-light opacity-70 pb-2 mb-lg-5">We provide the wide range of high quality IT services and best practices solutions to our customers making their business better.</p>
+                      </div>
+                      <div class="scale-up delay-1">
+                        <a href="#" class="btn btn-primary shadow-primary btn-lg">Start your project</a>
+                      </div>
 
-                            </div>
-
-                            <!-- Item -->
-                            <div class="swiper-slide" data-swiper-tab="#image-2">
-                                <h4 class="display-2 from-start mb-lg-4">El evento se llevará a cabo del 19 de Junio al 25 de Julio de 2023</h4>
-                                <div class="scale-up delay-1">
-                                    <!-- <a href="https://veranocientifico.cenidet.tecnm.mx/content/convocatorias/Convocatoria_congreso.pdf" class="btn btn-primary shadow-primary btn-lg" target="_blank">Descarga las Convocatorias</a> -->
-                                    <button class="btn btn-primary shadow-primary btn-lg" title="Descargar Convocatorias" type="button" onclick="onChange()" data-toggle="tooltip" data-placement="bottom"><i class='bx bxs-archive-in fs-lg me-2'></i>Descargar Convocatorias
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- Item -->
-                            <div class="swiper-slide" data-swiper-tab="#image-3">
-                                <h2 class="display-2 from-start mb-lg-4">Mesas Temáticas</h2>
-                                <div class="from-end">
-                                    <p class="fs-xl text-light opacity-70 pb-2 mb-lg-5">Área I. Física, Matemáticas y Ciencias de la Tierra. Área II. Biología y Química. Área III. Medicina y Salud. Área IV. Biotecnología y Ciencias Agropecuarias. Área V. Tecnología 4.0. Área VI. Ingeniería e Industria. Área VII. Ciencias Sociales y Administrativas. Área VIII. Cadena de valor de litio.</p>
-                                </div>
-                                <div class="scale-up delay-1">
-                                    <!-- <a href="https://veranocientifico.cenidet.tecnm.mx/content/convocatorias/Convocatoria_congreso.pdf" class="btn btn-primary shadow-primary btn-lg" target="_blank">Descarga las Convocatorias</a> -->
-                                    <button class="btn btn-primary shadow-primary btn-lg" title="Descargar Convocatorias" type="button" onclick="onChange()" data-toggle="tooltip" data-placement="bottom"><i class='bx bxs-archive-in fs-lg me-2'></i>Descargar Convocatorias
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Pagination (bullets) -->
-                        <div class="swiper-pagination position-relative d-md-none pt-2 mt-5"></div>
                     </div>
+
+                    <!-- Item -->
+                    <div class="swiper-slide">
+                      <h2 class="display-2 from-start mb-lg-4">Award-Winning Software Development</h2>
+                      <div class="from-end">
+                        <p class="fs-xl text-light opacity-70 pb-2 mb-lg-5">We build complex web, desktop and mobile applications. With us you get quality software and perfect service every time.</p>
+                      </div>
+                      <div class="scale-up delay-1">
+                        <a href="#" class="btn btn-primary shadow-primary btn-lg">View case studies</a>
+                      </div>
+                    </div>
+
+                    <!-- Item -->
+                    <div class="swiper-slide">
+                      <h2 class="display-2 from-start mb-lg-4">24/7 Tech &amp; Business Support</h2>
+                      <div class="from-end">
+                        <p class="fs-xl text-light opacity-70 pb-2 mb-lg-5">We ensure lifetime support of all applications we've built. Our support department is a team of professionals who will assist you 24/7.</p>
+                      </div>
+                      <div class="scale-up delay-1">
+                        <a href="#" class="btn btn-primary shadow-primary btn-lg">Work with us</a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Pagination (bullets) -->
+                  <div class="swiper-pagination position-relative d-md-none pt-2 mt-5"></div>
                 </div>
+              </div>
             </div>
+          </div>
         </div>
-    </div>
-  </section>
+      </section>
+
   
 
   <div class="contsistema container ">
@@ -298,9 +284,6 @@ import { defineComponent } from "vue"
 import { Head, Link } from '@inertiajs/inertia-vue3';
 import { Swiper, SwiperSlide } from "swiper/vue";
 
-
-
-
 export default defineComponent({
   components: {
     Head,
@@ -310,7 +293,6 @@ export default defineComponent({
     SwiperSlide,
   },
 
-
   props: {
     canLogin: Boolean,
     canRegister: Boolean,
@@ -319,10 +301,103 @@ export default defineComponent({
   },
   
 });
+
+let mode = window.localStorage.getItem('mode'),
+        root = document.getElementsByTagName('html')[0];
+    if (mode !== undefined && mode === 'dark') {
+      root.classList.add('dark-mode');
+    } else {
+    root.classList.remove('dark-mode');
+    }
+
+    (function () {
+      window.onload = function () {
+        const preloader = document.querySelector('.page-loading');
+        preloader.classList.remove('active');
+        setTimeout(function () {
+          preloader.remove();
+        }, 1000);
+      };
+    })(); 
 </script>
 
 <style scoped>
 
+.page-loading {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        -webkit-transition: all .4s .2s ease-in-out;
+        transition: all .4s .2s ease-in-out;
+        background-color: #fff;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 9999;
+      }
+      .dark-mode .page-loading {
+        background-color: #131022;
+      }
+      .page-loading.active {
+        opacity: 1;
+        visibility: visible;
+      }
+      .page-loading-inner {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+        -webkit-transition: opacity .2s ease-in-out;
+        transition: opacity .2s ease-in-out;
+        opacity: 0;
+      }
+      .page-loading.active > .page-loading-inner {
+        opacity: 1;
+      }
+      .page-loading-inner > span {
+        display: block;
+        font-size: 1rem;
+        font-weight: normal;
+        color: #9397ad;
+      }
+      .dark-mode .page-loading-inner > span {
+        color: #fff;
+        opacity: .6;
+      }
+      .page-spinner {
+        display: inline-block;
+        width: 2.75rem;
+        height: 2.75rem;
+        margin-bottom: .75rem;
+        vertical-align: text-bottom;
+        border: .15em solid #b4b7c9;
+        border-right-color: transparent;
+        border-radius: 50%;
+        -webkit-animation: spinner .75s linear infinite;
+        animation: spinner .75s linear infinite;
+      }
+      .dark-mode .page-spinner {
+        border-color: rgba(255,255,255,.4);
+        border-right-color: transparent;
+      }
+      @-webkit-keyframes spinner {
+        100% {
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+      @keyframes spinner {
+        100% {
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
 
   /*Barra de navegación*/
   .header{

@@ -23,10 +23,10 @@ return new class extends Migration
             $table->string('correo')->unique();
             $table->string('correocon')->unique();
             $table->string('telefono');
-            $table->string('institucionproced')->nullable();;
+            $table->unsignedBigInteger('institution_id');
             $table->string('formatosolicitud')->nullable();//revisor
-            $table->string('areaconoc')->nullable();//profesor
-            $table->string('subareaconoc')->nullable();
+            $table->unsignedBigInteger('thematic_id')->nullable();//profesor
+            $table->unsignedBigInteger('subthematic_id')->nullable();
             $table->string('nivelsni')->nullable();
             $table->string('gradomax')->nullable();
             $table->string('lineainv')->nullable();
@@ -35,6 +35,9 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
+            $table->foreign('institution_id')->references('id')->on('instituciones');
+            $table->foreign('thematic_id')->references('id')->on('tematica');
+            $table->foreign('subthematic_id')->references('id')->on('subtematica');
             //$table->foreignId('current_team_id')->nullable();
             //$table->string('profile_photo_path', 2048)->nullable();
             $table->timestamps();

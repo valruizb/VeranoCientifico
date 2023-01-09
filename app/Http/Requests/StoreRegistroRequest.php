@@ -33,15 +33,15 @@ class StoreRegistroRequest extends FormRequest
             'correo' => 'required|max:255',
             'correocon' => 'required|max:255|same:correo',
             'telefono' => 'required|max:255',
-            'institucionproced' => '',
-            'formatosolicitud' => '',
+            'institution_id' => '',
+            'formatosolicitud' => 'mimes:pdf',
             'areaconoc' => '',
             'subareaconoc' => '',
             'nivelsni' => '',
             'gradomax' => '',
             'lineainv' => '',
             'puesto' => '',
-            'constancia' => '',
+            'constancia' => 'mimes:pdf',
             'password' => 'required|max:255|min:8',
         ];
     }

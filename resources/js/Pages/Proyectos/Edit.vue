@@ -69,93 +69,95 @@
                 <br><i class="bi bi-bricks"></i> {{ titulo }}
               </h2>
               <div class="card-body border-right border-bottom p-3 h-100">
-                <form class="row g-3 needs-validation" @submit.prevent="guardar">
-                  <div class="col-md-8">
-                    <jet-label id="titulo" for="nombre" value="*Nombre del Proyecto:" /><br>
-                    <jet-input id="nombre"
-                      type="text" 
-                      v-model="form.titulo" 
-                      :class="{ 'is-invalid': form.errors.titulo }" 
-                      required 
-                      placeholder="Nombre del proyecto"   />
-                    <jet-input-error :message="form.errors.titulo" />
-                  </div>
-    
-                  <div class="">
-                    <jet-label for="Numero" value="*Número de alumnos:" /><jet-label for="modalidad" value="*Modalidad:" />
-                    <jet-input
-                      type="number"
-                      v-model="form.numalumn"
-                      :class="{ 'is-invalid': form.errors.numalumn }"
-                      required
-                      placeholder="Número de alumnos" />
-                    <jet-input-error :message="form.errors.numalumn" />
+                  <form class="row g-3 needs-validation" @submit.prevent="guardar">
+                    <div class="col-md-8">
+                      <jet-label for="nombre" value="*Nombre del Proyecto:" /><br>
+                      <jet-input id="nombre"
+                        type="text" 
+                        v-model="form.title " 
+                        :class="{ 'is-invalid': form.errors.title  }" 
+                        required 
+                        placeholder="Nombre del proyecto"   />
+                      <jet-input-error :message="form.errors.title " />
+                    </div>
+      
+                    <div class="">
+                      <jet-label for="Numero" value="*Número de alumnos:" /><jet-label for="modalidad" value="*Modalidad:" />
+                      <jet-input
+                        type="number"
+                        v-model="form.studentnum"
+                        :class="{ 'is-invalid': form.errors.studentnum }"
+                        required
+                        placeholder="Número de alumnos" />
+                      <jet-input-error :message="form.errors.studentnum" />
+  
+                      
+                      <select id="modalidad" :class="{'is-invalid':form.errors.modality}" v-model="form.modality">
+                        <option disabled value="">Seleccione un elemento</option>
+                        <option value="Presencial">Presencial</option>
+                        <option value="Virtual">Virtual</option>
+                        <option value="Mixta">Mixta</option>
+                      </select>
+                    </div>
+      
+                    <div class="profesor">
+                      <label for="tematica" >*Temática</label><label for="subtematica">*SubTemática</label>
+                      <select id="tematica" :class="{'is-invalid':form.errors.thematic_id}" v-model="form.thematic_id">
+                        <option disabled value="">Seleccione un elemento</option>
+                        <option v-for="tema in tem"  v-bind:value="tema.id" v-bind:key="tema.id">{{ tema.name }}</option>
+                      </select>
+  
+                      
+                      <select id="subtematica" :class="{'is-invalid':form.errors.subthematic_id}" v-model="form.subthematic_id">
+                        <option disabled value="">Seleccione un elemento</option>
+                        <option v-for="sub in subtem" v-bind:value="sub.id" v-bind:key="sub.id">{{ sub.name }}</option>
+                      </select>
+                    </div>
+      
+                    <div class="col-md-8">
+                      <jet-label for="objetivo" value="*Objetivo general:" />
+                      <jet-input id="objetivo" type="text" v-model="form.generalobject" :class="{ 'is-invalid': form.errors.generalobject }"  
+                      required  placeholder="Objetivo General" />
+                      <jet-input-error :message="form.errors.generalobject" />
+                    </div>
+      
+                    <div class="col-md-8">
+                      <jet-label for="requisitos" value="*Requisitos:" />
+                      <jet-input
+                        id="requisitos"
+                        type="text"  v-model="form.requirements" :class="{ 'is-invalid': form.errors.requirements }" required  placeholder="Requisitos" />
+                      <jet-input-error :message="form.errors.requirements" />
+                    </div>
 
-                    
-                    <select id="modalidad" :class="{'is-invalid':form.errors.modalidad}" v-model="form.modalidad">
-                      <option disabled value="">Seleccione un elemento</option>
-                      <option value="Presencial">Presencial</option>
-                      <option value="Virtual">Virtual</option>
-                      <option value="Mixta">Mixta</option>
-                    </select>
-                  </div>
-    
-                  <div class="profesor">
-                    <label for="tematica" >*Temática</label><label for="subtematica">*SubTemática</label>
-                    <select id="tematica" :class="{'is-invalid':form.errors.tematica}" v-model="form.tematica">
-                      <option disabled value="">Seleccione un elemento</option>
-                      <option v-for="tema in tem"  v-bind:value="tema.id" v-bind:key="tema.id">{{ tema.name }}</option>
-                    </select>
-
-                    
-                    <select id="subtematica" :class="{'is-invalid':form.errors.subtematica}" v-model="form.subtematica">
-                      <option disabled value="">Seleccione un elemento</option>
-                      <option v-for="sub in subtem" v-bind:value="sub.id" v-bind:key="sub.id">{{ sub.name }}</option>
-                    </select>
-                  </div>
-    
-                  <div class="col-md-8">
-                    <jet-label for="objetivo" value="*Objetivo general:" />
-                    <jet-input
-                      id="objetivo"
-                      type="text" 
-                      v-model="form.objectgeneral"
-                      :class="{ 'is-invalid': form.errors.objectgeneral }"
-                      required
-                      placeholder="Objetivo General"
-                    />
-                    <jet-input-error :message="form.errors.objectgeneral" />
-                  </div>
-    
-                  <div class="col-md-8">
-                    <jet-label for="requisitos" value="*Requisitos:" />
-                    <jet-input
-                      id="requisitos"
-                      type="text" 
-                      v-model="form.requisitos"
-                      :class="{ 'is-invalid': form.errors.requisitos }"
-                      required
-                      placeholder="Requisitos"
-                    />
-                    <jet-input-error :message="form.errors.requisitos" />
-                  </div>
-    
-                  <div class="px-6 py-4">
-                    <Link
-                      :href="route(`${routeName}index`)"
-                      class="btncancelar btn btn-outline-secondary me-4">
-                      <i class="bi bi-chevron-left"></i> CANCELAR
-                    </Link>
-                    <jet-button
-                      @click="guardar"
-                      class="btnguardar btn btn-outline-secondary "
-                      :class="{ 'text-white-50': form.processing }"
-                      :disabled="form.processing">
-                      <i class="bi bi-save"></i>  Guardar
-                    </jet-button>
-                  </div>
-                </form>
-            </div>
+                    <div class="col-md-8">
+                      <jet-label for="requisitos" value="*Palabras clave:" />
+                      <jet-input
+                        id="requisitos"
+                        type="text" 
+                        v-model="form.keywords"
+                        :class="{ 'is-invalid': form.errors.keywords }"
+                        required
+                        placeholder="Requisitos"
+                      />
+                      <jet-input-error :message="form.errors.keywords" />
+                    </div>
+      
+                    <div class="px-6 py-4">
+                      <Link
+                        :href="route(`${routeName}index`)"
+                        class="btncancelar btn btn-outline-secondary me-4">
+                        <i class="bi bi-chevron-left"></i> Cancelar
+                      </Link>
+                      <jet-button
+                        @click="guardar"
+                        class="btnguardar btn btn-outline-secondary "
+                        :class="{ 'text-white-50': form.processing }"
+                        :disabled="form.processing">
+                        <i class="bi bi-save"></i> Guardar
+                      </jet-button>
+                    </div>
+                  </form>
+              </div>
           </div>             
         </div>
     </template>

@@ -20,50 +20,15 @@
     <link rel="stylesheet" media="screen" href="../assets/css/theme.min.css">
   
   </head>
-  <header class="header navbar navbar-expand-lg navbar-light bg-light shadow-sm">
-  <div class="container">
-    <a class="navbar-brand" id="logo">
-      <img src="../../../../public/img/logo.png" width="47" alt="Silicon">
-      TecNM/Cenidet 
-    </a>
 
-    <nav id="navegador" class="collapse navbar-collapse">
-      <hr class="d-lg-none mt-3 mb-2">
-      <ul class="navbar-nav me-auto">
-        <li class="nav-item">
-          <a id="lista" :href="route('proyectos.index')" class="nav-link">Proyectos</a>
-        </li>
-        <li class="nav-item">
-          <a id="lista" :href="route('registro.create')" class="nav-link">Alumnos</a>
-        </li>
-        <li class="nav-item">
-          <a id="lista" :href="route('proyectos.index')" class="nav-link">Mis proyectos</a>
-        </li>
-        <li class="nav-item">
-          <a id="lista" :href="route('registro.create')" class="nav-link">Reportes</a>
-        </li>
-        <div id="auth" class="dropdown order-lg-3 ms-4">
-          <li class="dropdown" id="cont">
-      <a href="#" class="d-flex nav-link p-0" data-bs-toggle="dropdown" >
-        <img src="../../../../public/assets/img/avatar/09.jpg" class="rounded-circle" width="48" alt="Avatar">
-        
-          <p id="auth_user">{{ $page.props.user.nombre}} {{ $page.props.user.apellidop}}</p>
-        
-      </a>
-    </li>
-      <ul class="dropdown-menu" id="menu">
-        <form @submit.prevent="logout">
-                  <jet-dropdown-link as="button">
-                    Salir del Sistema
-                  </jet-dropdown-link>
-        </form> 
-      </ul>
-        </div>
-      </ul>
-    </nav>
-  </div>
-</header>
+  <Profe v-if="$page.props.user.tipouser == 2">
 
+  </Profe>
+
+  <Admin v-if="$page.props.user.tipouser == 1">
+
+  </Admin>
+  
 <div class="contenido">
       <div class="forma1">
         <div class="col-md-12 pe-0">
@@ -74,16 +39,16 @@
             <div class="mb-2 d-flex justify-content-start">
               <Link
                 :href="route(`${routeName}create`)"
-                class="btn btn-outline-secondary btn-sm"
+                class="add btn btn btn-success btn-sm"
               >
-                <i class="bi bi-plus"></i>
-                Agregar Proyecto
+              <i class="bi bi-plus-circle"></i>
+                 <p class="text-add">Agregar Proyecto</p>
               </Link>
               <div class="input-group w-50 ml-2">
                 <input
                   type="text"
                   class="
-                    form-control form-control-sm form-control
+                    busqueda form-control form-control-sm form-control
                     bg-light
                     shadow-sm
                   "
@@ -96,56 +61,47 @@
                     @click="search"
                     class="btn btn-outline-secondary btn-sm"
                   >
-                    <i class="bi bi-search"></i>
+                    <i class="buscar bi bi-search"></i>
                   </button>
                 </div>
               </div>
-              <select
-                @change="search"
-                class="
-                  custom-select-sm custom-select
-                  bg-light
-                  shadow-sm
-                  border-0
-                  w-25
-                  ml-2
-                "
-                v-model="filters.status"
-              >
+              <select @change="search"
+                class="custom-select-sm custom-select bg-light shadow-sm border-0 w-25 ml-2"
+                v-model="filters.status">
                 <option :value="true">Activos</option>
                 <option :value="false">Eliminados</option>
               </select>
             </div><br>
 
             <div class="table-responsive">
-              <table class="table table-striped">
+              <table class="table table-bordered">
                 <thead>
                   <tr>
-                    <th scope="col">Titulo</th>
-                    <th scope="col">Descripción</th>
-                    <th scope="col">Clave</th>
-                    <th scope="col">Editar</th>
-                    <th scope="col">Eliminar</th>
+                    <th class="col">Titulo</th>
+                    <th class="col">Descripción</th>
+                    <th class="col">Modalidad</th>
+                    <th class="col">Editar</th>
+                    <th class="col">Eliminar</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr v-for="item in proyectos.data" :key="item.id">
-                    <td>{{ item.titulo }}</td>
-                    <td>{{ item.objectgeneral }}</td>
-                    <td>{{ item.key }}</td>
-                    <td>
-                      <Link :href="route('proyectos.edit', item.id)">
-                       <i class="bi bi-pencil" ></i> 
-                      </Link>
+                <tbody v-for="item in proyectos.data" :key="item.id">
+                  <tr>
+                    <td>{{ item.title  }}</td>
+                    <td>{{ item.generalobject }}</td>
+                    <td>{{ item.modality }}</td>
+                    <td><button class="btn btn btn-info btn-sm" >
+                      <a :href="route('proyectos.edit', item.id)">
+                      <i class="lapiz bi bi-pencil-fill">
+                      </i></a></button> 
                     </td>
-                    <td>
+                    <td>  
                       <form action="">
                     <button
-                    class="btn btn-outline-danger btn-sm"
+                    class="btn btn btn-danger btn-sm"
                     type="button"
                     @click="eliminar(item.id)"
                   >
-                    <i class="bi bi-trash"></i> Eliminar Registro
+                    <i class="basura bi bi-trash-fill"></i>
                   </button>
                 </form>
                     </td>
@@ -183,11 +139,13 @@
     import JetInputError from "@/Jetstream/InputError.vue";
     import JetButton from "@/Jetstream/Button.vue";
     import 'sweetalert2/dist/sweetalert2.min.css';
+    import Admin from "@/Jetstream/Admin.vue";
+    import Profe from "@/Jetstream/Profe.vue";
     
     export default {
         name: "Index",
         props: {
-            titulo: { type: String, required: true },
+            title: { type: String, required: true },
             routeName: { type: String, required: true },
             proyectos: { type: Object, required: true },
             loadingResults: { type: Boolean, required: true, default: true },
@@ -205,8 +163,15 @@
             JetInput,
             JetInputError,
             JetButton,
+            Admin,
+            Profe,
         },
 
+        methods: {
+        logout() {
+        this.$inertia.post(route('logout'));
+        }
+      },
 
         setup(props) {
           const form = useForm({ ...props.proyectos });
@@ -321,6 +286,44 @@
     padding: 1px;
   }
 
+  /*Tabla */
+
+  .col{
+    text-align:left;
+  }
+
+  a{
+    text-decoration: none;
+  }
+
+  .lapiz{
+    font-size: 20px;
+    color: #ffffff;
+  }
+
+  .basura{
+    font-size: 20px;
+    color: #ffffff;
+  }
+
+  .add{
+    font-size: 15px;
+  }
+
+  .text-add{
+    font-size: 12px;
+    margin-left: 10px;
+  } 
+
+  .buscar{
+   
+  }
+
+  .busqueda{
+    margin-left: 10px;
+     
+  }
+
   /*Barra de navegacion */
   .header{
     position: fixed;
@@ -428,20 +431,26 @@
     transform: rotate(-135deg);
   }
 
-  .alumno, .revisor, .profesor2{
-    text-align: center;
-  }
-
   p{
     margin-bottom: 0 ;
     font-size: 18px;
   }
 
-  .h2pro{
-    margin-bottom: 0;
+  .opt{
+    cursor: pointer;
+      background-color:rgb(255, 255, 255);
+      color: #092252; 
+      border-radius: 8px;
   }
 
-  .pie{
-    text-align: center;
+  .menu{
+    margin-left: 25%;
+    margin-top: 30%;
   }
+
+  .opt:hover{
+      background-color:rgba(230, 231, 240, 0.932);
+      color: #092252; 
+      border-radius: 12px;
+    }
 </style>

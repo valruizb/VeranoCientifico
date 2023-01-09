@@ -15,14 +15,20 @@ return new class extends Migration
     {
         Schema::create('proyectos', function (Blueprint $table) {
             $table->id();
-            $table->string('titulo');
-            $table->string('numalumn');
-            $table->string('tematica');
-            $table->string('subtematica');
-            $table->string('objectgeneral');
-            $table->string('modalidad');
-            $table->string('requisitos');
+            $table->string('title');
+            $table->string('studentnum');
+            $table->string('thematic_id');
+            $table->string('subthematic_id');
+            $table->string('generalobject');
+            $table->string('modality');
+            $table->string('requirements');
+            $table->string('keywords');
+            $table->unsignedBigInteger('institution_id');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('institution_id')->references('id')->on('instituciones');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

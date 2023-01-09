@@ -16,6 +16,9 @@ use Illuminate\Http\RedirectResponse;
 use Inertia\Response;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 class RegistroController extends Controller
 {
@@ -29,9 +32,11 @@ class RegistroController extends Controller
     protected string $source;
     protected string $module = 'usuarios';
     protected User $model;
+    private $disk = 'public';
 
     public function __construct()
     {
+        
         $this->routeName = "usuarios.";
         $this->source    = "Auth/";
         $this->model     = new User();
@@ -71,17 +76,41 @@ class RegistroController extends Controller
      * @param  \App\Http\Requests\StoreRegistroRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreRegistroRequest $request): RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
-        if($request -> hasFile(key:'constancia')){
-            $filename = $request -> constancia -> getOriginalClientName();
+        /*$id =  Auth::id();
+        $file = $request->file('URL_documento');
+        $nombre = $request->input('nombre_documento') . $id . "." . $file->guessExtension();*/
+        //dd($request->constancia);
+        
+        if($request -> hasFile(key:'formatosolicitud')){
+            $filename = $request -> formatosolicitud -> getClientOriginalName();
+            $request->formatosolicitud = "Storage/DocumentosRevisores/".$filename;
         }
-        $fields= $request->validated();
+        
+        if($request -> hasFile(key:'constancia')){
+            $filename = $request -> constancia -> getClientOriginalName();
+            $constancia = $request->constancia = "Storage/DocumentosProfesores/".$filename;
+            $file = $request->file('constancia');
+            if (!Storage::disk($this->disk)->exists('DocumentosProfesores/'.$constancia)){
+                $fields= $request->validated();
+                $fields['password'] = Hash::make($fields['password']);
+                $usuario = $this->model::create($fields);
+                $roles = Role::where('id', $request->tipouser)->get();
+                $usuario->syncRoles($roles);
+                $file->storeAs('public/DocumentosProfesores', $constancia);
+                return redirect()->route('registro.create')->with('success', 'Usuario registrado!');
+            }
+        }
+
+        
+        dd($request->constancia);
+        /*$fields= $request->validated();
         $fields['password'] = Hash::make($fields['password']);
         $usuario = $this->model::create($fields);
         $roles = Role::where('id', $request->tipouser)->get();
         $usuario->syncRoles($roles);
-        return redirect()->route('register')->with('success', 'Usuario registrado!');
+        return redirect()->route('registro.create')->with('success', 'Usuario registrado!');*/
     }
 
     /**

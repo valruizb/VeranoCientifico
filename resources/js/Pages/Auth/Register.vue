@@ -96,7 +96,7 @@
         <jet-validation-errors class="mb-3"/>
         <div class="forma2"> 
           
-        <form @submit.prevent="guardar">
+        <form @submit.prevent="guardar" enctype="multipart/form-data">
           <div class="forma">
             <label for="tipouser">*Tipo de Usuario</label>
             <select class="" id="tipouser" :class="{'is-invalid':form.errors.tipouser}" v-model="form.tipouser">
@@ -122,7 +122,7 @@
           <div class="forma">
             <label for="telefono">*Teléfono</label><label for="institucionproced">*Institución de procedencia</label><label for="password">*Contraseña</label><br>
             <input  id="telefono" type="text"  v-model="form.telefono" required autofocus placeholder="Teclee su Número de Telefono" />
-            <select id="institucionproced" v-model="form.institucionproced">
+            <select id="institucionproced" v-model="form.institution_id">
               <option disabled value="">Seleccione un elemento</option>
               <option v-for="item in instituto" v-bind:value="item.id" v-bind:key="item.id">{{ item.name }}</option>
             </select>
@@ -136,11 +136,11 @@
 
           <div class="profesor" v-if="form.tipouser === 2">
             <label for="areaconoc" >*Área de conocimiento</label><label for="subareaconoc">*Subarea de conocimiento</label><br>
-            <select id="areaconoci" :class="{'is-invalid':form.errors.areaconoc}" v-model="form.areaconoc">
+            <select id="areaconoci" :class="{'is-invalid':form.errors.thematic_id}" v-model="form.thematic_id">
               <option disabled value="">Seleccione un elemento</option>
               <option v-for="tema in tematica"  v-bind:value="tema.id" v-bind:key="tema.id">{{ tema.name }}</option>
             </select>
-            <select id="subareaconoc" :class="{'is-invalid':form.errors.subareaconoc}" v-model="form.subareaconoc">
+            <select id="subareaconoc" :class="{'is-invalid':form.errors.subareaconoc}" v-model="form.subthematic_id">
               <option disabled value="">Seleccione un elemento</option>
               <option v-for="sub in subtematica" v-bind:value="sub.id" v-bind:key="sub.id">{{ sub.name }}</option>
             </select>
@@ -156,12 +156,19 @@
           <div class="forma" v-if="form.tipouser === 2">
             <label for="puesto">*Puesto que desempeña</label><label for="constancia">*Constancia</label><br>
             <input  id="puesto" type="text"  v-model="form.puesto" required  placeholder="Teclee su Puesto que Desempeña" />
-            <input  id="constancia" type="file" @change="select_file" />
+            <input id="constancia"
+                class="block w-full text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                type="file" @input="form.constancia = $event.target.files[0]" />
+                <jet-input-error :message="form.errors.constancia" />
+               
           </div>         
     
           <div class="revisorins" v-if="form.tipouser === 3">
             <label for="formatosolicitud">*Formato de solicitud</label><br>
-            <input  id="formatosolicitud" type="file"  />
+            <input id="formatosolicitud"
+                class="block w-full text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                type="file" @input="form.formatosolicitud = $event.target.files[0]" />
+                <jet-input-error :message="form.errors.formatosolicitud" />
           </div>
 
           <div class="forma">
@@ -196,12 +203,11 @@
         <div class="pie">
           <h1>Accede a Nuestro Sistema o </h1>
           <h1>Suscríbete</h1><br>
-          <p>© Todos los derechos Reservados. Hecho con por el <i class='bx bxs-heart bx-flashing' style='color:#f30909' ></i> <a id="linktec" target="blank" href="https://cenidet.tecnm.mx/">TecNM/Cenidet</a></p><br><br>
+          <p>© Todos los derechos Reservados. Hecho con por el <i class='bx bxs-heart bx-flashing' style='color:#f30909'></i> <a id="linktec" target="blank" href="https://cenidet.tecnm.mx/">TecNM/Cenidet</a></p><br><br>
         </div>
   </template>
 
   <script>
-  import { defineComponent } from 'vue'
   import JetAuthenticationCard from '@/Jetstream/AuthenticationCard.vue'
   import JetAuthenticationCardLogo from '@/Jetstream/AuthenticationCardLogo.vue'
   import JetButton from '@/Jetstream/Button.vue'
@@ -248,32 +254,22 @@
         curp:"",
         correocon:"", 
         telefono:"", 
-        institucionproced:"", 
+        institution_id:"", 
         formatosolicitud:"", 
-        areaconoc:"", 
-        subareaconoc:"",  
+        thematic_id:"", 
+        subthematic_id:"",  
         nivelsni:"",  
         gradomax:"",  
         lineainv:"",  
         puesto:"",  
-        constancia:null, 
+        constancia:"", 
         password:"", 
         password_confirmation:""});
       const guardar = () => {
-        
-          //pass constancia
-        //let form = new FormData();
-          for (let key in this.form){
-          form.append(key, this.form[key]);
-      }
         form.post(route("registro.store"));
       };
 
-      const select_file = (event) => {
-      this.form.constancia = event.target.files[0];
-      };
-
-      return { form, guardar, select_file};
+      return { form, guardar};
     },
 
     

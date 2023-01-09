@@ -13,7 +13,7 @@ class UpdateProyectosRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,25 +24,27 @@ class UpdateProyectosRequest extends FormRequest
     public function rules()
     {
         return [
-            'titulo' => 'required',
-            'numalumn' => 'required',
-            'tematica'=> "required",
-            'subtematica'=> "required",
-            'objectgeneral'=> "required",
-            'modalidad'=> "required",
-            'requisitos'=> "required",
+            'title ' => 'required',
+            'studentnum' => 'required',
+            'thematic_id'=> "required",
+            'subthematic_id'=> "required",
+            'generalobject'=> "required",
+            'modality'=> "required",
+            'requirements'=> "required",
+            'keywords' => 'required',
         ];
     }
     public function attributes(): array
     {
         return [
-            'titulo' => 'Titulo del proyecto',
-            'numalumn' => 'Numero de alumnos',
-            'tematica'=> "Tematica",
-            'subtematica'=> "Subtematica",
-            'objectgeneral'=> "Objetivo General",
-            'modalidad'=> "Modalidad",
-            'requisitos'=> "Requisitos del proyecto",
+            'title' => 'Titulo del proyecto',
+            'studentnum' => 'Numero de alumnos',
+            'thematic_id'=> "Tematica",
+            'subthematic_id'=> "Subtematica",
+            'generalobject'=> "Objetivo General",
+            'modality'=> "Modalidad",
+            'requirements'=> "Requisitos del proyecto",
+            'keywords' => "Palabras clave",
         ];
     }
 }
