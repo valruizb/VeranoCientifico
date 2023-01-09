@@ -24,7 +24,7 @@ class StoreRegistroRequest extends FormRequest
     public function rules()
     {
         
-        return [
+        $rules = [
             'tipouser' => 'required|max:255',
             'nombre' => 'max:255',
             'apellidop' => 'required|max:255',
@@ -34,16 +34,23 @@ class StoreRegistroRequest extends FormRequest
             'correocon' => 'required|max:255|same:correo',
             'telefono' => 'required|max:255',
             'institution_id' => '',
-            'formatosolicitud' => 'mimes:pdf',
-            'areaconoc' => '',
-            'subareaconoc' => '',
+            'nombre_doc' => '',
+            'thematic_id' => '',
+            'subthematic_id' => '',
             'nivelsni' => '',
             'gradomax' => '',
             'lineainv' => '',
             'puesto' => '',
-            'constancia' => 'mimes:pdf',
+            
             'password' => 'required|max:255|min:8',
         ];
+
+        if ( $this->hasFile('constancia') ){
+                $rules['constancia'] = ['max:2000','mimes:pdf'];
+            }
+
+        
+        return $rules;
     }
 
     public function attributes(): array

@@ -15,7 +15,7 @@ use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Auth\Notifications\VerifyEmail;
 
 
-class User extends Authenticatable
+class User extends Authenticatable 
 {
     use HasApiTokens;
     use HasFactory;

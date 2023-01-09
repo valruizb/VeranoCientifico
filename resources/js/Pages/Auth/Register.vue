@@ -262,7 +262,8 @@
         gradomax:"",  
         lineainv:"",  
         puesto:"",  
-        constancia:"", 
+        constancia:"",
+        nombre_doc:"Constancia", 
         password:"", 
         password_confirmation:""});
       const guardar = () => {
