@@ -84,7 +84,7 @@
         <div class="campos">
          <div class="mb-2">
            <jet-label id="correo" for="correo" value="Correo:" />
-           <jet-input id="email" type="email" v-model="form.correo" required autofocus placeholder="Introduzca su correo"/><br>
+           <jet-input id="email" type="email" v-model="form.email" required autofocus placeholder="Introduzca su correo"/><br>
          </div>
  
          <div class="mb-2">
@@ -161,7 +161,7 @@
    data() {
      return {
        form: this.$inertia.form({
-         correo: '',
+         email: '',
          password: '',
          remember: false
        })

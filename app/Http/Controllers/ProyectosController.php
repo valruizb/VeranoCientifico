@@ -47,8 +47,9 @@ class ProyectosController extends Controller
             if ($search != '') {
                 $query->where('title', 'LIKE', '%' . $search . '%')
                     ->orWhere('generalobject', 'LIKE', '%' . $search . '%');
+            }else{
+                $query->where('user_id', '=', '$usid' );
             }
-            
         });
         return Inertia::render("Proyectos/Index", [
             'title '          => 'Proyectos',

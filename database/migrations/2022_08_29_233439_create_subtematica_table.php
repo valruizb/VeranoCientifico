@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('subtematica', function (Blueprint $table) {
+        Schema::create('subthematics', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->unsignedBigInteger('id_tematica');
-            $table->foreign('id_tematica')->references('id')->on('tematica');
+            $table->unsignedBigInteger('thematic_id');
+            $table->foreign('thematic_id')->references('id')->on('thematics');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('subtematica');
+        Schema::dropIfExists('subthematics');
     }
 };

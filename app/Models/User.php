@@ -12,10 +12,10 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
 use Spatie\Permission\Traits\HasRoles; 
-use Illuminate\Auth\Notifications\VerifyEmail;
 
 
-class User extends Authenticatable 
+
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens;
     use HasFactory;
@@ -31,9 +31,25 @@ class User extends Authenticatable
      * @var string[]
      */
     protected $fillable = [
-        'tipouser','nombre','apellidop','apellidom','curp','correo','correocon','telefono','institution_id',
-        'formatosolicitud','thematic_id','subthematic_id','nivelsni','gradomax','lineainv','puesto','constancia',
-        'password', 'password_confirmation', 
+        'rol',
+        'name',
+        'lastnamep',
+        'lastnamem',
+        'curp',
+        'email',
+        'emailcon',
+        'phone',
+        'institution_id',
+        'requestform',
+        'thematic_id',
+        'subthematic_id',
+        'snilevel',
+        'maxgrade',
+        'invline',
+        'job',
+        'constancy',
+        'password', 
+        'password_confirmation', 
     ];
 
     /**

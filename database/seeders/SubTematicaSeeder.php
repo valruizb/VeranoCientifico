@@ -7,7 +7,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
 
-class SubTematicaSeeder extends Seeder
+class SubtematicaSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,63 +17,63 @@ class SubTematicaSeeder extends Seeder
     public function run()
     {
         
-        DB::table('subtematica')->insert([['name' => 'Astrofísica',  'id_tematica' => '1']]);
-        DB::table('subtematica')->insert(['name' => 'Astronomía',  'id_tematica' => '1']);
-        DB::table('subtematica')->insert(['name' => 'Ciencias de la Tierra y del espacio',  'id_tematica' => '1']);
-        DB::table('subtematica')->insert(['name' => 'Física',  'id_tematica' => '1']);
-        DB::table('subtematica')->insert(['name' => 'Lógica',  'id_tematica' => '1']);
-        DB::table('subtematica')->insert(['name' => 'Matemáticas',  'id_tematica' => '1']);
-        DB::table('subtematica')->insert(['name' => 'Prospectiva',  'id_tematica' => '1']);
-        DB::table('subtematica')->insert(['name' => 'Ciencias del mar',  'id_tematica' => '1']);
+        DB::table('subthematics')->insert([['name' => 'Astrofísica',  'thematic_id' => '1']]);
+        DB::table('subthematics')->insert(['name' => 'Astronomía',  'thematic_id' => '1']);
+        DB::table('subthematics')->insert(['name' => 'Ciencias de la Tierra y del espacio',  'thematic_id' => '1']);
+        DB::table('subthematics')->insert(['name' => 'Física',  'thematic_id' => '1']);
+        DB::table('subthematics')->insert(['name' => 'Lógica',  'thematic_id' => '1']);
+        DB::table('subthematics')->insert(['name' => 'Matemáticas',  'thematic_id' => '1']);
+        DB::table('subthematics')->insert(['name' => 'Prospectiva',  'thematic_id' => '1']);
+        DB::table('subthematics')->insert(['name' => 'Ciencias del mar',  'thematic_id' => '1']);
 
-        DB::table('subtematica')->insert(['name' => 'Ciencias de la vida',  'id_tematica' => '2']);
-        DB::table('subtematica')->insert(['name' => 'Prospectiva',  'id_tematica' => '2']);
-        DB::table('subtematica')->insert(['name' => 'Ciencias biomédicas',  'id_tematica' => '2']);
-        DB::table('subtematica')->insert(['name' => 'Biología',  'id_tematica' => '2']);
-        DB::table('subtematica')->insert(['name' => 'Química',  'id_tematica' => '2']);
-        DB::table('subtematica')->insert(['name' => 'Ciencias Ambientales',  'id_tematica' => '2']);
+        DB::table('subthematics')->insert(['name' => 'Ciencias de la vida',  'thematic_id' => '2']);
+        DB::table('subthematics')->insert(['name' => 'Prospectiva',  'thematic_id' => '2']);
+        DB::table('subthematics')->insert(['name' => 'Ciencias biomédicas',  'thematic_id' => '2']);
+        DB::table('subthematics')->insert(['name' => 'Biología',  'thematic_id' => '2']);
+        DB::table('subthematics')->insert(['name' => 'Química',  'thematic_id' => '2']);
+        DB::table('subthematics')->insert(['name' => 'Ciencias Ambientales',  'thematic_id' => '2']);
 
-        DB::table('subtematica')->insert(['name' => 'Ciencias médicas',  'id_tematica' => '3']);
-        DB::table('subtematica')->insert(['name' => 'Medicina',  'id_tematica' => '3']);
-        DB::table('subtematica')->insert(['name' => 'Enfermería',  'id_tematica' => '3']);
-        DB::table('subtematica')->insert(['name' => 'Ingeniería biomédica',  'id_tematica' => '3']);
-        DB::table('subtematica')->insert(['name' => 'Especialidad médica',  'id_tematica' => '3']);
-        DB::table('subtematica')->insert(['name' => 'Odontología',  'id_tematica' => '3']);
-        DB::table('subtematica')->insert(['name' => 'Investigación médica',  'id_tematica' => '3']);
+        DB::table('subthematics')->insert(['name' => 'Ciencias médicas',  'thematic_id' => '3']);
+        DB::table('subthematics')->insert(['name' => 'Medicina',  'thematic_id' => '3']);
+        DB::table('subthematics')->insert(['name' => 'Enfermería',  'thematic_id' => '3']);
+        DB::table('subthematics')->insert(['name' => 'Ingeniería biomédica',  'thematic_id' => '3']);
+        DB::table('subthematics')->insert(['name' => 'Especialidad médica',  'thematic_id' => '3']);
+        DB::table('subthematics')->insert(['name' => 'Odontología',  'thematic_id' => '3']);
+        DB::table('subthematics')->insert(['name' => 'Investigación médica',  'thematic_id' => '3']);
 
-        DB::table('subtematica')->insert(['name' => 'Biotecnología',  'id_tematica' => '4']);
-        DB::table('subtematica')->insert(['name' => 'Ciencias agrarías',  'id_tematica' => '4']);
-        DB::table('subtematica')->insert(['name' => 'Biotecnología agrícola',  'id_tematica' => '4']);
-        DB::table('subtematica')->insert(['name' => 'Salud y Producción Animal',  'id_tematica' => '4']);
-        DB::table('subtematica')->insert(['name' => 'Pesca',  'id_tematica' => '4']);
+        DB::table('subthematics')->insert(['name' => 'Biotecnología',  'thematic_id' => '4']);
+        DB::table('subthematics')->insert(['name' => 'Ciencias agrarías',  'thematic_id' => '4']);
+        DB::table('subthematics')->insert(['name' => 'Biotecnología agrícola',  'thematic_id' => '4']);
+        DB::table('subthematics')->insert(['name' => 'Salud y Producción Animal',  'thematic_id' => '4']);
+        DB::table('subthematics')->insert(['name' => 'Pesca',  'thematic_id' => '4']);
 
-        DB::table('subtematica')->insert(['name' => 'Robótica',  'id_tematica' => '5']);
-        DB::table('subtematica')->insert(['name' => 'Simulaciones',  'id_tematica' => '5']);
-        DB::table('subtematica')->insert(['name' => 'Materiales avanzados',  'id_tematica' => '5']);
-        DB::table('subtematica')->insert(['name' => 'Realidad virtual',  'id_tematica' => '5']);
-        DB::table('subtematica')->insert(['name' => 'Realidad Aumentada',  'id_tematica' => '5']);
-        DB::table('subtematica')->insert(['name' => 'Big Data',  'id_tematica' => '5']);
-        DB::table('subtematica')->insert(['name' => 'Inteligencia artificial',  'id_tematica' => '5']);
-        DB::table('subtematica')->insert(['name' => 'Software como servicio',  'id_tematica' => '5']);
-        DB::table('subtematica')->insert(['name' => 'Manufactura aditiva',  'id_tematica' => '5']);
+        DB::table('subthematics')->insert(['name' => 'Robótica',  'thematic_id' => '5']);
+        DB::table('subthematics')->insert(['name' => 'Simulaciones',  'thematic_id' => '5']);
+        DB::table('subthematics')->insert(['name' => 'Materiales avanzados',  'thematic_id' => '5']);
+        DB::table('subthematics')->insert(['name' => 'Realidad virtual',  'thematic_id' => '5']);
+        DB::table('subthematics')->insert(['name' => 'Realidad Aumentada',  'thematic_id' => '5']);
+        DB::table('subthematics')->insert(['name' => 'Big Data',  'thematic_id' => '5']);
+        DB::table('subthematics')->insert(['name' => 'Inteligencia artificial',  'thematic_id' => '5']);
+        DB::table('subthematics')->insert(['name' => 'Software como servicio',  'thematic_id' => '5']);
+        DB::table('subthematics')->insert(['name' => 'Manufactura aditiva',  'thematic_id' => '5']);
 
-        DB::table('subtematica')->insert(['name' => 'Ciencias tecnologícas',  'id_tematica' => '6']);
-        DB::table('subtematica')->insert(['name' => 'Ingeniería',  'id_tematica' => '6']);
-        DB::table('subtematica')->insert(['name' => 'Prospectiva',  'id_tematica' => '6']);
+        DB::table('subthematics')->insert(['name' => 'Ciencias tecnologícas',  'thematic_id' => '6']);
+        DB::table('subthematics')->insert(['name' => 'Ingeniería',  'thematic_id' => '6']);
+        DB::table('subthematics')->insert(['name' => 'Prospectiva',  'thematic_id' => '6']);
 
-        DB::table('subtematica')->insert(['name' => 'Ciencia política',  'id_tematica' => '7']);
-        DB::table('subtematica')->insert(['name' => 'Ciencias de la educación',  'id_tematica' => '7']);
-        DB::table('subtematica')->insert(['name' => 'Ciencias económicas',  'id_tematica' => '7']);
-        DB::table('subtematica')->insert(['name' => 'Ciencias jurídicas y Derecho',  'id_tematica' => '7']);
-        DB::table('subtematica')->insert(['name' => 'Demografía',  'id_tematica' => '7']);
-        DB::table('subtematica')->insert(['name' => 'Formación docente',  'id_tematica' => '7']);
-        DB::table('subtematica')->insert(['name' => 'Geografía',  'id_tematica' => '7']);
-        DB::table('subtematica')->insert(['name' => 'Historia',  'id_tematica' => '7']);
-        DB::table('subtematica')->insert(['name' => 'Sociología',  'id_tematica' => '7']);
-        DB::table('subtematica')->insert(['name' => 'Administración y negocios',  'id_tematica' => '7']);
-        DB::table('subtematica')->insert(['name' => 'Medios de comunicación y comunicaciones',  'id_tematica' => '7']);
-        DB::table('subtematica')->insert(['name' => 'Comunicación científica',  'id_tematica' => '7']);
-        DB::table('subtematica')->insert(['name' => 'Gestión',  'id_tematica' => '7']);
-        DB::table('subtematica')->insert(['name' => 'Estudios de Género',  'id_tematica' => '7']);
+        DB::table('subthematics')->insert(['name' => 'Ciencia política',  'thematic_id' => '7']);
+        DB::table('subthematics')->insert(['name' => 'Ciencias de la educación',  'thematic_id' => '7']);
+        DB::table('subthematics')->insert(['name' => 'Ciencias económicas',  'thematic_id' => '7']);
+        DB::table('subthematics')->insert(['name' => 'Ciencias jurídicas y Derecho',  'thematic_id' => '7']);
+        DB::table('subthematics')->insert(['name' => 'Demografía',  'thematic_id' => '7']);
+        DB::table('subthematics')->insert(['name' => 'Formación docente',  'thematic_id' => '7']);
+        DB::table('subthematics')->insert(['name' => 'Geografía',  'thematic_id' => '7']);
+        DB::table('subthematics')->insert(['name' => 'Historia',  'thematic_id' => '7']);
+        DB::table('subthematics')->insert(['name' => 'Sociología',  'thematic_id' => '7']);
+        DB::table('subthematics')->insert(['name' => 'Administración y negocios',  'thematic_id' => '7']);
+        DB::table('subthematics')->insert(['name' => 'Medios de comunicación y comunicaciones',  'thematic_id' => '7']);
+        DB::table('subthematics')->insert(['name' => 'Comunicación científica',  'thematic_id' => '7']);
+        DB::table('subthematics')->insert(['name' => 'Gestión',  'thematic_id' => '7']);
+        DB::table('subthematics')->insert(['name' => 'Estudios de Género',  'thematic_id' => '7']);
     }
 }

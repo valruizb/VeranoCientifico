@@ -68,7 +68,7 @@
         
       <div class="forma1">
 
-        <div class="alumno" v-if="form.tipouser === 4"><br>
+        <div class="alumno" v-if="form.rol === 4"><br>
           <h2>Solicitud de Registro para Estudiantes</h2><br>
           <p>Para registrarte en algunas de las temáticas del verano debes primero tener un perfil.</p>
           <p>Ingresa la siguiente información para crearlo. Posteriormente, revisa la bandeja de entrada</p>
@@ -76,7 +76,7 @@
           <p>proporcionado, puede ser que dicho correo se encuentre en su Spam.</p><br><br>
         </div>
 
-        <div class="revisor" v-if="form.tipouser === 3"><br>
+        <div class="revisor" v-if="form.rol === 3"><br>
           <h2>Solicitud de Registro para Revisores Institucionales</h2><br>
           <p>Para registrarte en algunas de las temáticas del verano debes primero tener un perfil.</p>
           <p>Ingresa la siguiente información para crearlo. Posteriormente, revisa la bandeja de entrada</p>
@@ -85,7 +85,7 @@
           <a target="_blank" href="https://docs.google.com/document/d/1WzD9VWNIoyt1FG8hrDlhd6KOn8KFq4Gq/edit"><button type="button" class="btn btn-info"><i id="boxi2" class='bx bxs-file-pdf'></i> Descargar Formato de Solicitud de Participación</button></a><br><br><br>
         </div>
 
-        <div class="profesor2" v-if="form.tipouser === 2"><br>
+        <div class="profesor2" v-if="form.rol === 2"><br>
           <h2 class="h2pro">Solicitud de Registro para Profesores Nuevo</h2>
           <h2 class="h2pro">Ingreso</h2><br>
           <p>Ingresa los siguientes datos. Posteriormente, el Administrador validará tu cuenta. Una vez</p>
@@ -99,7 +99,7 @@
         <form @submit.prevent="guardar" enctype="multipart/form-data">
           <div class="forma">
             <label for="tipouser">*Tipo de Usuario</label>
-            <select class="" id="tipouser" :class="{'is-invalid':form.errors.tipouser}" v-model="form.tipouser">
+            <select class="" id="tipouser" :class="{'is-invalid':form.errors.rol}" v-model="form.rol">
               <option disabled value="">Seleccione un elemento</option>
               <option v-for="rol in roles" v-bind:value="rol.id" v-bind:key="rol.id">{{ rol.name }}</option>
               </select>
@@ -107,21 +107,21 @@
 
           <div class="forma">
             <label for="nombre">*Nombre(s)</label> <label for="apellidop">*Apellido Paterno</label><label for="apellidom" >*Apellido Materno</label> 
-            <input  :class="{ 'is-invalid': form.errors.nombre }" id="nombre" type="text"  v-model="form.nombre"  required autofocus placeholder="Teclee su Nombre" >
-            <input  :class="{ 'is-invalid': form.errors.apellidop }" id="apellidop" type="text"  v-model="form.apellidop" required autofocus placeholder="Teclee su Apellido Paterno" > 
-            <input  :class="{ 'is-invalid': form.errors.apellidom }" id="apellidom" type="text"  v-model="form.apellidom" required autofocus placeholder="Teclee su Apellido Materno" >
+            <input  :class="{ 'is-invalid': form.errors.name }" id="nombre" type="text"  v-model="form.name"  required autofocus placeholder="Teclee su Nombre" >
+            <input  :class="{ 'is-invalid': form.errors.lastnamep }" id="apellidop" type="text"  v-model="form.lastnamep" required autofocus placeholder="Teclee su Apellido Paterno" > 
+            <input  :class="{ 'is-invalid': form.errors.lastnamem }" id="apellidom" type="text"  v-model="form.lastnamem" required autofocus placeholder="Teclee su Apellido Materno" >
           </div>
 
           <div class="forma">
             <label for="curp" value="CURP*" >*CURP</label><label for="correo" >*Correo</label><label for="correocon">*Confirmar correo</label> 
             <input  :class="{ 'is-invalid': form.errors.curp }" id="curp" type="text"  v-model="form.curp" required autofocus placeholder="Teclee su Curp" />
-            <input  id="correo" type="email"  v-model="form.correo" required autofocus placeholder="Teclee su Correo" />
-            <input  id="correocon" type="email"  v-model="form.correocon" required autofocus placeholder="Teclee nuevamente su Correo" />
+            <input  id="correo" type="email"  v-model="form.email" required autofocus placeholder="Teclee su Correo" />
+            <input  id="correocon" type="email"  v-model="form.emailcon" required autofocus placeholder="Teclee nuevamente su Correo" />
           </div>
 
           <div class="forma">
             <label for="telefono">*Teléfono</label><label for="institucionproced">*Institución de procedencia</label><label for="password">*Contraseña</label><br>
-            <input  id="telefono" type="text"  v-model="form.telefono" required autofocus placeholder="Teclee su Número de Telefono" />
+            <input  id="telefono" type="text"  v-model="form.phone" required autofocus placeholder="Teclee su Número de Telefono" />
             <select id="institucionproced" v-model="form.institution_id">
               <option disabled value="">Seleccione un elemento</option>
               <option v-for="item in instituto" v-bind:value="item.id" v-bind:key="item.id">{{ item.name }}</option>
@@ -134,41 +134,41 @@
             <input id="password_confirmation" type="password" v-model="form.password_confirmation" required placeholder="Teclee Nuevamente su Contraseña" />
           </div>
 
-          <div class="profesor" v-if="form.tipouser === 2">
+          <div class="profesor" v-if="form.rol === 2">
             <label for="areaconoc" >*Área de conocimiento</label><label for="subareaconoc">*Subarea de conocimiento</label><br>
             <select id="areaconoci" :class="{'is-invalid':form.errors.thematic_id}" v-model="form.thematic_id">
               <option disabled value="">Seleccione un elemento</option>
               <option v-for="tema in tematica"  v-bind:value="tema.id" v-bind:key="tema.id">{{ tema.name }}</option>
             </select>
-            <select id="subareaconoc" :class="{'is-invalid':form.errors.subareaconoc}" v-model="form.subthematic_id">
+            <select id="subareaconoc" :class="{'is-invalid':form.errors.subthematic_id}" v-model="form.subthematic_id">
               <option disabled value="">Seleccione un elemento</option>
               <option v-for="sub in subtematica" v-bind:value="sub.id" v-bind:key="sub.id">{{ sub.name }}</option>
             </select>
           </div>
 
-          <div class="forma" v-if="form.tipouser === 2">
+          <div class="forma" v-if="form.rol === 2">
             <label for="gradomax">*Grado Maximo de Estudios</label><label for="lineainv">*Su Línea de Investigación</label><label for="nivelsni">Nivel SNI*</label>
-            <input  id="nivelsni" type="text"  v-model="form.extension" required placeholder="Teclee su Nivel SNI" />         
-            <input  id="gradomax" type="text"  v-model="form.gradomax" required  placeholder="Teclee su Máximo Grado de Estudios" />
-            <input  id="lineainv" type="text"  v-model="form.lineainv" required  placeholder="Teclee su Línea de Investigación" />
+            <input  id="nivelsni" type="text"  v-model="form.snilevel" required placeholder="Teclee su Nivel SNI" />         
+            <input  id="gradomax" type="text"  v-model="form.maxgrade" required  placeholder="Teclee su Máximo Grado de Estudios" />
+            <input  id="lineainv" type="text"  v-model="form.invline" required  placeholder="Teclee su Línea de Investigación" />
           </div>
 
-          <div class="forma" v-if="form.tipouser === 2">
+          <div class="forma" v-if="form.rol === 2">
             <label for="puesto">*Puesto que desempeña</label><label for="constancia">*Constancia</label><br>
-            <input  id="puesto" type="text"  v-model="form.puesto" required  placeholder="Teclee su Puesto que Desempeña" />
+            <input  id="puesto" type="text"  v-model="form.job" required  placeholder="Teclee su Puesto que Desempeña" />
             <input id="constancia"
                 class="block w-full text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                type="file" @input="form.constancia = $event.target.files[0]" />
-                <jet-input-error :message="form.errors.constancia" />
+                type="file" @input="form.constancy = $event.target.files[0]" />
+                <jet-input-error :message="form.errors.constancy" />
                
           </div>         
     
-          <div class="revisorins" v-if="form.tipouser === 3">
+          <div class="revisorins" v-if="form.rol === 3">
             <label for="formatosolicitud">*Formato de solicitud</label><br>
             <input id="formatosolicitud"
                 class="block w-full text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                type="file" @input="form.formatosolicitud = $event.target.files[0]" />
-                <jet-input-error :message="form.errors.formatosolicitud" />
+                type="file" @input="form.requestform = $event.target.files[0]" />
+                <jet-input-error :message="form.errors.requestform" />
           </div>
 
           <div class="forma">
@@ -203,7 +203,7 @@
         <div class="pie">
           <h1>Accede a Nuestro Sistema o </h1>
           <h1>Suscríbete</h1><br>
-          <p>© Todos los derechos Reservados. Hecho con por el <i class='bx bxs-heart bx-flashing' style='color:#f30909'></i> <a id="linktec" target="blank" href="https://cenidet.tecnm.mx/">TecNM/Cenidet</a></p><br><br>
+          <p>© Todos los derechos Reservados. Hecho con por el<i class='bx bxs-heart bx-flashing' style='color:#f30909'></i> <a id="linktec" target="blank" href="https://cenidet.tecnm.mx/">TecNM/Cenidet</a></p><br><br>
         </div>
   </template>
 
@@ -246,27 +246,33 @@
       
     setup(props) {
       const form = useForm({ 
-        tipouser: "", 
-        nombre: "",
-        apellidop: "", 
-        apellidom:"", 
-        correo:"", 
+        rol: "", 
+        name: "",
+        lastnamep: "", 
+        lastnamem:"", 
+        email:"", 
         curp:"",
-        correocon:"", 
-        telefono:"", 
+        emailcon:"", 
+        phone:"", 
         institution_id:"", 
-        formatosolicitud:"", 
+        requestform:"", 
         thematic_id:"", 
         subthematic_id:"",  
-        nivelsni:"",  
-        gradomax:"",  
-        lineainv:"",  
-        puesto:"",  
-        constancia:"",
-        nombre_doc:"Constancia", 
+        snilevel:"",  
+        maxgrade:"",  
+        invline:"",  
+        job:"",  
+        constancy:"",
+        name_doc:"", 
         password:"", 
         password_confirmation:""});
       const guardar = () => {
+        if(form.rol == 3){
+          form.name_doc = "formatosolicitud";
+        }
+        if(form.rol == 2){
+          form.name_doc = "constancia";
+        }
         form.post(route("registro.store"));
       };
 

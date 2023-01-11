@@ -25,28 +25,31 @@ class StoreRegistroRequest extends FormRequest
     {
         
         $rules = [
-            'tipouser' => 'required|max:255',
-            'nombre' => 'max:255',
-            'apellidop' => 'required|max:255',
-            'apellidom' => 'required|max:255',
+            'rol' => 'required|max:255',
+            'name' => 'max:255',
+            'lastnamep' => 'required|max:255',
+            'lastnamem' => 'required|max:255',
             'curp' => 'max:255',
-            'correo' => 'required|max:255',
-            'correocon' => 'required|max:255|same:correo',
-            'telefono' => 'required|max:255',
+            'email' => 'required|max:255',
+            'emailcon' => 'required|max:255|same:email',
+            'phone' => 'required|max:255',
             'institution_id' => '',
-            'nombre_doc' => '',
+            'name_doc' => '',
             'thematic_id' => '',
             'subthematic_id' => '',
-            'nivelsni' => '',
-            'gradomax' => '',
-            'lineainv' => '',
-            'puesto' => '',
-            
+            'snilevel' => '',
+            'maxgrade' => '',
+            'invline' => '',
+            'job' => '', 
             'password' => 'required|max:255|min:8',
         ];
 
-        if ( $this->hasFile('constancia') ){
-                $rules['constancia'] = ['max:2000','mimes:pdf'];
+        if ( $this->hasFile('constancy') ){
+                $rules['constancy'] = ['max:2000','mimes:pdf'];
+            }
+
+        if ( $this->hasFile('requestform') ){
+                $rules['requestform'] = ['max:2000','mimes:pdf'];
             }
 
         
@@ -56,23 +59,23 @@ class StoreRegistroRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'tipouser' => 'Tipo de usuario',
-            'nombre' => 'Nombre',
-            'apellidop' => 'Apellido paterno',
-            'apellidom' => 'Apellido materno',
+            'rol' => 'Tipo de usuario',
+            'name' => 'Nombre',
+            'lastnamep' => 'Apellido paterno',
+            'lastnamem' => 'Apellido materno',
             'curp' => 'CURP',
-            'correo' => 'Correo',
-            'correocon' => 'Correo de confirmación',
-            'telefono' => 'Teléfono',
-            'institucionproced' => 'Institución de procedencia',
-            'formatosolicitud' => 'Formato de solicitud',
-            'areaconoc' => 'Área de conocimiento',
-            'subareaconoc' => 'Subárea de conocimiento',
-            'nivelsni' => 'Nivel SNI',
-            'gradomax' => 'Grado máximo de estudios',
-            'lineainv' => 'Línea de investigación',
-            'puesto' => 'Puesto',
-            'constancia' => 'Constancia',
+            'email' => 'Correo',
+            'emailcon' => 'Correo de confirmación',
+            'phone' => 'Teléfono',
+            'institution_id' => 'Institución de procedencia',
+            'requestform' => 'Formato de solicitud',
+            'thematic_id' => 'Área de conocimiento',
+            'subthematic' => 'Subárea de conocimiento',
+            'snilevel' => 'Nivel SNI',
+            'maxgrade' => 'Grado máximo de estudios',
+            'invline' => 'Línea de investigación',
+            'job' => 'Puesto',
+            'constancy' => 'Constancia',
             'password' => 'Contraseña',
             'password_confirmation' => 'Contraseña de confirmación',
         ];

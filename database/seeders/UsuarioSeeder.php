@@ -22,37 +22,37 @@ class UsuarioSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            'nombre' => 'Vitervo', 
-            'apellidop' => 'López', 
-            'apellidom' => 'Caballero', 
-            'tipouser' => '1', 
-            'correo' => 'vitervo@gmail.com',
-            'correocon' => 'vitervo@gmail.com',
-            'telefono' => '7772341881',
+            'name' => 'Vitervo', 
+            'lastnamep' => 'López', 
+            'lastnamem' => 'Caballero', 
+            'rol' => '1', 
+            'email' => 'vitervo@gmail.com',
+            'emailcon' => 'vitervo@gmail.com',
+            'phone' => '7772341881',
             'institution_id' => 2,
             'password' => Hash::make('Password'),
         ]);
 
         DB::table('users')->insert([
-            'nombre' => 'Enrique', 
-            'apellidop' => 'Hernandez', 
-            'apellidom' => 'Gomez', 
-            'tipouser' => '2', 
-            'correo' => 'kike@gmail.com',
-            'correocon' => 'kike@gmail.com',
-            'telefono' => '7773415872',
+            'name' => 'Enrique', 
+            'lastnamep' => 'Hernandez', 
+            'lastnamem' => 'Gomez', 
+            'rol' => '2', 
+            'email' => 'kike@gmail.com',
+            'emailcon' => 'kike@gmail.com',
+            'phone' => '7773415872',
             'institution_id' => 5,
             'password' => Hash::make('Password'),
         ]);
 
         DB::table('users')->insert([
-            'nombre' => 'Valeria', 
-            'apellidop' => 'Ruiz', 
-            'apellidom' => 'Bermudez', 
-            'tipouser' => '3', 
-            'correo' => 'vale@gmail.com',
-            'correocon' => 'vale@gmail.com',
-            'telefono' => '7773415882',
+            'name' => 'Valeria', 
+            'lastnamep' => 'Ruiz', 
+            'lastnamem' => 'Bermudez', 
+            'rol' => '3', 
+            'email' => 'valeriarb672@gmail.com',
+            'emailcon' => 'valeriarb672@gmail.com',
+            'phone' => '7773415882',
             'institution_id' => 9,
             'password' => Hash::make('Password'),
         ]);

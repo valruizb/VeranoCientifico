@@ -15,12 +15,12 @@ class TematicaSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('tematica')->insert(['name' => '1.-Física, Matemáticas y Ciencias']);
-        DB::table('tematica')->insert(['name' => '2.-Biología y Química']);
-        DB::table('tematica')->insert(['name' => '3.-Medicina y Salud']);
-        DB::table('tematica')->insert(['name' => '4.-Biotecnología y Ciencias Agropecuarias']);
-        DB::table('tematica')->insert(['name' => '5.-Tecnología 4.0 ']);
-        DB::table('tematica')->insert(['name' => '6.-Ingeniería e Industria']);
-        DB::table('tematica')->insert(['name' => '7.-Ciencias sociales']);
+        DB::table('thematics')->insert(['name' => '1.-Física, Matemáticas y Ciencias']);
+        DB::table('thematics')->insert(['name' => '2.-Biología y Química']);
+        DB::table('thematics')->insert(['name' => '3.-Medicina y Salud']);
+        DB::table('thematics')->insert(['name' => '4.-Biotecnología y Ciencias Agropecuarias']);
+        DB::table('thematics')->insert(['name' => '5.-Tecnología 4.0 ']);
+        DB::table('thematics')->insert(['name' => '6.-Ingeniería e Industria']);
+        DB::table('thematics')->insert(['name' => '7.-Ciencias sociales']);
     }
 }

@@ -12,11 +12,11 @@ use App\Models\subtematica;
 class tematica extends Model
 {
     use HasFactory;
-    protected $table = 'tematica';
+    protected $table = 'thematics';
 
     protected $fillable = ['name'];
 
     public function subtematica(){
-        return $this->hasMany(subtematica::class, 'id_tematica');
+        return $this->hasMany(subtematica::class, 'thematic_id');
     }
 }

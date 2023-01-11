@@ -1,34 +1,32 @@
 <template>
-  <Head title="Email Verification" />
+  <Head title="Verificación de correo" />
+    <br><br><img src="../../../../public/img/logo.png" width="">
 
-  <jet-authentication-card>
-    <template #logo>
-      <jet-authentication-card-logo />
-    </template>
-
-    <div class="card-body">
-      <div class="mb-3 small text-muted">
-        Thanks for signing up! Before getting started, could you verify your
-        email address by clicking on the link we just emailed to you? If you
-        didn't receive the email, we will gladly send you another.
+  <jet-authentication-card >
+    <br><h2>Verificación de correo electrónico</h2><hr><hr><hr>
+      <div class="card text-center">
+      
+      <div class="text">
+        Gracias por registrarte! Antes de comenzar, deberá verificar su dirección de correo electrónico 
+        haciendo clic en el enlace que le acabamos de enviar por correo electrónico.
+        Si usted no recibió el correo, con gusto te enviaremos otro.
       </div>
 
-      <div class="alert alert-success" role="alert" v-if="verificationLinkSent">
-        A new verification link has been sent to the email address you provided
-        during registration.
+      <br><br><div class="alert alert-success" role="alert" v-if="verificationLinkSent">
+        Se ha enviado un nuevo enlace de verificación a la dirección de correo electrónico que proporcionó
+        durante el registro.
       </div>
 
       <form @submit.prevent="submit">
         <div class="mt-4 d-flex justify-content-between">
-          <jet-button
+          <jet-button class="boton"
             :class="{ 'text-white-50': form.processing }"
             :disabled="form.processing"
           >
             <div v-show="form.processing" class="spinner-border spinner-border-sm" role="status">
               <span class="visually-hidden">Loading...</span>
             </div>
-
-            Resend Verification Email
+            Reenviar Link de Verificación
           </jet-button>
 
           <Link
@@ -40,7 +38,7 @@
           >
         </div>
       </form>
-    </div>
+      </div>
   </jet-authentication-card>
 </template>
 
@@ -83,3 +81,33 @@ export default defineComponent({
   }
 })
 </script>
+<style :scope>
+
+  img{
+    width: 80px;
+    margin-left: 48%;
+  }
+
+  .card{
+    margin-top: -55px;
+     
+  }
+
+  .verificacion{
+    box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px rgba(216, 213, 213, 0.137);
+  }
+
+  h2{
+    text-align: center;
+    font-weight: bolder;
+  }
+
+  .boton{
+    background-color: rgb(15, 17, 129);
+  }
+
+  .text{
+    color: black;
+  }
+
+</style>

@@ -9,9 +9,9 @@ use Illuminate\Database\Eloquent\Model;
 class subtematica extends Model
 {
     use HasFactory;
-    protected $table = 'subtematica';
+    protected $table = 'subthematics';
 
-    protected $fillable = ['name', 'id_tematica'];
+    protected $fillable = ['name', 'thematic_id'];
     
 
 }

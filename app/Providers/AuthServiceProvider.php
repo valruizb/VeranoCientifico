@@ -32,19 +32,6 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         
-        VerifyEmail::toMailUsing(function ($notifiable, $url){
-            return (new MailMessage)
-            ->subject(Lang::get('Verify Email Address'))
-            ->line(Lang::get('Please click'))
-            ->action(Lang::get('Verify email'), $url)
-            ->line(Lang::get('I you create account'))
-            ->salutation('Muchas gracias');
-        });
-
-        Gate::before(function ($user, $ability) {
-            return $user->hasRole('Admin') ? true : null;
-        });
-
 
     }
 }

@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Auth\Events\Registered;
 
 class RegistroController extends Controller
 {
@@ -80,14 +81,49 @@ class RegistroController extends Controller
     {
         //dd($request);
 
-        if($request -> hasFile(key:'formatosolicitud')){
-            $filename = $request -> formatosolicitud -> getClientOriginalName();
-            $request->formatosolicitud = "Storage/DocumentosRevisores/".$filename;
+        if($request -> hasFile(key:'requestform')){
+            $file = $request->file('requestform');
+            $formatosolicitud = $request->input('name_doc') .$request->curp .".". $file->guessExtension();
+
+            if (!Storage::disk($this->disk)->exists('DocumentosRevisores/'.$formatosolicitud)){
+                
+                $fields= $request->validated();
+                
+                //$fields['constancia'] = $request -> constancia -> getClientOriginalName();
+                    
+                $fields['password'] = Hash::make($fields['password']);
+                $usuario = $this->model::create([
+                    'rol' => $fields['rol'],
+                    'name' => $fields['name'],
+                    'lastnamep' => $fields['lastnamep'],
+                    'lastnamem' => $fields['lastnamem'],
+                    'curp' => $fields['curp'],
+                    'email' => $fields['email'],
+                    'emailcon' => $fields['emailcon'],
+                    'phone' => $fields['phone'],
+                    'institution_id' => $fields['institution_id'],
+                    'thematic_id' => $fields['thematic_id'],
+                    'subthematic_id' => $fields['subthematic_id'],
+                    'snilevel' => $fields['snilevel'],
+                    'grademax' => $fields['maxgrade'],
+                    'invline' => $fields['invline'],
+                    'job' => $fields['job'],
+                    'password' => $fields['password'],
+                    'requestform' => $formatosolicitud
+                ] );
+                $roles = Role::where('id', $request->rol)->get();
+                $usuario->syncRoles($roles);
+                $file->storeAs('public/DocumentosRevisores', $formatosolicitud);
+                event(new Registered($usuario));
+                return redirect()->route('dashboard')->with('success', 'Usuario registrado!');
+            }else{
+                return 'Este documento ya fue subido';
+            }
         }
         
-        if($request -> hasFile(key:'constancia')){
-            $file = $request->file('constancia');
-            $constancia = $request->input('nombre_doc') .$request->curp .".". $file->guessExtension();
+        if($request -> hasFile(key:'constancy')){
+            $file = $request->file('constancy');
+            $constancia = $request->input('name_doc') .$request->curp .".". $file->guessExtension();
             //dd($constancia); 
             //$constancia = $request -> constancia -> getClientOriginalName();
             //$request->constancia = $constancia;  
@@ -99,50 +135,47 @@ class RegistroController extends Controller
                     
                 $fields['password'] = Hash::make($fields['password']);
                 $usuario = $this->model::create([
-                    'tipouser' => $fields['tipouser'],
-                    'nombre' => $fields['nombre'],
-                    'apellidop' => $fields['apellidop'],
-                    'apellidom' => $fields['apellidom'],
+                    'rol' => $fields['rol'],
+                    'name' => $fields['name'],
+                    'lastnamep' => $fields['lastnamep'],
+                    'lastnamem' => $fields['lastnamem'],
                     'curp' => $fields['curp'],
-                    'correo' => $fields['correo'],
-                    'correocon' => $fields['correocon'],
-                    'telefono' => $fields['telefono'],
+                    'email' => $fields['email'],
+                    'emailcon' => $fields['emailcon'],
+                    'phone' => $fields['phone'],
                     'institution_id' => $fields['institution_id'],
                     'thematic_id' => $fields['thematic_id'],
                     'subthematic_id' => $fields['subthematic_id'],
-                    'nivelsni' => $fields['nivelsni'],
-                    'gradomax' => $fields['gradomax'],
-                    'lineainv' => $fields['lineainv'],
-                    'puesto' => $fields['puesto'],
+                    'snilevel' => $fields['snilevel'],
+                    'grademax' => $fields['maxgrade'],
+                    'invline' => $fields['invline'],
+                    'job' => $fields['job'],
                     'password' => $fields['password'],
-                    'constancia' => $constancia
+                    'constancy' => $constancia
                 ] );
-                $roles = Role::where('id', $request->tipouser)->get();
+                $roles = Role::where('id', $request->rol)->get();
                 $usuario->syncRoles($roles);
                 $file->storeAs('public/DocumentosProfesores', $constancia);
+                event(new Registered($usuario));
                 return redirect()->route('registro.create')->with('success', 'Usuario registrado!');
             }else{
                 return 'Este documento ya fue subido';
             }
-
-
                 
         }
 
-        /*$fields= $request->validated();
-                $fields['password'] = Hash::make($fields['password']);
-                $usuario = $this->model::create($fields);
-                $roles = Role::where('id', $request->tipouser)->get();
-                $usuario->syncRoles($roles);
-                //$file->storeAs('public/DocumentosProfesores', $constancia);
-                return redirect()->route('registro.create')->with('success', 'Usuario registrado!');*/
-        //dd($request->constancia);
-        /*$fields= $request->validated();
-        $fields['password'] = Hash::make($fields['password']);
-        $usuario = $this->model::create($fields);
-        $roles = Role::where('id', $request->tipouser)->get();
-        $usuario->syncRoles($roles);
-        return redirect()->route('registro.create')->with('success', 'Usuario registrado!');*/
+        if($request->rol == 4){
+            //dd($request);
+            $fields= $request->validated();
+            $fields['password'] = Hash::make($fields['password']);
+            $usuario = $this->model::create($fields);
+            $roles = Role::where('id', $request->rol)->get();
+            $usuario->syncRoles($roles);
+            //$file->storeAs('public/DocumentosProfesores', $constancia);
+            event(new Registered($usuario));
+            return redirect()->route('dashboard')->with('success', 'Usuario registrado!');
+        }
+
     }
 
     /**
