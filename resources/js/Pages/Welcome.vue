@@ -26,49 +26,143 @@
       <!-- Main Theme Styles + Bootstrap -->
       <link rel="stylesheet" media="screen" href="../assets/css/theme.min.css">
     
-    </head>
-    
-  <header class="header navbar navbar-expand-lg navbar-light bg-light shadow-sm">
-    <div class="container">
-      <a class="navbar-brand" id="logo">
-        <img src="../../../public/img/logo.png" width="47" alt="Silicon">
-        TecNM/Cenidet 
-      </a>
-      <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse2" aria-expanded="false">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="form-check form-switch mode-switch order-lg-2 ms-4 ms-lg-auto me-lg-4" data-bs-toggle="mode">
-        <input type="checkbox" class="form-check-input" id="theme-mode">
-        <label class="form-check-label d-none d-sm-block d-lg-none d-xl-block" for="theme-mode">Light</label>
-        <label class="form-check-label d-none d-sm-block d-lg-none d-xl-block" for="theme-mode">Dark</label>
-      </div>
-      <a id="btn" :href="route('login')" class="btn btn-secondary btn-sm fs-sm rounded order-lg-3 my-3 d-none d-lg-inline-flex">
-        <i id="boxi" class='bx bx-user bx-flashing' ></i>
-        Acceder al sistema
-      </a>
-      <nav id="navegador" class="collapse navbar-collapse">
-        <hr class="d-lg-none mt-3 mb-2">
-        <ul class="navbar-nav me-auto">
-          <li class="nav-item">
-            <a id="lista" :href="route('registro.create')" class="nav-link">Proyectos</a>
-          </li>
-          <li class="nav-item">
-            <a id="lista" :href="route('registro.create')" class="nav-link">Investigadores</a>
-          </li>
-          <li class="nav-item">
-            <a id="lista" :href="route('acercaverano.index')" class="nav-link">Acerca del Verano</a>
-          </li>
-          <li class="dropdown" id="cont">
-            <a id="text" class="dropdown-item" data-bs-toggle="dropdown" aria-expanded="false">Registro</a>
-              <ul class="dropdown-menu" id="menu">
-                <li><a id="opt" class="dropdown-item" :href="route('registro.create')">Registrate aquí</a></li>
-              </ul>
-          </li>
-        </ul>
-      </nav>
-    </div>
-  </header><br><br><br><br>
+    </head> 
 
+  <header class="header navbar navbar-expand-lg navbar-light bg-light navbar-sticky">
+        <div class="container px-3">
+          <a href="index.html" class="navbar-brand pe-3">
+            <img src="../../../public/img/logo.png" width="47" alt="Silicon">
+            TecNM / Cenidet
+          </a>
+          <div id="navbarNav" class="offcanvas offcanvas-end">
+            <div class="offcanvas-header border-bottom">
+              <h5 class="offcanvas-title">Menu</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                  <a id="lista" :href="route('proyectos.index')" class="nav-link">Proyectos</a>
+                </li>
+                <li class="nav-item">
+                  <a id="lista" :href="route('proyectos.index')" class="nav-link">Investigadores</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" aria-current="page">Acerca de</a>
+                  <div class="dropdown-menu p-0">
+                    <div class="d-lg-flex">
+                      <div class="mega-dropdown-column pt-lg-3 pb-lg-4">
+                        <ul class="list-unstyled mb-0">
+                          <li><a id="lista" :href="route('proyectos.create')" class="dropdown-item">Acerca del Verano</a></li>
+                          <li><a id="lista" href="https://veranocientifico.cenidet.tecnm.mx/content/convocatorias/Membresia.pdf" class="dropdown-item">Membresia</a></li>
+                          <li><a id="lista" href="https://veranocientifico.cenidet.tecnm.mx/content/convocatorias/Membresia.pdf" class="dropdown-item">Videos Tutoriales</a></li>
+                          <li><a id="lista" href="https://veranocientifico.cenidet.tecnm.mx/content/convocatorias/Membresia.pdf" class="dropdown-item">Formatos Recomendados</a></li>
+                          <li><a id="lista" href="https://veranocientifico.cenidet.tecnm.mx/content/convocatorias/Membresia.pdf" class="dropdown-item">Presentación Reunión</a></li>
+                          <li><a id="lista" href="https://veranocientifico.cenidet.tecnm.mx/content/convocatorias/Membresia.pdf" class="dropdown-item">Grabación Reunión</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li class="nav-item dropdown">
+                  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                  <div class="dropdown-menu">
+                    <div class="d-lg-flex pt-lg-3">
+                      <div class="mega-dropdown-column">
+                        <h6 class="px-3 mb-2">About</h6>
+                        <ul class="list-unstyled mb-3">
+                          <li><a href="about-v1.html" class="dropdown-item py-1">About v.1</a></li>
+                          <li><a href="about-v2.html" class="dropdown-item py-1">About v.2</a></li>
+                        </ul>
+                        <h6 class="px-3 mb-2">Portfolio</h6>
+                        <ul class="list-unstyled mb-3">
+                          <li><a href="portfolio-grid.html" class="dropdown-item py-1">Grid View</a></li>
+                          <li><a href="portfolio-list.html" class="dropdown-item py-1">List View</a></li>
+                          <li><a href="portfolio-slider.html" class="dropdown-item py-1">Slider View</a></li>
+                          <li><a href="portfolio-courses.html" class="dropdown-item py-1">Courses</a></li>
+                          <li><a href="portfolio-single-project.html" class="dropdown-item py-1">Single Project</a></li>
+                          <li><a href="portfolio-single-course.html" class="dropdown-item py-1">Single Course</a></li>
+                        </ul>
+                      </div>
+                      <div class="mega-dropdown-column">
+                        <h6 class="px-3 mb-2">Blog</h6>
+                        <ul class="list-unstyled mb-3">
+                          <li><a href="blog-list-with-sidebar.html" class="dropdown-item py-1">List View with Sidebar</a></li>
+                          <li><a href="blog-grid-with-sidebar.html" class="dropdown-item py-1">Grid View with Sidebar</a></li>
+                          <li><a href="blog-list-no-sidebar.html" class="dropdown-item py-1">List View no Sidebar</a></li>
+                          <li><a href="blog-grid-no-sidebar.html" class="dropdown-item py-1">Grid View no Sidebar</a></li>
+                          <li><a href="blog-simple-feed.html" class="dropdown-item py-1">Simple Feed</a></li>
+                          <li><a href="blog-single.html" class="dropdown-item py-1">Single Post</a></li>
+                          <li><a href="blog-podcast.hml" class="dropdown-item py-1">Podcast</a></li>
+                        </ul>
+                        <h6 class="px-3 mb-2">Services</h6>
+                        <ul class="list-unstyled mb-3">
+                          <li><a href="services.html" class="dropdown-item py-1">Services Page</a></li>
+                          <li><a href="services-single.html" class="dropdown-item py-1">Service Details</a></li>
+                        </ul>
+                      </div>
+                      <div class="mega-dropdown-column">
+                        <h6 class="px-3 mb-2">Contacts</h6>
+                        <ul class="list-unstyled mb-3">
+                          <li><a href="contacts-v1.html" class="dropdown-item py-1">Contacts v.1</a></li>
+                          <li><a href="contacts-v2.html" class="dropdown-item py-1">Contacts v.2</a></li>
+                        </ul>
+                        <h6 class="px-3 mb-2">Specialty</h6>
+                        <ul class="list-unstyled">
+                          <li><a href="404-v1.html" class="dropdown-item py-1">404 Error v.1</a></li>
+                          <li><a href="404-v2.html" class="dropdown-item py-1">404 Error v.2</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li class="nav-item dropdown">
+                  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Account</a>
+                  <ul class="dropdown-menu">
+                    <li><a href="account-details.html" class="dropdown-item">Account Details</a></li>
+                    <li><a href="account-security.html" class="dropdown-item">Security</a></li>
+                    <li><a href="account-notifications.html" class="dropdown-item">Notifications</a></li>
+                    <li><a href="account-messages.html" class="dropdown-item">Messages</a></li>
+                    <li><a href="account-saved-items.html" class="dropdown-item">Saved Items</a></li>
+                    <li><a href="account-collections.html" class="dropdown-item">My Collections</a></li>
+                    <li><a href="account-payment.html" class="dropdown-item">Payment Details</a></li>
+                    <li><a href="account-signin.html" class="dropdown-item">Sign In</a></li>
+                    <li><a href="account-signup.html" class="dropdown-item">Sign Up</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item">
+                  <a href="docs/getting-started.html" class="nav-link">Docs</a>
+                </li>
+              </ul>
+            </div>
+            <div class="offcanvas-footer border-top">
+              <a href="#" class="btn btn-primary w-100">
+                <i class="bx bx-cart fs-4 lh-1 me-1"></i>
+                &nbsp;Buy now
+              </a>
+            </div>      
+          </div>
+          <div class="form-check form-switch mode-switch pe-lg-1 ms-auto me-4" data-bs-toggle="mode">
+            <input type="checkbox" class="form-check-input" id="theme-mode">
+            <label class="form-check-label d-none d-sm-block" for="theme-mode">Light</label>
+            <label class="form-check-label d-none d-sm-block" for="theme-mode">Dark</label>
+          </div>
+          <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <a href="#" class="btn btn-primary btn-sm fs-sm rounded d-none d-lg-inline-flex">
+            <i class="bx bx-cart fs-5 lh-1 me-1"></i>
+            &nbsp;Buy now
+          </a>
+        </div>
+      </header>
+
+  <body>
+    <!----<div class="page-loading active">
+      <div class="page-loading-inner">
+        <div class="page-spinner"></div><span>Cargando...</span>
+      </div>
+    </div>-->
   
   <section class="jarallax dark-mode bg-dark py-xxl-5" data-jarallax data-speed="0.4">
     
@@ -149,8 +243,6 @@
           </div>
         </div>
       </section>
-
-  
 
   <div class="contsistema container ">
 
@@ -256,14 +348,12 @@
       </div>
     </div><br><br><hr><br><br><br><br>
 
-  
-
   <div class="pie">
           <h1>Accede a Nuestro Sistema o </h1>
           <h1>Suscríbete</h1><br>
           <p>© Todos los derechos Reservados. Hecho con por el <i class='bx bxs-heart bx-flashing' style="color:#f30909" ></i> <a id="linktec" target="blank" href="https://cenidet.tecnm.mx/">TecNM/Cenidet</a></p><br><br>
   </div>
-   
+</body>
 
 <!----<div id="my-carousel" class="carousel" data-ride="carousel">
   <div class="carousel-inner">
@@ -308,7 +398,7 @@ let mode = window.localStorage.getItem('mode'),
       root.classList.add('dark-mode');
     } else {
     root.classList.remove('dark-mode');
-    }
+    };
 
     (function () {
       window.onload = function () {

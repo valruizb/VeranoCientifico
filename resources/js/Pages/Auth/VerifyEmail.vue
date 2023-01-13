@@ -12,16 +12,13 @@
         Si usted no recibió el correo, con gusto te enviaremos otro.
       </div>
 
-      <br><br><div class="alert alert-success" role="alert" v-if="verificationLinkSent">
-        Se ha enviado un nuevo enlace de verificación a la dirección de correo electrónico que proporcionó
-        durante el registro.
-      </div>
-
+      
       <form @submit.prevent="submit">
         <div class="mt-4 d-flex justify-content-between">
           <jet-button class="boton"
             :class="{ 'text-white-50': form.processing }"
             :disabled="form.processing"
+            @click = "verificationLinkSent"
           >
             <div v-show="form.processing" class="spinner-border spinner-border-sm" role="status">
               <span class="visually-hidden">Loading...</span>
@@ -34,7 +31,7 @@
             method="post"
             as="button"
             class="btn btn-link"
-            >Log out</Link
+            >Salir</Link
           >
         </div>
       </form>
@@ -48,6 +45,8 @@ import JetAuthenticationCard from "@/Jetstream/AuthenticationCard.vue"
 import JetAuthenticationCardLogo from "@/Jetstream/AuthenticationCardLogo.vue"
 import JetButton from "@/Jetstream/Button.vue"
 import { Head, Link } from "@inertiajs/inertia-vue3"
+import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
 
 export default defineComponent({
   components: {
@@ -71,14 +70,19 @@ export default defineComponent({
   methods: {
     submit() {
       this.form.post(this.route("verification.send"));
-    }
-  },
+    },
 
-  computed: {
-    verificationLinkSent() {
-      return this.status === "verification-link-sent";
-    }
-  }
+    verificationLinkSent(){
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Link reenviado',
+        showConfirmButton: false,
+        timer: 3500
+      });
+    }, 
+  },
+ 
 })
 </script>
 <style :scope>

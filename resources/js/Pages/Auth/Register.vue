@@ -266,16 +266,47 @@
         name_doc:"", 
         password:"", 
         password_confirmation:""});
-      const guardar = () => {
-        if(form.rol == 3){
-          form.name_doc = "formatosolicitud";
-        }
-        if(form.rol == 2){
-          form.name_doc = "constancia";
-        }
-        form.post(route("registro.store"));
-      };
 
+        const guardar = () => {
+          const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+            confirmButton: 'btn btn-success',
+            cancelButton: 'btn btn-danger'
+          },
+          buttonsStyling: false
+        })
+        swalWithBootstrapButtons.fire({
+          title: '¿Desea confirmar su registro?',
+          icon: 'info',
+          showCancelButton: true,
+          confirmButtonText: 'Si',
+          cancelButtonText: 'No',
+          reverseButtons: true
+        }).then((result) => {
+          if (result.isConfirmed) {
+    
+            if(form.rol == 3){
+              form.name_doc = "formatosolicitud";
+            }
+            if(form.rol == 2){
+              form.name_doc = "constancia";
+            }
+            form.post(route("registro.store"));
+          
+            swalWithBootstrapButtons.fire(
+            'Registrado',
+            'Revisa la bandeja de tu correo electrónico y verifíquelo',
+            'success'
+            )
+          } else if (result.dismiss === Swal.DismissReason.cancel) {
+              swalWithBootstrapButtons.fire(
+              'Registro cancelado',
+              '',
+              'error'
+              )
+            }
+          })
+        };
       return { form, guardar};
     },
 

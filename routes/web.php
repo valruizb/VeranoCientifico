@@ -39,7 +39,7 @@ Route::resource('acercaverano', AcercaVeranoController::class);
 
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
-    return redirect('/home');
+    return redirect('/dashboard');
 })->middleware(['auth', 'signed'])->name('verification.verify');
 
 
