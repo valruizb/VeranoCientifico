@@ -15,22 +15,14 @@ return new class extends Migration
     {
         Schema::create('renapo', function (Blueprint $table) {
             $table->id();
-            $table->string('curp_consulta', 18);
-            $table->string('curp_respuesta', 18)->nullable;
-            $table->string('nombre')->nullable();
-            $table->string('paterno')->nullable();
-            $table->string('materno')->nullable();
-            $table->date('fec_nacimiento')->nullable();
-            $table->integer('id_user')->nullable();
-            $table->string('nacionalidad')->nullable();
-            $table->smallinteger('estatus')->default(1);
+            $table->string('curp', 18);
+            $table->string('curpRespuesta', 18)->nullable();
+            $table->string('nombres')->nullable();
+            $table->string('apellidoPaterno')->nullable();
+            $table->string('apellidoMaterno')->nullable();
+            
             $table->timestamps();
             $table->softDeletes();
-
-            $table->index('curp_consulta');
-            $table->index('curp_respuesta');
-            $table->index('id_user');
-            $table->index('estatus');
         });
     }
 

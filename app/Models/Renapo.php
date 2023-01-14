@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Renapo extends Model
 {
     use HasFactory;
+    protected $table = 'renapo'; 
+
+    protected $fillable = [
+        'curp', 
+        'curp_respuesta', 
+        'nombres', 
+        'apellidoPaterno', 
+        'apellidoMaterno', 
+    ];
 }

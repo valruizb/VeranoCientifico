@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Registro;
+use App\Models\Renapo;
 use App\Models\User;
 use App\Models\tematica;
 use App\Models\subtematica;
@@ -19,6 +20,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Auth\Events\Registered;
 
 class RegistroController extends Controller
@@ -56,18 +58,14 @@ class RegistroController extends Controller
      */
     public function create()
     {  
+        $thematic = tematica::all();
+        $thematic->load('subtematica');
         return Inertia::render("{$this->source}Register", [
-            'tematica'=>tematica::orderBy('name')->get(),
+            'tematica'=>$thematic,
             'instituto' =>Instituciones::orderBy('id')->get(),
             'roles'=> Role::with('permissions:id,name,description,module_key')->orderBy('name')->select('id', 'name', 'description')->get(),
-             /*'subtematica' => tematica::subtematica()->get(),
-           'sub1' =>Subtematica::orderBy('id')->where('id_tematica', '=' ,'1')->get(),
-            'sub2' =>Subtematica::orderBy('id')->where('id_tematica', '=' ,'2')->get(),
-            'sub3' =>Subtematica::orderBy('id')->where('id_tematica', '=' ,'3')->get(),
-            'sub4' =>Subtematica::orderBy('id')->where('id_tematica', '=' ,'4')->get(),
-            'sub5' =>Subtematica::orderBy('id')->where('id_tematica', '=' ,'5')->get(),
-            'sub6' =>Subtematica::orderBy('id')->where('id_tematica', '=' ,'6')->get(),
-            'sub7' =>Subtematica::orderBy('id')->where('id_tematica', '=' ,'7')->get(),*/
+            'subtematica' => subtematica::get(),
+           
         ]);
     }
 
@@ -184,9 +182,24 @@ class RegistroController extends Controller
      * @param  \App\Models\Registro  $registro
      * @return \Illuminate\Http\Response
      */
-    public function show(Registro $registro)
+    public function show($request)
     {
-        abort(405);
+        if(Renapo::where('curp',$request)->exists()){
+            $records = Renapo::where('curp',$request)->get();
+        }else{
+            $response = Http::get("https://curpws.bienestar.gob.mx/ServiceCurpPro/ConsultaPor/Curp/".$request);
+            $data = $response->object();
+            //dd($data);
+            $reg = new Renapo();
+            $reg->curp = $data->response->curp;
+            $reg->curpRespuesta = $data->response->curpRespuesta;
+            $reg->nombres = $data->response->nombres;
+            $reg->apellidopaterno = $data->response->apellidoPaterno;
+            $reg->apellidomaterno = $data->response->apellidoMaterno;
+            $reg->save();
+            $records = Renapo::where('curp',$request)->get();
+        }
+        return $records[0];
     }
 
     /**

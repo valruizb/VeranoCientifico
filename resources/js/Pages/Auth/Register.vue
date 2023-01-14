@@ -95,6 +95,35 @@
 
         <jet-validation-errors class="mb-3"/>
         <div class="forma2"> 
+
+          <div class="mb-0 m-4">
+            <jet-label for="curp" value="Curp:" /><br />
+            <b> Teclee su curp </b>
+            <div class="d-flex justify-content-end align-items-baseline">
+              <jet-input
+                v-on:keyup.enter="formSubmit()"
+                id="curp"
+                type="text"
+                v-model="curp.curp"
+                required
+              />
+              
+
+              <jet-button
+                class="col-md-4 m-4"
+                :class="{ 'text-white-10': form.processing }"
+                :disabled="form.processing"
+                v-on:click="formSubmit()"
+              >
+                <i class="bi bi-search"></i>
+              </jet-button>
+            </div>
+            <div>
+              <div class="me-3 text-decoration-none" v-if="feedback != ''">
+                <span style="color: red" v-text="feedback"></span>
+              </div>
+            </div>
+          </div>
           
         <form @submit.prevent="guardar" enctype="multipart/form-data">
           <div class="forma">
@@ -135,14 +164,15 @@
           </div>
 
           <div class="profesor" v-if="form.rol === 2">
-            <label for="areaconoc" >*Área de conocimiento</label><label for="subareaconoc">*Subarea de conocimiento</label><br>
+            <label for="areaconoc" >*Área de conocimiento</label><label v-if="form.thematic_id != ''" for="subareaconoc">*Subarea de conocimiento</label><br>
             <select id="areaconoci" :class="{'is-invalid':form.errors.thematic_id}" v-model="form.thematic_id">
               <option disabled value="">Seleccione un elemento</option>
               <option v-for="tema in tematica"  v-bind:value="tema.id" v-bind:key="tema.id">{{ tema.name }}</option>
             </select>
-            <select id="subareaconoc" :class="{'is-invalid':form.errors.subthematic_id}" v-model="form.subthematic_id">
+            <select  v-if="form.thematic_id != ''" id="subareaconoc" :class="{'is-invalid':form.errors.subthematic_id}" v-model="form.subthematic_id">
               <option disabled value="">Seleccione un elemento</option>
-              <option v-for="sub in subtematica" v-bind:value="sub.id" v-bind:key="sub.id">{{ sub.name }}</option>
+              <option v-for="item in tematica[form.thematic_id-1].subtematica" :value="item.id"
+                  :key="item">{{ item.name }}</option>
             </select>
           </div>
 
@@ -203,7 +233,7 @@
         <div class="pie">
           <h1>Accede a Nuestro Sistema o </h1>
           <h1>Suscríbete</h1><br>
-          <p>© Todos los derechos Reservados. Hecho con por el<i class='bx bxs-heart bx-flashing' style='color:#f30909'></i> <a id="linktec" target="blank" href="https://cenidet.tecnm.mx/">TecNM/Cenidet</a></p><br><br>
+          <p>© Todos los derechos Reservados. Hecho con por el<i class='bx bxs-heart bx-flashing' style='color: #f30909'></i> <a id="linktec" target="blank" href="https://cenidet.tecnm.mx/">TecNM/Cenidet</a></p><br><br>
         </div>
   </template>
 
@@ -245,6 +275,9 @@
     },
       
     setup(props) {
+
+      const curp = useForm({ curp: "" });
+
       const form = useForm({ 
         rol: "", 
         name: "",
@@ -307,8 +340,33 @@
             }
           })
         };
-      return { form, guardar};
+      return { form, guardar, curp};
     },
+
+    methods: {
+    formSubmit() {
+      console.log(this.form.area);
+      axios
+        .get(route("registro.show", this.curp.curp))
+        .then((response) => {
+          this.form.curp = response["data"]["curp"];
+          this.form.name = response["data"]["nombres"];
+          this.form.lastnamep = response["data"]["apellidoPaterno"];
+          this.form.lastnamem = response["data"]["apellidoMaterno"];
+          this.feedback = "";
+        })
+        .catch((error) => {
+          error.response.data.exception == "TypeError"
+            ? (this.feedback = "Curp Incorrecta")
+            : (this.feedback = error.response.data.exception);
+        });
+    },
+    submit() {
+      this.form.post(this.route("register"), {
+        onFinish: () => this.form.reset("password", "password_confirmation"),
+      });
+    },
+  },
 
     
   };

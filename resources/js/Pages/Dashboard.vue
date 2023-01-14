@@ -2,7 +2,7 @@
   <Profe v-if="$page.props.user.rol == 2">
   </Profe>
 
-<Admin v-if="$page.props.user.rol == 3">
+<Admin v-if="$page.props.user.rol == 4">
 </Admin>
 
 </template>
