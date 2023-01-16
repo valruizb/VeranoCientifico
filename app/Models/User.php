@@ -12,10 +12,10 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
 use Spatie\Permission\Traits\HasRoles; 
+//implements MustVerifyEmail
 
 
-
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable 
 {
     use HasApiTokens;
     use HasFactory;

@@ -45,6 +45,30 @@ class UsuarioSeeder extends Seeder
             'password' => Hash::make('Password'),
         ]);
 
+        DB::table('users')->insert([
+            'name' => 'Enrique', 
+            'lastnamep' => 'Hernandez', 
+            'lastnamem' => 'Gomez', 
+            'rol' => '3', 
+            'email' => 'kike12@gmail.com',
+            'emailcon' => 'kike12@gmail.com',
+            'phone' => '7773415872',
+            'institution_id' => 5,
+            'password' => Hash::make('Password'),
+        ]);
+
+        DB::table('users')->insert([
+            'name' => 'Enrique', 
+            'lastnamep' => 'Hernandez', 
+            'lastnamem' => 'Gomez', 
+            'rol' => '4', 
+            'email' => 'kike123@gmail.com',
+            'emailcon' => 'kike123@gmail.com',
+            'phone' => '7773415872',
+            'institution_id' => 5,
+            'password' => Hash::make('Password'),
+        ]);
+
        
         //DB::table('users')->insert(['nombre' => 'Noé Castro Sánchez', 'tipouser' => '1', 'correo' => 'noe@gmail.com', 'password' => Hash::make('Password'),]);
 

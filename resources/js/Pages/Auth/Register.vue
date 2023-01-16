@@ -136,14 +136,14 @@
 
           <div class="forma">
             <label for="nombre">*Nombre(s)</label> <label for="apellidop">*Apellido Paterno</label><label for="apellidom" >*Apellido Materno</label> 
-            <input  :class="{ 'is-invalid': form.errors.name }" id="nombre" type="text"  v-model="form.name"  required autofocus placeholder="Teclee su Nombre" >
-            <input  :class="{ 'is-invalid': form.errors.lastnamep }" id="apellidop" type="text"  v-model="form.lastnamep" required autofocus placeholder="Teclee su Apellido Paterno" > 
-            <input  :class="{ 'is-invalid': form.errors.lastnamem }" id="apellidom" type="text"  v-model="form.lastnamem" required autofocus placeholder="Teclee su Apellido Materno" >
+            <input  :class="{ 'is-invalid': form.errors.name }" id="nombre" type="text"  v-model="form.name"  required autofocus placeholder="Teclee su Nombre" disabled>
+            <input  :class="{ 'is-invalid': form.errors.lastnamep }" id="apellidop" type="text"  v-model="form.lastnamep" required autofocus placeholder="Teclee su Apellido Paterno" disabled> 
+            <input  :class="{ 'is-invalid': form.errors.lastnamem }" id="apellidom" type="text"  v-model="form.lastnamem" required autofocus placeholder="Teclee su Apellido Materno" disabled>
           </div>
 
           <div class="forma">
             <label for="curp" value="CURP*" >*CURP</label><label for="correo" >*Correo</label><label for="correocon">*Confirmar correo</label> 
-            <input  :class="{ 'is-invalid': form.errors.curp }" id="curp" type="text"  v-model="form.curp" required autofocus placeholder="Teclee su Curp" />
+            <input  :class="{ 'is-invalid': form.errors.curp }" id="curp" type="text"  v-model="form.curp" required autofocus placeholder="Teclee su Curp" disabled/>
             <input  id="correo" type="email"  v-model="form.email" required autofocus placeholder="Teclee su Correo" />
             <input  id="correocon" type="email"  v-model="form.emailcon" required autofocus placeholder="Teclee nuevamente su Correo" />
           </div>
@@ -303,42 +303,42 @@
         const guardar = () => {
           const swalWithBootstrapButtons = Swal.mixin({
             customClass: {
-            confirmButton: 'btn btn-success',
-            cancelButton: 'btn btn-danger'
-          },
-          buttonsStyling: false
-        })
-        swalWithBootstrapButtons.fire({
-          title: '¿Desea confirmar su registro?',
-          icon: 'info',
-          showCancelButton: true,
-          confirmButtonText: 'Si',
-          cancelButtonText: 'No',
-          reverseButtons: true
-        }).then((result) => {
-          if (result.isConfirmed) {
-    
-            if(form.rol == 3){
-              form.name_doc = "formatosolicitud";
-            }
-            if(form.rol == 2){
-              form.name_doc = "constancia";
-            }
-            form.post(route("registro.store"));
-          
-            swalWithBootstrapButtons.fire(
-            'Registrado',
-            'Revisa la bandeja de tu correo electrónico y verifíquelo',
-            'success'
-            )
-          } else if (result.dismiss === Swal.DismissReason.cancel) {
-              swalWithBootstrapButtons.fire(
-              'Registro cancelado',
-              '',
-              'error'
-              )
-            }
+              confirmButton: 'btn btn-success',
+              cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
           })
+          swalWithBootstrapButtons.fire({
+            title: '¿Desea confirmar su registro?',
+            icon: 'info',
+            showCancelButton: true,
+            confirmButtonText: 'Si',
+            cancelButtonText: 'No',
+            reverseButtons: true
+          }).then((result) => {
+            if (result.isConfirmed) {
+    
+              if(form.rol == 3){
+                form.name_doc = "formatosolicitud";
+              }
+              if(form.rol == 2){
+                form.name_doc = "constancia";
+              }
+              form.post(route("registro.store"));
+            
+              swalWithBootstrapButtons.fire(
+                'Registrado',
+                'Revisa la bandeja de tu correo electrónico y verifíquelo',
+                'success'
+              )
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                swalWithBootstrapButtons.fire(
+                'Registro cancelado',
+                '',
+                'error'
+                )
+              }
+            })
         };
       return { form, guardar, curp};
     },
@@ -400,6 +400,10 @@
       padding: 0px;
     }
 
+    form input[id="curp"], [id="nombre"], [id="apellidop"], [id="apellidom"]{
+      cursor:not-allowed;
+    }
+
     form input[type="text"],[type="email"], [type="password"], select{
       display: inline;
       border-color: rgba(39, 38, 38, 0.363);
@@ -450,6 +454,7 @@
       font-weight:bold;
       color: black;
       font-size: 16px;
+      
     }
 
     form label[for="formatosolicitud"]{
