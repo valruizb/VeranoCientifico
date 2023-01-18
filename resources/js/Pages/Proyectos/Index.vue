@@ -183,10 +183,7 @@
                     status: props.status ?? 1,
                 },
             });
-            const search = () => {
-                props.loadingResults = true;
-                Inertia.replace(route(`${props.routeName}index`, state.filters));
-            };
+            
 
             const eliminar = (idel) => {
               Swal.fire({
@@ -203,6 +200,11 @@
               }
             });
           };
+
+          const search = () => {
+                props.loadingResults = true;
+                Inertia.replace(route(`${props.routeName}index`, state.filters));
+            };
 
           return {
                 ...toRefs(state),

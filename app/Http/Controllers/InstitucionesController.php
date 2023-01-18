@@ -6,6 +6,8 @@ use App\Models\Instituciones;
 use App\Http\Requests\StoreInstitucionesRequest;
 use App\Http\Requests\UpdateInstitucionesRequest;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class InstitucionesController extends Controller
 {
@@ -21,17 +23,33 @@ class InstitucionesController extends Controller
     
         public function __construct()
         {
-            $this->routeName = "instituciones.";
-            $this->source    = "Instituciones/";
-            $this->model     = new Instituciones();
-            $this->middleware("permission:{$this->module}.index")->only(['index', 'show']);
+            $this->source = 'Instituciones/';
+        $this->model = new Instituciones();
+        $this->routeName = 'instituciones.';
+
+            
+            /*$this->middleware("permission:{$this->module}.index")->only(['index', 'show']);
             $this->middleware("permission:{$this->module}.store")->only(['store', 'create']);
             $this->middleware("permission:{$this->module}.update")->only(['update', 'edit']);
-            $this->middleware("permission:{$this->module}.delete")->only(['destroy', 'edit']); 
+            $this->middleware("permission:{$this->module}.delete")->only(['destroy', 'edit']); */
         }
-    public function index()
+    public function index(Request $request)
     {
-        //
+        // $request->status = $request->status === null ? true : $request->status;
+         $records = $request->status == '0' ? $this->model->onlyTrashed() : $this->model;
+         $records= 
+         $records = $records->when($request->search, function ($query, $search) {
+             if ($search != '') {
+                 $query->where('name', 'LIKE', '%' . $search . '%');
+             }
+         });
+         return Inertia::render("Instituciones/Index", [
+             'titulo '          => 'Instituciones Registradas',
+             'routeName'      => $this->routeName,
+             'institucion'=>  $records->orderBy('id') -> paginate(5),
+             'loadingResults' => false,
+             'search'         => $request->search ?? '',
+             'status'         => (bool) $request->status, ]);
     }
 
     /**
@@ -68,7 +86,7 @@ class InstitucionesController extends Controller
      */
     public function show(Instituciones $instituciones)
     {
-        //
+        abort(405);
     }
 
     /**
@@ -91,7 +109,8 @@ class InstitucionesController extends Controller
      */
     public function update(UpdateInstitucionesRequest $request, Instituciones $instituciones)
     {
-        //
+        $instituciones->update($request->validated());
+        return redirect()->route('instituciones.index')->with('success', 'Módulo actualizado correctamente!');
     }
 
     /**
@@ -102,6 +121,7 @@ class InstitucionesController extends Controller
      */
     public function destroy(Instituciones $instituciones)
     {
-        //
+        $instituciones->delete();
+        return redirect()->route('instituciones.index')->with('success', 'Proyecto eliminado con éxito');
     }
 }

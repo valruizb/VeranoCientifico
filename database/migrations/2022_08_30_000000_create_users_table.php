@@ -19,9 +19,10 @@ return new class extends Migration
             $table->string('name');
             $table->string('lastnamep');
             $table->string('lastnamem');
-            $table->string('curp')->unique()->nullable();
-            $table->string('email')->unique();
-            $table->string('emailcon')->unique();
+            $table->string('curp')->nullable();
+            $table->string('rfc')->nullable();
+            $table->string('email');
+            $table->string('emailcon');
             $table->string('phone');
             $table->unsignedBigInteger('institution_id');
             $table->string('requestform')->nullable();//revisor
@@ -34,6 +35,7 @@ return new class extends Migration
             $table->string('constancy')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('password_confirmation')->nullable();
             $table->rememberToken();
             $table->foreign('institution_id')->references('id')->on('institutions');
             $table->foreign('thematic_id')->references('id')->on('thematics');

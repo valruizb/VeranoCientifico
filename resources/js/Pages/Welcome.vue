@@ -351,7 +351,7 @@
   <div class="pie">
           <h1>Accede a Nuestro Sistema o </h1>
           <h1>Suscríbete</h1><br>
-          <p>© Todos los derechos Reservados. Hecho con por el <i class='bx bxs-heart bx-flashing' style="color:#f30909" ></i> <a id="linktec" target="blank" href="https://cenidet.tecnm.mx/">TecNM/Cenidet</a></p><br><br>
+          <p>© Todos los derechos Reservados. Hecho con <i class='bx bxs-heart bx-flashing' style="color:#f30909" ></i> por el <a id="linktec" target="blank" href="https://cenidet.tecnm.mx/">TecNM/Cenidet</a></p><br><br>
   </div>
 </body>
 

@@ -125,10 +125,10 @@
             </div>
           </div>
           
-        <form @submit.prevent="guardar" enctype="multipart/form-data">
+        <form @submit.prevent="guardar" enctype="multipart/form-data" v-if="form.curp!=''">
           <div class="forma">
             <label for="tipouser">*Tipo de Usuario</label>
-            <select class="" id="tipouser" :class="{'is-invalid':form.errors.rol}" v-model="form.rol">
+            <select required class="" id="tipouser" :class="{'is-invalid':form.errors.rol}" v-model="form.rol">
               <option disabled value="">Seleccione un elemento</option>
               <option v-for="rol in roles" v-bind:value="rol.id" v-bind:key="rol.id">{{ rol.name }}</option>
               </select>
@@ -188,7 +188,7 @@
             <input  id="puesto" type="text"  v-model="form.job" required  placeholder="Teclee su Puesto que Desempeña" />
             <input id="constancia"
                 class="block w-full text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                type="file" @input="form.constancy = $event.target.files[0]" />
+                type="file" @input="form.constancy = $event.target.files[0]" required/>
                 <jet-input-error :message="form.errors.constancy" />
                
           </div>         
@@ -233,7 +233,7 @@
         <div class="pie">
           <h1>Accede a Nuestro Sistema o </h1>
           <h1>Suscríbete</h1><br>
-          <p>© Todos los derechos Reservados. Hecho con por el<i class='bx bxs-heart bx-flashing' style='color: #f30909'></i> <a id="linktec" target="blank" href="https://cenidet.tecnm.mx/">TecNM/Cenidet</a></p><br><br>
+          <p>© Todos los derechos Reservados. Hecho con por el<i class='bx bxs-heart bx-flashing' style='color: #f30909'></i><a id="linktec" target="blank" href="https://cenidet.tecnm.mx/">TecNM/Cenidet</a></p><br><br>
         </div>
   </template>
 
@@ -285,6 +285,7 @@
         lastnamem:"", 
         email:"", 
         curp:"",
+        rfc:"",
         emailcon:"", 
         phone:"", 
         institution_id:"", 
@@ -301,44 +302,101 @@
         password_confirmation:""});
 
         const guardar = () => {
-          const swalWithBootstrapButtons = Swal.mixin({
-            customClass: {
-              confirmButton: 'btn btn-success',
-              cancelButton: 'btn btn-danger'
-            },
-            buttonsStyling: false
-          })
-          swalWithBootstrapButtons.fire({
-            title: '¿Desea confirmar su registro?',
-            icon: 'info',
-            showCancelButton: true,
-            confirmButtonText: 'Si',
-            cancelButtonText: 'No',
-            reverseButtons: true
-          }).then((result) => {
-            if (result.isConfirmed) {
-    
-              if(form.rol == 3){
-                form.name_doc = "formatosolicitud";
-              }
-              if(form.rol == 2){
-                form.name_doc = "constancia";
-              }
-              form.post(route("registro.store"));
-            
-              swalWithBootstrapButtons.fire(
-                'Registrado',
-                'Revisa la bandeja de tu correo electrónico y verifíquelo',
-                'success'
-              )
-            } else if (result.dismiss === Swal.DismissReason.cancel) {
-                swalWithBootstrapButtons.fire(
-                'Registro cancelado',
-                '',
-                'error'
-                )
-              }
+          if(form.rol == "4" && form.name != "" && form.lastnamep != "" && form.lastnamem != "" && form.curp != "" && form.email != "" && form.emailcon != "" && form.phone != "" && form.institution_id != "" && form.password != "" && form.password_confirmation != ""){
+            const swalWithBootstrapButtons = Swal.mixin({
+              customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+              },
+              buttonsStyling: false
             })
+            swalWithBootstrapButtons.fire({
+              title: '¿Desea confirmar su registro?',
+              icon: 'info',
+              showCancelButton: true,
+              confirmButtonText: 'Si',
+              cancelButtonText: 'No',
+              reverseButtons: true
+            }).then((result) => {
+              if (result.isConfirmed) {
+                form.post(route("registro.store"));
+              
+                
+              } else if (result.dismiss === Swal.DismissReason.cancel) {
+                  swalWithBootstrapButtons.fire(
+                  'Registro cancelado',
+                  '',
+                  'error'
+                  )
+                }
+              })
+          }else if (form.rol == "2" && form.name != "" && form.lastnamep != "" && form.lastnamem != "" && form.curp != "" && form.email != "" && form.emailcon != "" && form.phone != "" && form.institution_id != "" && form.password != "" && form.password_confirmation != "" && form.thematic_id != "" && form.subthematic_id != "" && form.maxgrade != "" && form.invline != "" && form.snilevel != ""&& form.constancy != ""){
+            const swalWithBootstrapButtons = Swal.mixin({
+              customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+              },
+              buttonsStyling: false
+            })
+            swalWithBootstrapButtons.fire({
+              title: '¿Desea confirmar su registro?',
+              icon: 'info',
+              showCancelButton: true,
+              confirmButtonText: 'Si',
+              cancelButtonText: 'No',
+              reverseButtons: true
+            }).then((result) => {
+              if (result.isConfirmed) {
+
+                form.name_doc = "Constancia";
+        
+                form.post(route("registro.store"));
+              
+                
+              } else if (result.dismiss === Swal.DismissReason.cancel) {
+                  swalWithBootstrapButtons.fire(
+                  'Registro cancelado',
+                  '',
+                  'error'
+                  )
+                }
+              })
+
+
+          }else if(form.rol == "3" && form.name != "" && form.lastnamep != "" && form.lastnamem != "" && form.curp != "" && form.email != "" && form.emailcon != "" && form.phone != "" && form.institution_id != "" && form.password != "" && form.password_confirmation != "" && form.requestform != ""){
+            const swalWithBootstrapButtons = Swal.mixin({
+              customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+              },
+              buttonsStyling: false
+            })
+            swalWithBootstrapButtons.fire({
+              title: '¿Desea confirmar su registro?',
+              icon: 'info',
+              showCancelButton: true,
+              confirmButtonText: 'Si',
+              cancelButtonText: 'No',
+              reverseButtons: true
+            }).then((result) => {
+              if (result.isConfirmed) {
+
+                form.name_doc = "FormatoSolicitud";
+        
+                form.post(route("registro.store"));
+              
+                
+              } else if (result.dismiss === Swal.DismissReason.cancel) {
+                  swalWithBootstrapButtons.fire(
+                  'Registro cancelado',
+                  '',
+                  'error'
+                  )
+                }
+              })
+          }else{
+            console.log('Hola');
+          }
         };
       return { form, guardar, curp};
     },

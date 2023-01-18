@@ -1,4 +1,6 @@
 <template>
+
+  <Head> </Head>
   <Profe v-if="$page.props.user.rol == 2"></Profe>
 
   <Admin v-if="$page.props.user.rol == 1"></Admin>
@@ -7,8 +9,19 @@
 
   <Revisor v-if="$page.props.user.rol == 3"></Revisor>
 
-<body class="position-relative" data-bs-spy="scroll" data-bs-offset="150" data-bs-target="#jumpToNav">
-<section class="container pt-5">
+<body>
+
+<!-- Page loading spinner 
+<div class="page-loading active">
+  <div class="page-loading-inner">
+    <div class="page-spinner"></div><span>Loading...</span>
+  </div>
+</div>-->
+
+
+
+<main class="page-wrapper">
+  <section class="container pt-5">
         <div class="row">
           <aside class="col-lg-3 col-md-4 border-end pb-5 mt-n5">
             <div class="position-sticky top-0">
@@ -23,41 +36,25 @@
                 <p class="mb-3 pb-3">{{ $page.props.user.email}}</p>
                 <button type="button" class="btn btn-secondary w-100 d-md-none mt-n2 mb-3" data-bs-toggle="collapse" data-bs-target="#account-menu">
                   <i class="bx bxs-user-detail fs-xl me-2"></i>
-                  Account menu
+                  Menú
                   <i class="bx bx-chevron-down fs-lg ms-1"></i>
                 </button>
                 <div id="account-menu" class="list-group list-group-flush collapse d-md-block">
                   <a href="account-details.html" class="list-group-item list-group-item-action d-flex align-items-center active">
                     <i class="bx bx-cog fs-xl opacity-60 me-2"></i>
-                    Accountt Details
+                    Detalles de la cuenta
                   </a>
-                  <a href="account-security.html" class="list-group-item list-group-item-action d-flex align-items-center">
+                  <a :href="route('profile.show')" class="list-group-item list-group-item-action d-flex align-items-center">
                     <i class="bx bx-lock-alt fs-xl opacity-60 me-2"></i>
-                    Security
+                    Seguridad de la cuenta
                   </a>
                   <a href="account-notifications.html" class="list-group-item list-group-item-action d-flex align-items-center">
                     <i class="bx bx-bell fs-xl opacity-60 me-2"></i>
-                    Notifications
-                  </a>
-                  <a href="account-messages.html" class="list-group-item list-group-item-action d-flex align-items-center">
-                    <i class="bx bx-chat fs-xl opacity-60 me-2"></i>
-                    Messages
-                  </a>
-                  <a href="account-saved-items.html" class="list-group-item list-group-item-action d-flex align-items-center">
-                    <i class="bx bx-bookmark fs-xl opacity-60 me-2"></i>
-                    Saved Items
-                  </a>
-                  <a href="account-collections.html" class="list-group-item list-group-item-action d-flex align-items-center">
-                    <i class="bx bx-collection fs-xl opacity-60 me-2"></i>
-                    My Collections
-                  </a>
-                  <a href="account-payment.html" class="list-group-item list-group-item-action d-flex align-items-center">
-                    <i class="bx bx-credit-card-front fs-xl opacity-60 me-2"></i>
-                    Payment Details
+                    Notificaciones
                   </a>
                   <a href="account-signin.html" class="list-group-item list-group-item-action d-flex align-items-center">
                     <i class="bx bx-log-out fs-xl opacity-60 me-2"></i>
-                    Sign Out
+                    Cerrar sesión
                   </a>
                 </div>
               </div>
@@ -65,18 +62,17 @@
           </aside>
 
 
-          <!-- Account details -->
           <div class="col-md-8 offset-lg-1 pb-5 mb-2 mb-lg-4 pt-md-5 mt-n3 mt-md-0">
             <div class="ps-md-3 ps-lg-0 mt-md-2 py-md-4">
-              <h1 class="h2 pt-xl-1 pb-3">Account Details</h1>
+              <h1 class="h2 pt-xl-1 pb-3"><i class='bx bx-lock-open-alt bx-flashing' style='color:#07179a'></i> B I E N V E N I D O</h1><hr><br>
 
               <!-- Basic info -->
-              <h2 class="h5 text-primary mb-4">Basic info</h2>
+              <h2 class="h5 text-primary mb-4">Información sobre tu cuenta</h2>
               <form class="needs-validation border-bottom pb-3 pb-lg-4" novalidate>
                 <div class="row pb-2">
                   <div class="col-sm-6 mb-4">
-                    <label for="fn" class="form-label fs-base">First name</label>
-                    <input type="text" id="fn" class="form-control form-control-lg" value="John" required>
+                    <label for="fn" class="form-label fs-base">Teléfono</label>
+                    <input type="text" id="fn" class="form-control form-control-lg" value="{{ page.props.user.name}}" required>
                     <div class="invalid-feedback">Please enter your first name!</div>
                   </div>
                   <div class="col-sm-6 mb-4">
@@ -103,83 +99,12 @@
                   <button type="submit" class="btn btn-primary">Save changes</button>
                 </div>
               </form>
-
-              <!-- Address -->
-              <h2 class="h5 text-primary pt-1 pt-lg-3 my-4">Address</h2>
-              <form class="needs-validation border-bottom pb-2 pb-lg-4" novalidate>
-                <div class="row pb-2">
-                  <div class="col-sm-6 mb-4">
-                    <label for="country" class="form-label fs-base">Country</label>
-                    <select id="country" class="form-select form-select-lg" required>
-                      <option value="" disabled>Choose country</option>
-                      <option value="Australia">Australia</option>
-                      <option value="Belgium">Belgium</option>
-                      <option value="Canada">Canada</option>
-                      <option value="Denmark">Denmark</option>
-                      <option value="USA" selected>USA</option>
-                    </select>
-                    <div class="invalid-feedback">Please choose your country!</div>
-                  </div>
-                  <div class="col-sm-6 mb-4">
-                    <label for="state" class="form-label fs-base">State</label>
-                    <select id="state" class="form-select form-select-lg" required>
-                      <option value="" disabled>Choose state</option>
-                      <option value="Arizona">Arizona</option>
-                      <option value="California">California</option>
-                      <option value="Iowa">Iowa</option>
-                      <option value="Florida" selected>Florida</option>
-                      <option value="Michigan">Michigan</option>
-                      <option value="Texas">Texas</option>
-                    </select>
-                    <div class="invalid-feedback">Please choose your state!</div>
-                  </div>
-                  <div class="col-sm-6 mb-4">
-                    <label for="city" class="form-label fs-base">City</label>
-                    <select id="city" class="form-select form-select-lg" required>
-                      <option value="" disabled>Choose city</option>
-                      <option value="Boston">Boston</option>
-                      <option value="Chicago">Chicago</option>
-                      <option value="Los Angeles">Los Angeles</option>
-                      <option value="Miami" selected>Miami</option>
-                      <option value="New York">New York</option>
-                      <option value="Philadelphia">Philadelphia</option>
-                    </select>
-                    <div class="invalid-feedback">Please choose your city!</div>
-                  </div>
-                  <div class="col-sm-6 mb-4">
-                    <label for="zip" class="form-label fs-base">ZIP code</label>
-                    <input type="text" id="zip" class="form-control form-control-lg" required>
-                    <div class="invalid-feedback">Please enter your ZIP code!</div>
-                  </div>
-                  <div class="col-12 mb-4">
-                    <label for="address1" class="form-label fs-base">Address line 1</label>
-                    <input id="address1" class="form-control form-control-lg" required>
-                  </div>
-                  <div class="col-12 mb-4">
-                    <label for="address2" class="form-label fs-base">Address line 2 <small class="text-muted">(optional)</small></label>
-                    <input id="address2" class="form-control form-control-lg">
-                  </div>
-                </div>
-                <div class="d-flex mb-3">
-                  <button type="reset" class="btn btn-secondary me-3">Cancel</button>
-                  <button type="submit" class="btn btn-primary">Save changes</button>
-                </div>
-              </form>
-
-              <!-- Delete account -->
-              <h2 class="h5 text-primary pt-1 pt-lg-3 mt-4">Delete account</h2>
-              <p>When you delete your account, your public profile will be deactivated immediately. If you change your mind before the 14 days are up, sign in with your email and password, and we’ll send you a link to reactivate your account.</p>
-              <div class="form-check mb-4">
-                <input type="checkbox" id="delete-account" class="form-check-input">
-                <label for="delete-account" class="form-check-label fs-base">Yes, I want to delete my account</label>
-              </div>
-              <button type="button" class="btn btn-danger">Delete</button>
             </div>
           </div>
         </div>
 </section> 
+</main>
 </body>
-
 </template>
 
 <script>
@@ -188,6 +113,8 @@ import Main from "./Main.vue"
 import Admin from "@/Jetstream/Admin.vue";
 import Profe from "@/Jetstream/Profe.vue";
 import Head from '@/Jetstream/Head.vue';
+import Revisor from '@/Jetstream/Revisor.vue';
+import Alumno from '@/Jetstream/Alumno.vue';
 
 export default{
   name:"Dashboard",
@@ -196,7 +123,104 @@ export default{
     Main, 
     Admin,
     Profe, 
-    Head
+    Head,
+    Alumno,
+    Revisor
   }
 };
+
+methods: {
+  (function () {
+        window.onload = function () {
+          const preloader = document.querySelector('.page-loading');
+          preloader.classList.remove('active');
+          setTimeout(function () {
+            preloader.remove();
+          }, 1000);
+        };
+      })();
+  
+}
 </script>
+
+<style>
+
+h1{
+  text-align: center;
+}
+.page-loading {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        -webkit-transition: all .4s .2s ease-in-out;
+        transition: all .4s .2s ease-in-out;
+        background-color: #fff;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 9999;
+      }
+      .dark-mode .page-loading {
+        background-color: #131022;
+      }
+      .page-loading.active {
+        opacity: 1;
+        visibility: visible;
+      }
+      .page-loading-inner {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+        -webkit-transition: opacity .2s ease-in-out;
+        transition: opacity .2s ease-in-out;
+        opacity: 0;
+      }
+      .page-loading.active > .page-loading-inner {
+        opacity: 1;
+      }
+      .page-loading-inner > span {
+        display: block;
+        font-size: 1rem;
+        font-weight: normal;
+        color: #9397ad;
+      }
+      .dark-mode .page-loading-inner > span {
+        color: #fff;
+        opacity: .6;
+      }
+      .page-spinner {
+        display: inline-block;
+        width: 2.75rem;
+        height: 2.75rem;
+        margin-bottom: .75rem;
+        vertical-align: text-bottom;
+        border: .15em solid #b4b7c9;
+        border-right-color: transparent;
+        border-radius: 50%;
+        -webkit-animation: spinner .75s linear infinite;
+        animation: spinner .75s linear infinite;
+      }
+      .dark-mode .page-spinner {
+        border-color: rgba(255,255,255,.4);
+        border-right-color: transparent;
+      }
+      @-webkit-keyframes spinner {
+        100% {
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+      @keyframes spinner {
+        100% {
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+</style>

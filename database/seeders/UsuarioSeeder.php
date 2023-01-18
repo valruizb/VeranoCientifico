@@ -58,12 +58,12 @@ class UsuarioSeeder extends Seeder
         ]);
 
         DB::table('users')->insert([
-            'name' => 'Enrique', 
-            'lastnamep' => 'Hernandez', 
-            'lastnamem' => 'Gomez', 
+            'name' => 'Valeria', 
+            'lastnamep' => 'Ruiz', 
+            'lastnamem' => 'Bermudez', 
             'rol' => '4', 
-            'email' => 'kike123@gmail.com',
-            'emailcon' => 'kike123@gmail.com',
+            'email' => 'kike12332@gmail.com',
+            'emailcon' => 'kike12332@gmail.com',
             'phone' => '7773415872',
             'institution_id' => 5,
             'password' => Hash::make('Password'),

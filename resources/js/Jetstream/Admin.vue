@@ -15,8 +15,8 @@
           <a href="#" class="d-flex nav-link p-0" data-bs-toggle="dropdown" >
             <img src="../../../public/assets/img/avatar/09.jpg" class="rounded-circle" width="47" alt="Silicon">
               <div class="d-none d-sm-block ps-2">
-                  <div class="fs-xs lh-1 opacity-60">Hello,</div>
-                  <div class="fs-sm ">{{ $page.props.user.name}} {{ $page.props.user.lastnamep}}</div>
+                  <div class="fs-xs lh-1 opacity-60">Hola,</div>
+                  <div class="fs-sm dropdown-toggle">{{ $page.props.user.name}} {{ $page.props.user.lastnamep}}</div>
               </div>
           </a>
           <ul class="dropdown-menu" id="menu">
@@ -31,23 +31,23 @@
         <hr class="d-lg-none mt-3 mb-2">
           <ul class="navbar-nav me-auto">
             <li class="dropdown drop" id="cont1">
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Gestión catálogos</a>
+                <a href="#" class="nav-link" data-bs-toggle="dropdown">Gestión catálogos</a>
                   <ul class="dropdown-menu">
-                    <li><a id="lista" :href="route('proyectos.index')" class="nav-link">Instituciones</a></li>
+                    <li><a id="lista" :href="route('instituciones.index')" class="nav-link">Instituciones</a></li>
                     <li><a id="lista" :href="route('proyectos.index')" class="nav-link">Temáticas</a></li>
                     <li><a id="lista" :href="route('proyectos.index')" class="nav-link">Subtemáticas</a></li>
                   </ul>
             </li>
-            <li class="dropdown drop" id="cont">
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Gestión Usuarios</a>
+            <li class="dropdown drop" id="cont1">
+                <a href="#" class="nav-link" data-bs-toggle="dropdown">Gestión Usuarios</a>
                   <ul class="dropdown-menu">
                     <li><a id="lista" :href="route('proyectos.index')" class="nav-link">Profesores</a></li>
                     <li><a id="lista" :href="route('proyectos.index')" class="nav-link">Revisores</a></li>
                     <li><a id="lista" :href="route('proyectos.index')" class="nav-link">Alumnos</a></li>
                   </ul>
             </li>
-            <li class="dropdown drop" id="cont">
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Gestión Usuarios</a>
+            <li class="dropdown drop1" id="cont">
+                <a href="#" class="nav-link" data-bs-toggle="dropdown">Seguridad</a>
                   <ul class="dropdown-menu">
                     <li><a id="lista" :href="route('proyectos.index')" class="nav-link">Profesores</a></li>
                     <li><a id="lista" :href="route('proyectos.index')" class="nav-link">Revisores</a></li>
@@ -113,10 +113,15 @@
   }
   
   .drop{
-    margin-left: 70px;
-    margin-right: 80px;
-    
-    background-color: aqua;
+    font-size: 15px;
+    margin-right: 40px;
+   
+  }
+
+  .drop1{
+    font-size: 15px;
+    margin-left: -50px;
+   
   }
 
   a[id="text"]{
@@ -126,12 +131,12 @@
   }
 
   li{
-    padding: 5px;
+    padding: 2px;
   }
 
   a[id="logo"]{
-    margin-left: -8%;
-    height: 80px;
+    margin-left: 0%;
+    height: 60px;
   }
 
   a[id="lista"]:hover{
@@ -160,7 +165,7 @@
     background-color: rgb(22, 9, 82);
     width: 3px;
     height: 12px;
-    top: 20px;
+    top: 16px;
     border-radius: 5px;
     transition: all 0.3s;
   }
@@ -168,8 +173,8 @@
   li[id="cont1"]{
     min-height: 45px;
     position: relative;
-    width: 150px;
-    margin-left: -10px;
+    width: 170px;
+    margin-left: 12px;
     text-align: center;
     cursor: pointer;
     color: #092252; 
@@ -177,12 +182,12 @@
 
   li[id="cont1"]::after{
     transform: rotate(45deg);
-    left:111%;
+    left:91%;
   }
 
   li[id="cont1"]::before{
     transform: rotate(-45deg);
-    left:115%;
+    left:95%;
   }
 
   li[id="cont1"]:hover::after{
@@ -192,47 +197,6 @@
   li[id="cont1"]:hover::before{
     transform: rotate(-135deg);
   }
-
-  li[id="cont2"]::after, li[id="cont2"]::before{
-    content: '';
-    position: absolute;
-    background-color: rgb(22, 9, 82);
-    width: 3px;
-    height: 12px;
-    top: 20px;
-    border-radius: 5px;
-    transition: all 0.3s;
-  }
-
-  li[id="cont2"]{
-    min-height: 45px;
-    position: relative;
-    width: 150px;
-    margin-left: -10px;
-    text-align: center;
-    cursor: pointer;
-    color: #092252; 
-  }
-
-  li[id="cont2"]::after{
-    transform: rotate(45deg);
-    left:111%;
-  }
-
-  li[id="cont2"]::before{
-    transform: rotate(-45deg);
-    left:115%;
-  }
-
-  li[id="cont2"]:hover::after{
-    transform: rotate(135deg);
-  }
-
-  li[id="cont2"]:hover::before{
-    transform: rotate(-135deg);
-  }
-
-
   
   li[id="cont"]::after, li[id="cont"]::before{
     content: '';
@@ -240,7 +204,7 @@
     background-color: rgb(22, 9, 82);
     width: 3px;
     height: 11px;
-    top: 35px;
+    top: 16px;
     border-radius: 5px;
     transition: all 0.3s;
   }
@@ -249,7 +213,7 @@
     min-height: 45px;
     position: relative;
     width: 150px;
-    margin-left: -10px;
+    margin-left: 12px;
     text-align: center;
     cursor: pointer;
     color: #092252; 
@@ -257,12 +221,12 @@
 
   li[id="cont"]::after{
     transform: rotate(45deg);
-    left:81%;
+    left:71%;
   }
 
   li[id="cont"]::before{
     transform: rotate(-45deg);
-    left:85%;
+    left:75%;
   }
 
   li[id="cont"]:hover::after{

@@ -29,7 +29,7 @@ class StoreRegistroRequest extends FormRequest
             'name' => 'max:255',
             'lastnamep' => 'required|max:255',
             'lastnamem' => 'required|max:255',
-            'curp' => 'max:255',
+            'curp' => 'max:18|unique:users,curp',
             'email' => 'required|max:255',
             'emailcon' => 'required|max:255|same:email',
             'phone' => 'required|max:255',
@@ -42,6 +42,7 @@ class StoreRegistroRequest extends FormRequest
             'invline' => '',
             'job' => '', 
             'password' => 'required|max:255|min:8',
+            'password_confirmation' => 'required|max:255|min:8|same:password',
         ];
 
         if ( $this->hasFile('constancy') ){

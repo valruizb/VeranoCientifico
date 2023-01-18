@@ -35,8 +35,6 @@ use Illuminate\Http\Request;
 Route::resource('registro', RegistroController::class);
 Route::resource('acercaverano', AcercaVeranoController::class);
 
-
-
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
     return redirect('/dashboard');
