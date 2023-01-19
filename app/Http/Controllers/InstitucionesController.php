@@ -35,18 +35,18 @@ class InstitucionesController extends Controller
         }
     public function index(Request $request)
     {
-        // $request->status = $request->status === null ? true : $request->status;
-         $records = $request->status == '0' ? $this->model->onlyTrashed() : $this->model;
-         $records= 
-         $records = $records->when($request->search, function ($query, $search) {
-             if ($search != '') {
-                 $query->where('name', 'LIKE', '%' . $search . '%');
-             }
-         });
+        $request->status = $request->status === null ? true : $request->status;
+        $records = $request->status == '0' ? $this->model->onlyTrashed() : $this->model;
+        $records = $records->when($request->search, function ($query, $search) {
+            if ($search != '') {
+                $query->where('name', 'LIKE', '%' . $search . '%');
+            }
+        });
+
          return Inertia::render("Instituciones/Index", [
              'titulo '          => 'Instituciones Registradas',
              'routeName'      => $this->routeName,
-             'institucion'=>  $records->orderBy('id') -> paginate(5),
+             'institucion'=>  $records->orderBy('id') -> paginate(6),
              'loadingResults' => false,
              'search'         => $request->search ?? '',
              'status'         => (bool) $request->status, ]);
@@ -97,7 +97,11 @@ class InstitucionesController extends Controller
      */
     public function edit(Instituciones $instituciones)
     {
-        abort(405);
+        return Inertia::render("{$this->source}Edit", [
+            'titulo'          => 'Editar Institución',
+            'routeName'      => $this->routeName,
+            'institucion' => $instituciones
+        ]);
     }
 
     /**

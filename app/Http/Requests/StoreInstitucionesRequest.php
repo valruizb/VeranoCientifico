@@ -24,14 +24,14 @@ class StoreInstitucionesRequest extends FormRequest
     public function rules()
     {
         return [
-            'nombre' => 'max:255',
+            'name' => 'max:255',
         ];
     }
 
     public function attributes(): array
     {
         return [
-            'nombre' => 'Nombre',
+            'name' => 'Nombre',
         ];
     }
 }

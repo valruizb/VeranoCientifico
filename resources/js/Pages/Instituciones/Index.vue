@@ -13,27 +13,20 @@
           <div v-if="$page.props.flash.success" class="alert alert-success" role="alert">
             {{ $page.props.flash.success }}
           </div>
-          <div class="mb-2 d-flex justify-content-start">
-            <Link :href="route(`${routeName}create`)" class="add btn btn btn-success btn-sm" >
-              <i class="bi bi-plus-circle"></i> <p class="text-add">Agregar Proyecto</p>
+          <div class="mb-3 d-flex justify-content-start divbus">
+            <Link :href="route(`${routeName}create`)" class="add btn btn" >
+              <i class="bi bi-plus-circle"></i> <p class="text-add">Agregar Institución</p>
             </Link>
             <div class="input-group w-50 ml-2">
-              <input id="search-input" type="search"
-                
-                class="
-                  busqueda form-control form-control-sm form-control
-                  bg-light
-                  shadow-sm
-                "
+              <input id="search-input" type="text"
+                class="busqueda form-control form-control-sm form-control bg-light shadow-sm"
                 placeholder="Ingrese un parámetro de búsqueda"
                 v-model="filters.search"
                 @change="search"
               />
               <div class="input-group-append input-group-append-sm">
                 <button
-                  @click="search"
-                  class="btn btn-outline-secondary btn-sm"
-                >
+                  @click="search" class="btnbuscar btn btn-outline-secondary btn-sm" >
                   <i class="buscar bi bi-search"></i>
                 </button>
               </div>
@@ -45,10 +38,10 @@
             <table class="table table-bordered">
               <thead>
                 <tr>
-                  <th class="col">No.</th>
-                  <th class="col">Nombre</th>
-                  <th class="col">Editar</th>
-                  <th class="col">Eliminar</th>
+                  <th width="5%" class="col">No.</th>
+                  <th width="35%" class="col">Nombre</th>
+                  <th width="9%" class="col">Editar</th>
+                  <th width="9%" class="col">Eliminar</th>
                 </tr>
               </thead>
               <tbody v-for="item in institucion.data" :key="item.id">
@@ -56,7 +49,7 @@
                   <td>{{ item.id  }}</td>
                   <td>{{ item.name }}</td>
                   
-                  <td><button class="btn btn btn-info btn-sm" >
+                  <td><button class="btn1 btn btn-info btn-sm" >
                     <a :href="route('instituciones.edit', item.id)">
                     <i class="lapiz bi bi-pencil-fill">
                     </i></a></button> 
@@ -64,7 +57,7 @@
                   <td>  
                     <form action="">
                   <button
-                  class="btn btn btn-danger btn-sm"
+                  class="btn1 btn btn-danger btn-sm"
                   type="button"
                   @click="eliminar(item.id)"
                 >
@@ -76,12 +69,8 @@
               </tbody>
             </table>
           </div>
-          <RecordsHelper
-          :thereAreResults="thereAreResults"
-          :loadingResults="loadingResults"
-        />
-          <pagination :links="institucion.links" :total="institucion.total" />
-          
+          <RecordsHelper :thereAreResults="thereAreResults" :loadingResults="loadingResults"/>
+          <pagination  :links="institucion.links" :total="institucion.total" class="pagination"/>
         </div>
       </div>
     </div>
@@ -133,7 +122,6 @@
             JetButton,
             Admin,
             Head,
-
         },
 
         methods: {
@@ -152,7 +140,6 @@
                     status: props.status ?? 1,
                 },
             });
-            
 
             const eliminar = (idel) => {
               Swal.fire({
@@ -165,7 +152,7 @@
               confirmButtonText: "Si!, eliminar registro!",
             }).then((res) => {
               if (res.isConfirmed) {
-                form.delete(route("proyectos.destroy", idel));
+                form.delete(route("instituciones.destroy", idel));
               }
             });
           };
@@ -189,13 +176,6 @@
   
 <style scoped>
 
-:root{
-  --main-color: rgb(23, 33, 123);
-  --second-color:rgba(29, 43, 172, 0.795);
-  --black: #000000;
-  --white: #ffffff;
-}
-
 .forma1{
 width: 85%;
 border-radius: 20px;
@@ -214,14 +194,19 @@ h2{
   text-align: center;
   font-weight: bolder;
   color: rgb(5, 5, 107);
+  margin-top: -22px;
 }
 
 .boxi{
   font-size: 30px;
-  
 }
 
 /*Tabla */
+table{
+  width: 90%;
+  text-align: center;
+  margin-left: 60px;
+}
 
 .col{
   text-align:center;
@@ -232,26 +217,52 @@ a{
 }
 
 .lapiz{
-  font-size: 15px;
+  font-size: 13px;
   color: #ffffff;
 }
 
 .basura{
-  font-size: 15px;
+  font-size: 13px;
   color: #ffffff;
 }
 
 .add{
-  font-size: 15px;
+  font-size: 19px;
+  height: 44px;
+  width: 14%;
+  background-color: rgb(3, 4, 112);
+  margin-left: 55px;
+}
+
+.add:hover{
+  background-color: rgb(5, 7, 145);
 }
 
 .text-add{
-  font-size: 12px;
+  font-size: 13px;
   margin-left: 10px;
+  margin-top: 17px;
 } 
 
-.busqueda{
-  margin-left: 10px;
-   
-}
+  input{
+  color: #000000;
+  margin-left: 15px;
+  height: 44px;
+  width: 30%;
+  border-right: none;
+  }
+
+  .btnbuscar{
+    margin-left: 0px;
+    height: 44px;
+    background-color: rgb(3, 4, 112);
+    color: #ffffff;
+  }
+
+  .btnbuscar:hover{
+    margin-left: 0px;
+    height: 44px;
+    background-color: rgba(6, 9, 138, 0.993);
+    color: #fbfdfd;
+  }
 </style>

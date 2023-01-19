@@ -63,7 +63,7 @@ class RegistroController extends Controller
         return Inertia::render("{$this->source}Register", [
             'tematica'=>$thematic,
             'instituto' =>Instituciones::orderBy('id')->get(),
-            'roles'=> Role::with('permissions:id,name,description,module_key')->orderBy('name')->select('id', 'name', 'description')->get(),
+            'roles'=> Role::with('permissions:id,name,description,module_key')->orderBy('name')->select('id', 'name', 'description')->where('id', '!=', '1')->get(),
             'subtematica' => subtematica::get(),
            
         ]);
