@@ -1,110 +1,64 @@
-<template >
-  <head lang="en"><meta charset="UTF-8"><title>Registro</title>
-    <!-- Viewport -->
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-  
-  <!-- Favicon and Touch Icons -->
-      <link rel="icon" type="image/png" sizes="32x32" href="../../../../public/img/TecNM_logo.png">
-      <link rel="icon" type="image/png" sizes="16x16" href="../../../../public/img/TecNM_logo.png">
-      <link rel="manifest" href="../assets/favicon/site.webmanifest">
-      <link rel="mask-icon" href="../assets/favicon/safari-pinned-tab.svg" color="#6366f1">
-      <link rel="shortcut icon" href="../assets/favicon/favicon.ico">
-      <meta name="msapplication-TileColor" content="#080032">
-      <meta name="msapplication-config" content="../assets/favicon/browserconfig.xml">
-      <meta name="theme-color" content="#ffffff">
-  
-      <!-- Vendor Styles -->
-      <link rel="stylesheet" media="screen" href="../assets/vendor/boxicons/css/boxicons.min.css"/>
-  
-      <!-- Main Theme Styles + Bootstrap -->
-      <link rel="stylesheet" media="screen" href="../assets/css/theme.min.css">
-    
-    </head>
+<template>
+  <Head> </Head>
 
-    <Profe>
+  <Profe> </Profe>
 
-    </Profe>
-  
-  
-      <div class="contenido">
+    <div class="contenido">
               <div class="forma1">
                 <h2 class="h4 font-weight-bold text-center">
                   <br><i class="bi bi-bricks"></i> {{ titulo }}
                 </h2>
                 <div class="card-body border-right border-bottom p-3 h-100">
                   <form class="row g-3 needs-validation" @submit.prevent="guardar">
-                    <div class="col-md-8">
-                    <jet-label id="titulo" for="nombre" value="*Nombre del Proyecto:" /><br>
-                    <jet-input id="nombre"
-                      type="text" 
-                      v-model="form.title" 
-                      :class="{ 'is-invalid': form.errors.title }" 
-                      required 
-                      placeholder="Nombre del proyecto"   />
+                  <div class="col-sm-12 mb-12" >
+                    <jet-label class="label form-label fs-base" value="*Nombre del Proyecto:" />
+                    <jet-input placeholder="Introduce el titulo"  type="text" id="sn" class="form-control form-control-lg" v-model="form.title"  :class="{ 'is-invalid': form.errors.title }" autocomplete="name"  required />
                     <jet-input-error :message="form.errors.title" />
                   </div>
-      
-                    <div class="">
-                      <jet-label for="Numero" value="*Número de alumnos:" /><jet-label for="modalidad" value="*Modalidad:" />
-                      <jet-input
-                        type="number"
-                        v-model="form.studentnum"
-                        :class="{ 'is-invalid': form.errors.studentnum }"
-                        required
-                        placeholder="Número de alumnos" />
-                      <jet-input-error :message="form.errors.studentnum" />
-  
-                      
-                      <select id="modalidad" :class="{'is-invalid':form.errors.modality}" v-model="form.modality">
+                  <div class="col-sm-6 mb-4" >
+                    <jet-label class="label form-label fs-base" value="*Número alumnos:" />
+                    <jet-input type="number" id="sn" class="form-control form-control-lg" v-model="form.studentnum"  :class="{ 'is-invalid': form.errors.studentnum }" autocomplete="name"  required />
+                    <jet-input-error :message="form.errors.studentnum" />
+                  </div>
+                  <div class="col-sm-6 mb-4" >
+                    <jet-label class="label form-label fs-base" value="Modalidad:" />
+                      <select class="form-control form-control-lg" :class="{'is-invalid':form.errors.modality}" v-model="form.modality">
                         <option disabled value="">Seleccione un elemento</option>
                         <option value="Presencial">Presencial</option>
                         <option value="Virtual">Virtual</option>
                         <option value="Mixta">Mixta</option>
                       </select>
-                    </div>
-      
-                    <div class="profesor">
-                      <label for="tematica" >*Temática</label><label for="subtematica">*SubTemática</label>
-                      <select id="tematica" :class="{'is-invalid':form.errors.thematic_id}" v-model="form.thematic_id">
+                  </div>
+                  <div class="col-sm-6 mb-4" >
+                    <jet-label class="label form-label fs-base" value="Temática:" />
+                      <select class="form-control form-control-lg" :class="{'is-invalid':form.errors.thematic_id}" v-model="form.thematic_id">
                         <option disabled value="">Seleccione un elemento</option>
                         <option v-for="tema in tem"  v-bind:value="tema.id" v-bind:key="tema.id">{{ tema.name }}</option>
                       </select>
-  
-                      
-                      <select id="subtematica" :class="{'is-invalid':form.errors.subthematic_id}" v-model="form.subthematic_id">
+                  </div>
+                  <div class="col-sm-6 mb-4" >
+                    <jet-label class="label form-label fs-base" value="Subtemática:" />
+                      <select class="form-control form-control-lg" :class="{'is-invalid':form.errors.subthematic_id}" v-model="form.subthematic_id">
                         <option disabled value="">Seleccione un elemento</option>
                         <option v-for="sub in subtem" v-bind:value="sub.id" v-bind:key="sub.id">{{ sub.name }}</option>
                       </select>
-                    </div>
-      
-                    <div class="col-md-8">
-                      <jet-label for="objetivo" value="*Objetivo general:" />
-                      <jet-input id="objetivo" type="text" v-model="form.generalobject" :class="{ 'is-invalid': form.errors.generalobject }"     
-                      required  placeholder="Objetivo General" />
+                  </div>
+                  <div class="col-sm-12 mb-12" >
+                    <jet-label class="label form-label fs-base" value="*Requisitos:" />
+                    <jet-input placeholder="Introduce los requisitos" type="text" id="sn" class="form-control form-control-lg" v-model="form.requirements"  :class="{ 'is-invalid': form.errors.requirements }" autocomplete="name"  required />
+                    <jet-input-error :message="form.errors.requirements" />
+                  </div>
+                    <div class="col-sm-12 mb-12" >
+                      <jet-label class="label form-label fs-base" value="*Objetivo general:" />
+                      <jet-input type="text" v-model="form.generalobject" :class="{ 'is-invalid': form.errors.generalobject }"     
+                      required  placeholder="Introduce el objetivo general" />
                       <jet-input-error :message="form.errors.generalobject" />
                     </div>
-      
-                    <div class="col-md-8">
-                      <jet-label for="requisitos" value="*Requisitos:" />
-                      <jet-input
-                        id="requisitos"
-                        type="text"  v-model="form.requirements" :class="{ 'is-invalid': form.errors.requirements }" required  placeholder="Requisitos" />
-                      <jet-input-error :message="form.errors.requirements" />
-                    </div>
-
-                    <div class="col-md-8">
-                      <jet-label for="requisitos" value="*Palabras clave:" />
-                      <jet-input
-                        id="requisitos"
-                        type="text" 
-                        v-model="form.keywords"
-                        :class="{ 'is-invalid': form.errors.keywords }"
-                        required
-                        placeholder="Requisitos"
-                      />
+                    <div class="col-sm-12 mb-12" >
+                      <jet-label class="label form-label fs-base" value="*Palabras clave:" />
+                      <jet-input placeholder="Introduce palabras claves de tu proyecto"  type="text" id="sn" class="form-control form-control-lg" v-model="form.keywords"  :class="{ 'is-invalid': form.errors.keywords }" autocomplete="name"  required />
                       <jet-input-error :message="form.errors.keywords" />
                     </div>
-      
                     <div class="px-6 py-4">
                       <Link
                         :href="route(`${routeName}index`)"
@@ -122,8 +76,8 @@
                   </form>
               </div>
             </div>             
-          </div>
-  </template>
+    </div>
+</template>
   
   <script>
 import { defineComponent } from 'vue'
@@ -131,7 +85,7 @@ import JetAuthenticationCard from '@/Jetstream/AuthenticationCard.vue'
 import JetAuthenticationCardLogo from '@/Jetstream/AuthenticationCardLogo.vue'
 import JetCheckbox from "@/Jetstream/Checkbox.vue";
 import JetValidationErrors from '@/Jetstream/ValidationErrors.vue'
-import { Head, Link } from '@inertiajs/inertia-vue3'
+import { Link } from '@inertiajs/inertia-vue3'
 import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 import axios from 'axios';
@@ -144,6 +98,7 @@ import { useForm } from "@inertiajs/inertia-vue3";
 import { ref } from "vue";
 import JetDropdownLink from '@/Jetstream/DropdownLink.vue';
 import Profe from "@/Jetstream/Profe.vue";
+import Head from "@/Jetstream/Head.vue";
   
   
   export default {
@@ -161,6 +116,7 @@ import Profe from "@/Jetstream/Profe.vue";
       Link,
       Profe,
       JetLabel,
+      Head,
       JetInput,
       JetInputError,
       JetButton,
@@ -219,18 +175,12 @@ import Profe from "@/Jetstream/Profe.vue";
           background-color: #092252;
           color: #ffffff;
         }
+
+        .label{
+          color: #092252;
+        }
   
-        form input[type="number"], select{
-        display: inline;
-        border-color: rgba(3, 3, 3, 0.466);
-        background-color:#2b4f7400  ;
-        color: #000000;
-        width: 45%;
-        padding: 11px;
-        margin: 15px;
-        margin-top: -28px;
-        border-radius: 6px;
-      }
+        
   
       form input[id="objetivo"], [id="requisitos"], [id="nombre"] {
         display: inline;
@@ -257,11 +207,6 @@ import Profe from "@/Jetstream/Profe.vue";
       }
   
       form label[for="modalidad"],[for="Numero"], [for="objetivo"], [for="requisitos"], [for="nombre"], [for="tematica"], [for="subtematica"]{
-        padding: 0px;
-        margin: 18px;
-        width: 30%;
-        margin-left: 20px;
-        margin-right: 150px;
         font-weight:bold;
         color: #092252;
         font-size: 16px;
@@ -455,6 +400,6 @@ import Profe from "@/Jetstream/Profe.vue";
           font-size: 18px;
         }
   
-      </style>
+  </style>
   
   

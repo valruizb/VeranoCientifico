@@ -13,11 +13,15 @@
           <div v-if="$page.props.flash.success" class="alert alert-success" role="alert">
             {{ $page.props.flash.success }}
           </div>
-          <div class="mb-3 d-flex justify-content-start divbus">
-            <Link :href="route(`${routeName}create`)" class="add btn btn" >
-              <i class="bi bi-plus-circle"></i> <p class="text-add">Agregar Institución</p>
-            </Link>
-            <div class="input-group w-50 ml-2">
+          <div class="mb-3 d-flex justify-content-start">
+              <Link
+                :href="route(`${routeName}create`)"
+                class="add btn btn btn-sm"
+              >
+              <i class="bi bi-plus-circle"></i>
+                 <p class="text-add">Agregar Institución</p>
+              </Link>
+              <div class="input-group w-50 ml-2">
               <input id="search-input" type="text"
                 class="busqueda form-control form-control-sm form-control bg-light shadow-sm"
                 placeholder="Ingrese un parámetro de búsqueda"
@@ -31,17 +35,22 @@
                 </button>
               </div>
             </div>
-            
-          </div><br>
+              <select @change="search"
+                class="custom-select-sm custom-select bg-light shadow-sm border-0 w-25 ml-2"
+                v-model="filters.status">
+                <option :value="true">Activos</option>
+                <option :value="false">Eliminados</option>
+              </select>
+            </div><br>
 
           <div class="table-responsive">
             <table class="table table-bordered">
               <thead>
                 <tr>
-                  <th width="5%" class="col">No.</th>
-                  <th width="35%" class="col">Nombre</th>
-                  <th width="9%" class="col">Editar</th>
-                  <th width="9%" class="col">Eliminar</th>
+                  <th class="col">No.</th>
+                  <th class="col">Nombre</th>
+                  <th width="10%" class="col">Editar</th>
+                  <th width="10%" class="col">Eliminar</th>
                 </tr>
               </thead>
               <tbody v-for="item in institucion.data" :key="item.id">
@@ -176,93 +185,128 @@
   
 <style scoped>
 
-.forma1{
-width: 85%;
-border-radius: 20px;
-/*sizing: border-box;*/
-background-color: #ffffff;
-margin-top: 10%;
-margin-left: 8%;
-}
+  :root{
+    --main-color: rgb(23, 33, 123);
+    --second-color:rgba(29, 43, 172, 0.795);
+    --black: #000000;
+    --white: #ffffff;
+  }
 
-.contenido{
+  h2{
+    font-size: 30px;
+    text-align: center;
+    font-weight: bolder;
+    color: rgb(5, 5, 107);
+    margin-top: -22px;
+    }
+
+  .boxi{
+    font-size: 30px;
+  }
+
+  table{
+    text-align: center;
+  }
+
+  .forma1{
+  width: 85%;
+  border-radius: 20px;
+  /*sizing: border-box;*/
   background-color: #ffffff;
-}
+  margin-top: 10%;
+  margin-left: 8%;
+  }
 
-h2{
-  font-size: 30px;
-  text-align: center;
-  font-weight: bolder;
-  color: rgb(5, 5, 107);
-  margin-top: -22px;
-}
+  .contenido{
+    background-color: #ffffff;
+  }
 
-.boxi{
-  font-size: 30px;
-}
+  .forma{
+    padding: 0px;
+  }
 
-/*Tabla */
-table{
-  width: 90%;
-  text-align: center;
-  margin-left: 60px;
-}
+  [id="cuenta"]:hover{
+    background-color: #c90c0cec;
+    color: rgb(255, 255, 255);
+    font-style: bold;
+  }
 
-.col{
-  text-align:center;
-}
+  [id="btn"]:hover, [id="guardar"]:hover{
+    background-color: rgba(6, 42, 107, 0.986);
+    color: rgb(255, 255, 255);
+    font-style: bold;
+  }
 
-a{
-  text-decoration: none;
-}
+  [id="btn"]{
+    background-color: #092252;
+    color: rgb(255, 255, 255);
+    width: 16%;
+    border-radius: 10px;
+    padding: 12px;
+    margin-left: 40px;
+    margin-right: -8%;
+  }
 
-.lapiz{
-  font-size: 13px;
-  color: #ffffff;
-}
+  [id="guardar"]{
+    background-color: #092252;
+    color: rgb(255, 255, 255);
+    width: 16%;
+    padding: 12px;
+    margin-left:10%;
+    border-radius: 10px;
+    margin-right: -8%;
+    outline: none;
+    border: #092252;
+  }
 
-.basura{
-  font-size: 13px;
-  color: #ffffff;
-}
+  /*Tabla */
 
-.add{
-  font-size: 19px;
-  height: 44px;
-  width: 14%;
+  .col{
+    text-align:center;
+  }
+
+  a{
+    text-decoration: none;
+  }
+
+  .lapiz{
+    font-size: 18px;
+    color: #ffffff;
+  }
+
+  .basura{
+    font-size: 18px;
+    color: #ffffff;
+  }
+
+  .add{
+    font-size: 15px;
+  }
+
+  .text-add{
+    font-size: 12px;
+    margin-left: 10px;
+  } 
+
+  .buscar{
+   
+  }
+  .add{
   background-color: rgb(3, 4, 112);
-  margin-left: 55px;
 }
 
 .add:hover{
   background-color: rgb(5, 7, 145);
 }
 
-.text-add{
-  font-size: 13px;
-  margin-left: 10px;
-  margin-top: 17px;
-} 
-
-  input{
-  color: #000000;
-  margin-left: 15px;
-  height: 44px;
-  width: 30%;
-  border-right: none;
+  .busqueda{
+    margin-left: 10px;
+     
   }
 
-  .btnbuscar{
-    margin-left: 0px;
-    height: 44px;
-    background-color: rgb(3, 4, 112);
-    color: #ffffff;
+  p{
+    margin-bottom: 0 ;
+    font-size: 18px;
   }
 
-  .btnbuscar:hover{
-    margin-left: 0px;
-    height: 44px;
-    background-color: rgba(6, 9, 138, 0.993);
-    color: #fbfdfd;
-  }
 </style>

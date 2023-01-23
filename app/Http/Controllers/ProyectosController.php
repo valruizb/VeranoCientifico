@@ -7,8 +7,8 @@ use App\Http\Requests\StoreProyectosRequest;
 use App\Http\Requests\UpdateProyectosRequest;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
-use App\Models\tematica;
-use App\Models\subtematica;
+use App\Models\Tematicas;
+use App\Models\Subtematicas;
 use Illuminate\Support\Facades\Auth;
 
 class ProyectosController extends Controller
@@ -73,8 +73,8 @@ class ProyectosController extends Controller
         return Inertia::render("{$this->source}Create", [
             'titulo'          => 'Agregar Proyecto',
             'routeName'      => $this->routeName,
-            'tem'=>tematica::orderBy('name')->get(),
-            'subtem'=>subtematica::orderBy('name')->get(),
+            'tem'=>Tematicas::orderBy('name')->get(),
+            'subtem'=>Subtematicas::orderBy('name')->get(),
             'idlog' => Auth::id(),
             'idinstlog' => Auth::user()->institution_id,    
         ]);
@@ -88,12 +88,7 @@ class ProyectosController extends Controller
      */
     public function store(StoreProyectosRequest $request)
     {
-        //dd($request -> title);
-    
-       
-        //dd($request);
-        Proyectos::create($request->validated());
-            
+        Proyectos::create($request->validated());    
     }
 
     /**

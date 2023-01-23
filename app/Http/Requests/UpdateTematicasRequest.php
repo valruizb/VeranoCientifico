@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateInstitucionesRequest extends FormRequest
+class UpdateTematicasRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,6 +21,7 @@ class UpdateInstitucionesRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
+    
     public function rules()
     {
         return [
@@ -30,7 +31,7 @@ class UpdateInstitucionesRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'name' => 'Nombre de la institución',
+            'name' => 'Nombre de la temática',
         ];
     }
 }

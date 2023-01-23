@@ -1,36 +1,15 @@
 <template>
-    <head lang="en"><meta charset="UTF-8"><title>Registro</title>
-  <!-- Viewport -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+  <Head> </Head>
+  <Profe v-if="$page.props.user.rol == 2"> </Profe>
 
-<!-- Favicon and Touch Icons -->
-    <link rel="icon" type="image/png" sizes="32x32" href="../../../../public/img/TecNM_logo.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="../../../../public/img/TecNM_logo.png">
-    <link rel="manifest" href="../assets/favicon/site.webmanifest">
-    <link rel="mask-icon" href="../assets/favicon/safari-pinned-tab.svg" color="#6366f1">
-    <link rel="shortcut icon" href="../assets/favicon/favicon.ico">
-    <meta name="msapplication-TileColor" content="#080032">
-    <meta name="msapplication-config" content="../assets/favicon/browserconfig.xml">
-    <meta name="theme-color" content="#ffffff">
-
-    <!-- Vendor Styles -->
-    <link rel="stylesheet" media="screen" href="../assets/vendor/boxicons/css/boxicons.min.css"/>
-
-    <!-- Main Theme Styles + Bootstrap -->
-    <link rel="stylesheet" media="screen" href="../assets/css/theme.min.css">
-  
-  </head>
-
-  <Profe v-if="$page.props.user.tipouser == 2">
-
-  </Profe>
-
-  <Admin v-if="$page.props.user.tipouser == 1">
-
-  </Admin>
+  <Admin v-if="$page.props.user.rol == 1"> </Admin>
   
 <div class="contenido">
       <div class="forma1">
+        <h2 class="h4 font-weight-bold">
+        <i class='boxi bx bxs-notepad' style='color:#030664' ></i> Mis proyectos
+        </h2><hr><br>
         <div class="col-md-12 pe-0">
           <div class="card-body border-right border-bottom p-3 h-100">
             <div v-if="$page.props.flash.success" class="alert alert-success" role="alert">
@@ -80,8 +59,8 @@
                     <th class="col">Titulo</th>
                     <th class="col">Descripción</th>
                     <th class="col">Modalidad</th>
-                    <th class="col">Editar</th>
-                    <th class="col">Eliminar</th>
+                    <th width="10%" class="col">Editar</th>
+                    <th width="10%" class="col">Eliminar</th>
                   </tr>
                 </thead>
                 <tbody v-for="item in proyectos.data" :key="item.id">
@@ -141,6 +120,7 @@
     import 'sweetalert2/dist/sweetalert2.min.css';
     import Admin from "@/Jetstream/Admin.vue";
     import Profe from "@/Jetstream/Profe.vue";
+    import Head from "@/Jetstream/Head.vue";
     
     export default {
         name: "Index",
@@ -227,6 +207,22 @@
     --white: #ffffff;
   }
 
+  h2{
+    font-size: 30px;
+    text-align: center;
+    font-weight: bolder;
+    color: rgb(5, 5, 107);
+    margin-top: -22px;
+    }
+
+  .boxi{
+    font-size: 30px;
+  }
+
+  table{
+    text-align: center;
+  }
+
   .forma1{
   width: 85%;
   border-radius: 20px;
@@ -278,20 +274,10 @@
     border: #092252;
   }
 
-  i[id="boxi2"]{
-    font-size: 21px;
-    padding: 5px;
-  }
-
-  i[id="boxi3"]{
-    font-size: 17px;
-    padding: 1px;
-  }
-
   /*Tabla */
 
   .col{
-    text-align:left;
+    text-align:center;
   }
 
   a{
@@ -299,12 +285,12 @@
   }
 
   .lapiz{
-    font-size: 20px;
+    font-size: 18px;
     color: #ffffff;
   }
 
   .basura{
-    font-size: 20px;
+    font-size: 18px;
     color: #ffffff;
   }
 
@@ -326,133 +312,9 @@
      
   }
 
-  /*Barra de navegacion */
-  .header{
-    position: fixed;
-  }
-
-  i[id="boxi"]{
-    font-size: 19px;
-    padding: 5px;
-  }
-
- 
-  .navbar{
-    width: 100%;
-  }
-
-  a[id="text"]{
-    font-size: bold;
-    padding-top: 10px;
-    display: block;
-  }
-
-  nav[id="navegador"]{
-  font-size: 18px;
-  color: #092252; 
-  margin-left: 2%;
-  }
-
-  li{
-    padding: 18px;
-  }
-
-  a[id="logo"]{
-    margin-left: -8%;
-    height: 80px;
-  }
-
-  a[id="lista"]:hover{
-    background-color:rgba(195, 197, 214, 0.795);
-    border-radius: 15px;
-  }
-
-
-  a[id="opt"]:hover{
-    background-color:rgba(230, 231, 240, 0.932);
-    color: #092252; 
-    border-radius: 12px;
-  }
-
-  a[id="opt"]{
-    cursor: pointer;
-    background-color:rgb(255, 255, 255);
-    color: #092252; 
-    padding-top: 5px;
-    border-radius: 10px;
-  }
-
-  li[id="cont"]::after, li[id="cont"]::before{
-    content: '';
-    position: absolute;
-    background-color: rgb(22, 9, 82);
-    width: 3px;
-    height: 11px;
-    top: 35px;
-    border-radius: 5px;
-    transition: all 0.3s;
-  }
-
-  div[id="auth"]{
-    left: 330px;
-  }
-
-  p[id="auth_user"]{
-    position: absolute;
-    left: 50px;
-    width: 220px;
-    font-size: 15px;
-    color: #092352a8;
-  }
-
-  li[id="cont"]{
-    min-height: 45px;
-    position: relative;
-    width: 150px;
-    margin-left: -10px;
-    text-align: center;
-    cursor: pointer;
-    color: #092252; 
-  }
-
-  li[id="cont"]::after{
-    transform: rotate(45deg);
-    left:171%;
-  }
-
-  li[id="cont"]::before{
-    transform: rotate(-45deg);
-    left:175%;
-  }
-
-  li[id="cont"]:hover::after{
-    transform: rotate(135deg);
-  }
-
-  li[id="cont"]:hover::before{
-    transform: rotate(-135deg);
-  }
-
   p{
     margin-bottom: 0 ;
     font-size: 18px;
   }
 
-  .opt{
-    cursor: pointer;
-      background-color:rgb(255, 255, 255);
-      color: #092252; 
-      border-radius: 8px;
-  }
-
-  .menu{
-    margin-left: 25%;
-    margin-top: 30%;
-  }
-
-  .opt:hover{
-      background-color:rgba(230, 231, 240, 0.932);
-      color: #092252; 
-      border-radius: 12px;
-    }
 </style>

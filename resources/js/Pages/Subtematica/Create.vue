@@ -7,22 +7,31 @@
       <div class="contenido">
               <div class="forma1">
                 <h2 class="h4 font-weight-bold text-center">
-                  <br><i class='boxi bx bxs-school' style='color:#030664' ></i> {{ titulo }}
+                  <br><i class='boxi bx bx-book' style='color:#030664' ></i> {{ titulo }}
                 </h2>
                 <div class="card-body border-right border-bottom p-3 h-100">
                   <form class="row g-3 needs-validation" @submit.prevent="guardar">
                     <div class="col-md-8">
-                    <jet-label id="titulo" for="nombre" value="*Nombre de la institución:" /><br>
+                    <jet-label id="titulo" for="nombre" value="*Nombre de la Subtemática:" /><br>
                     <div class="">
                     <jet-input id="nombre" autofocus
                       type="text" 
                       v-model="form.name" 
                       :class="{ 'is-invalid': form.errors.name }" 
                       required 
-                      placeholder="Nombre del proyecto"   />
+                      placeholder="Nombre de la subtemática"   />
                     <jet-input-error :message="form.errors.name" />
-                  </div></div>
-      
+                  </div>
+                </div>
+                <div class="col-md-8">
+                    <jet-label id="titulo" for="nombre" value="*Nombre de la Subtemática:" /><br>
+                    <div class="">
+                      <select id="areaconoci" :class="{'is-invalid':form.errors.thematic_id}" v-model="form.thematic_id">
+                      <option disabled value="">Seleccione un elemento</option>
+                      <option v-for="tema in tematicas"  v-bind:value="tema.id" v-bind:key="tema.id">{{ tema.name }}</option>
+                      </select>
+                </div>
+                </div>
                     <div class="px-6 py-4">
                       <Link
                         :href="route(`${routeName}index`)"
@@ -70,6 +79,7 @@ import Head from '@/Jetstream/Head.vue';
     props: {
       titulo: { type: String, required: true },
       routeName: { type: String, required: true },
+      tematicas: { type: Object, required: true },
     },
     components: {
       AppLayout,
@@ -85,10 +95,11 @@ import Head from '@/Jetstream/Head.vue';
     setup(props) {
       const form = useForm({ 
         name: "", 
+        thematic_id:"",
       });
   
       const guardar = () => {
-        form.post(route("instituciones.store"));
+        form.post(route("subtematicas.store"));
       };
   
       return { form, guardar };
@@ -134,13 +145,25 @@ import Head from '@/Jetstream/Head.vue';
   
       form label[for="nombre"]{
         padding: 0px;
-        width: 40%;
+        width: 50%;
         margin-left: 20px;
         margin-right: 150px;
         font-weight:bold;
         color: #092252;
         font-size: 16px;
       }
+
+      form select{
+        display: inline;
+        border-color: rgba(3, 3, 3, 0.466);
+        background-color:#2b4f7400  ;
+        color: #000000;
+        width: 25rem;
+        padding: 11px;
+        margin: 17px;
+        border-radius: 6px;
+      }
+
   
         .forma1{
         width: 55%;

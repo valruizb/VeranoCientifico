@@ -1,7 +1,5 @@
 <template >
- <Head>
-
- </Head>
+ <Head> </Head>
     <header class="header navbar navbar-expand-lg navbar-light bg-light border-bottom border-light shadow-sm fixed-top">
       <div class="container">
         <a class="navbar-brand nav-link p-0" id="logo">
@@ -34,22 +32,22 @@
                 <a href="#" class="nav-link" data-bs-toggle="dropdown">Gestión catálogos</a>
                   <ul class="dropdown-menu">
                     <li><a id="lista" :href="route('instituciones.index')" class="nav-link">Instituciones</a></li>
-                    <li><a id="lista" :href="route('proyectos.index')" class="nav-link">Temáticas</a></li>
-                    <li><a id="lista" :href="route('proyectos.index')" class="nav-link">Subtemáticas</a></li>
+                    <li><a id="lista" :href="route('tematicas.index')" class="nav-link">Temáticas</a></li>
+                    <li><a id="lista" :href="route('subtematicas.index')" class="nav-link">Subtemáticas</a></li>
                   </ul>
             </li>
             <li class="dropdown drop" id="cont1">
                 <a href="#" class="nav-link" data-bs-toggle="dropdown">Gestión Usuarios</a>
                   <ul class="dropdown-menu">
-                    <li><a id="lista" :href="route('proyectos.index')" class="nav-link">Profesores</a></li>
-                    <li><a id="lista" :href="route('proyectos.index')" class="nav-link">Revisores</a></li>
-                    <li><a id="lista" :href="route('proyectos.index')" class="nav-link">Alumnos</a></li>
+                    <li><a id="lista" :href="route('usuarios.index' )" class="nav-link">Profesores</a></li>
+                    <li><a id="lista" :href="route('usuarios.create')" class="nav-link">Revisores</a></li>
+                    <li><a id="lista" :href="route('usuarios.index')" class="nav-link">Alumnos</a></li>
                   </ul>
             </li>
             <li class="dropdown drop1" id="cont">
                 <a href="#" class="nav-link" data-bs-toggle="dropdown">Seguridad</a>
                   <ul class="dropdown-menu">
-                    <li><a id="lista" :href="route('proyectos.index')" class="nav-link">Profesores</a></li>
+                    <li><a id="lista" :href="route('documento.index')" class="nav-link">Profesores</a></li>
                     <li><a id="lista" :href="route('proyectos.index')" class="nav-link">Revisores</a></li>
                     <li><a id="lista" :href="route('proyectos.index')" class="nav-link">Alumnos</a></li>
                   </ul>
@@ -60,7 +58,7 @@
 </header> 
     </template>
     
-    <script>
+<script>
   import { Link } from '@inertiajs/inertia-vue3'
   import 'sweetalert2/dist/sweetalert2.min.css';
   import axios from 'axios';
@@ -79,8 +77,6 @@
       props: {
         title: { type: String, required: true },
         routeName: { type: String, required: true },
-        tem: {type:Object, required:true},
-        subtem: {type:Object, required:true},
       },
       components: {
         AppLayout,
@@ -101,7 +97,7 @@
        
     };
     
-    </script>
+</script>
   <style scoped>     
   /*Barra de navegacion */
   .header{
@@ -115,7 +111,6 @@
   .drop{
     font-size: 15px;
     margin-right: 40px;
-   
   }
 
   .drop1{
@@ -136,7 +131,7 @@
 
   a[id="logo"]{
     margin-left: 0%;
-    height: 60px;
+    height: 50px;
   }
 
   a[id="lista"]:hover{

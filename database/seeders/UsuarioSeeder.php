@@ -81,6 +81,8 @@ class UsuarioSeeder extends Seeder
         // Asignar ROLES a usuarios
        User::find(1)->assignRole($adm);
         User::find(2)->assignRole($prof);
+        User::find(3)->assignRole($rev);
+        User::find(4)->assignRole($alumn);
         //User::find(2)->assignRole($alumn);
     }
 }

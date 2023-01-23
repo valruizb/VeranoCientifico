@@ -1,24 +1,10 @@
 <template>
-
   <Head> </Head>
   <Profe v-if="$page.props.user.rol == 2"></Profe>
-
   <Admin v-if="$page.props.user.rol == 1"></Admin>
-
   <Alumno v-if="$page.props.user.rol == 4"></Alumno>
-
   <Revisor v-if="$page.props.user.rol == 3"></Revisor>
-
 <body>
-
-<!-- Page loading spinner 
-<div class="page-loading active">
-  <div class="page-loading-inner">
-    <div class="page-spinner"></div><span>Loading...</span>
-  </div>
-</div>-->
-
-
 
 <main class="page-wrapper">
   <section class="container pt-5">
@@ -27,8 +13,8 @@
             <div class="position-sticky top-0">
               <div class="text-center pt-5">
                 <div class="d-table position-relative mx-auto mt-2 mt-lg-4 pt-5 mb-3">
-                  <img src="assets/img/avatar/18.jpg" class="d-block rounded-circle" width="120" alt="John Doe">
-                  <button type="button" class="btn btn-icon btn-light bg-white btn-sm border rounded-circle shadow-sm position-absolute bottom-0 end-0 mt-4" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Change picture">
+                  <img :src="user.profile_photo_url" class="d-block rounded-circle" ref="photo"  width="120" alt="John Doe">
+                  <button  type="button" class="btn btn-icon btn-light bg-white btn-sm border rounded-circle shadow-sm position-absolute bottom-0 end-0 mt-4" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Change picture">
                     <i class="bx bx-refresh"></i>
                   </button>
                 </div>
@@ -64,39 +50,81 @@
 
           <div class="col-md-8 offset-lg-1 pb-5 mb-2 mb-lg-4 pt-md-5 mt-n3 mt-md-0">
             <div class="ps-md-3 ps-lg-0 mt-md-2 py-md-4">
-              <h1 class="h2 pt-xl-1 pb-3"><i class='bx bx-lock-open-alt bx-flashing' style='color:#07179a'></i> B I E N V E N I D O</h1><hr><br>
+              <h1 class="h2 pt-xl-1 pb-3"><i class='bx bx-lock-open-alt bx-flashing' style='color:#07179a' ></i> B I E N V E N I D O</h1><hr><br>
 
               <!-- Basic info -->
               <h2 class="h5 text-primary mb-4">Información sobre tu cuenta</h2>
-              <form class="needs-validation border-bottom pb-3 pb-lg-4" novalidate>
+              <form class="needs-validation border-bottom pb-3 pb-lg-4" enctype="multipart/form-data" @submit.prevent="updateProfileInformation">
                 <div class="row pb-2">
-                  <div class="col-sm-6 mb-4">
-                    <label for="fn" class="form-label fs-base">Teléfono</label>
-                    <input type="text" id="fn" class="form-control form-control-lg" value="{{ page.props.user.name}}" required>
-                    <div class="invalid-feedback">Please enter your first name!</div>
+                  <div class="col-sm-6 mb-4" v-if="$page.props.user.rol == 1">
+                    <jet-label class="form-label fs-base" for="name" value="Nombre" />
+                    <jet-input type="text" id="sn" class="form-control form-control-lg" v-model="form.name"  :class="{ 'is-invalid': form.errors.name }" autocomplete="name"  required />
+                    <jet-input-error :message="form.errors.name" />
                   </div>
-                  <div class="col-sm-6 mb-4">
-                    <label for="sn" class="form-label fs-base">Second name</label>
-                    <input type="text" id="sn" class="form-control form-control-lg" value="Doe" required>
-                    <div class="invalid-feedback">Please enter your second name!</div>
+                  <div class="col-sm-6 mb-4" v-if="$page.props.user.rol == 1">
+                    <jet-label class="form-label fs-base" for="name" value="Apellido Paterno" />
+                    <jet-input type="text" id="sn" class="form-control form-control-lg" v-model="form.lastnamep"  :class="{ 'is-invalid': form.errors.name }" autocomplete="name"   />
+                    <jet-input-error :message="form.errors.lastnamep" />
                   </div>
-                  <div class="col-sm-6 mb-4">
-                    <label for="email" class="form-label fs-base">Email address</label>
-                    <input type="email" id="email" class="form-control form-control-lg" value="jonny@email.com" required>
-                    <div class="invalid-feedback">Please provide a valid email address!</div>
+                  <div class="col-sm-6 mb-4" v-if="$page.props.user.rol == 1">
+                    <jet-label class="form-label fs-base" for="name" value="Apellido Materno" />
+                    <jet-input type="text" id="sn" class="form-control form-control-lg" v-model="form.lastnamem"  :class="{ 'is-invalid': form.errors.name }" autocomplete="name"  r/>
+                    <jet-input-error :message="form.errors.lastnamem" />
                   </div>
-                  <div class="col-sm-6 mb-4">
-                    <label for="phone" class="form-label fs-base">Phone <small class="text-muted">(optional)</small></label>
-                    <input type="text" id="phone" class="form-control form-control-lg" data-format="custom" data-delimiter="-" data-blocks="2 3 4" data-numeral="9" placeholder="00-000-0000">
+                  <div class="col-sm-6 mb-4" >
+                    <jet-label class="form-label fs-base" for="name" value="Teléfono" />
+                    <jet-input type="text" id="sn" class="form-control form-control-lg" v-model="form.phone"  :class="{ 'is-invalid': form.errors.name }" autocomplete="name"  />
+                    <jet-input-error :message="form.errors.phone" />
                   </div>
-                  <div class="col-12 mb-4">
-                    <label for="bio" class="form-label fs-base">Bio <small class="text-muted">(optional)</small></label>
-                    <textarea id="bio" class="form-control form-control-lg" rows="4" placeholder="Add a short bio..."></textarea>
+                  <div class="col-sm-6 mb-4" >
+                    <jet-label class="form-label fs-base" for="name" value="Email" />
+                    <jet-input type="text" id="sn" class="form-control form-control-lg" v-model="form.email"  :class="{ 'is-invalid': form.errors.email }" autocomplete="name"  />
+                    <jet-input-error :message="form.errors.email" />
+                  </div>
+                  <div class="col-sm-6 mb-4" v-if="$page.props.user.rol == 2">
+                    <jet-label class="form-label fs-base" value="Institución de procedencia:" />
+                      <select class="form-control form-control-lg" :class="{'is-invalid':form.errors.institution_id}" v-model="form.institution_id">
+                      <option id="sn"  v-for="ins in instituto" disabled  value="">{{ ins.name }}</option>
+                      <option id="sn"  v-for="ins in instituciones"  v-bind:value="ins.id" v-bind:key="ins.id">{{ ins.name }}</option>
+                      </select>
+                  </div>
+                  <div class="col-sm-6 mb-4" v-if="$page.props.user.rol == 2">
+                    <jet-label class="form-label fs-base" value="Institución de procedencia:" />
+                      <select class="form-control form-control-lg" :class="{'is-invalid':form.errors.institution_id}" v-model="form.institution_id">
+                      <option id="sn"  v-for="ins in instituto" disabled  value="">{{ ins.name }}</option>
+                      <option id="sn"  v-for="ins in instituciones"  v-bind:value="ins.id" v-bind:key="ins.id">{{ ins.name }}</option>
+                      </select>
+                  </div>
+                  <div class="col-sm-6 mb-4" v-if="$page.props.user.rol == 2">
+                    <jet-label class="form-label fs-base" value="Institución de procedencia:" />
+                      <select class="form-control form-control-lg" :class="{'is-invalid':form.errors.institution_id}" v-model="form.institution_id">
+                      <option id="sn"  v-for="ins in instituto" disabled  value="">{{ ins.name }}</option>
+                      <option id="sn"  v-for="ins in instituciones"  v-bind:value="ins.id" v-bind:key="ins.id">{{ ins.name }}</option>
+                      </select>
+                  </div>
+                  <div class="col-sm-6 mb-4" v-if="$page.props.user.rol == 2">
+                    <jet-label class="form-label fs-base" for="name" value="Puesto" />
+                    <jet-input type="text" id="sn" class="form-control form-control-lg" v-model="form.job"  :class="{ 'is-invalid': form.errors.job }" autocomplete="name"  />
+                    <jet-input-error :message="form.errors.job" />
+                  </div>
+                  <div class="col-sm-6 mb-4" v-if="$page.props.user.rol == 2">
+                    <jet-label class="form-label fs-base" for="name" value="Nivel SNI" />
+                    <jet-input type="text" id="sn" class="form-control form-control-lg" v-model="form.snilevel"  :class="{ 'is-invalid': form.errors.snilevel }" autocomplete="name"  />
+                    <jet-input-error :message="form.errors.snilevel" />
+                  </div>
+                  <div class="col-sm-6 mb-4" v-if="$page.props.user.rol == 2">
+                    <jet-label class="form-label fs-base" for="name" value="Línea de investigación" />
+                    <jet-input type="text" id="sn" class="form-control form-control-lg" v-model="form.invline"  :class="{ 'is-invalid': form.errors.invline }" autocomplete="name"  />
+                    <jet-input-error :message="form.errors.invline" />
+                  </div>
+                  <div class="col-sm-6 mb-4" v-if="$page.props.user.rol == 2">
+                    <jet-label class="form-label fs-base" for="name" value="Grado Máximo" />
+                    <jet-input type="text" id="sn" class="form-control form-control-lg" v-model="form.maxgrade"  :class="{ 'is-invalid': form.errors.maxgrade }" autocomplete="name"  />
+                    <jet-input-error :message="form.errors.maxgrade" />
                   </div>
                 </div>
                 <div class="d-flex mb-3">
-                  <button type="reset" class="btn btn-secondary me-3">Cancel</button>
-                  <button type="submit" class="btn btn-primary">Save changes</button>
+                  <button type="submit" class="btn btn-primary"><i class="bx bx-save fs-xl opacity-60 me-2"></i> Guardar cambios</button>
                 </div>
               </form>
             </div>
@@ -108,39 +136,91 @@
 </template>
 
 <script>
-import AppLayout from "@/Layouts/AppLayout.vue"
 import Main from "./Main.vue"
 import Admin from "@/Jetstream/Admin.vue";
 import Profe from "@/Jetstream/Profe.vue";
 import Head from '@/Jetstream/Head.vue';
 import Revisor from '@/Jetstream/Revisor.vue';
 import Alumno from '@/Jetstream/Alumno.vue';
+import JetInput from '@/Jetstream/Input.vue'
+import JetInputError from '@/Jetstream/InputError.vue'
+import JetLabel from '@/Jetstream/Label.vue'
+import { defineComponent } from 'vue'
+import JetSecondaryButton from '@/Jetstream/SecondaryButton.vue'
 
-export default{
+export default defineComponent({
   name:"Dashboard",
   components: {
-    AppLayout,
     Main, 
     Admin,
     Profe, 
     Head,
     Alumno,
-    Revisor
+    Revisor,
+    JetInput,
+    JetInputError,
+    JetLabel,
+    JetSecondaryButton,
+  },
+  props: ['user'],
+        subtematicas: { type: Object, required: true },
+        tematicas: { type: Object, required: true },
+        tematica: { type: Object, required: true },
+        instituciones: { type: Object, required: true },
+        instituto: { type: Object, required: true },
+
+data() {
+  return {
+    form: this.$inertia.form({
+      _method: 'PUT',
+      name: this.user.name,
+      lastnamep: this.user.lastnamep,
+      lastnamem: this.user.lastnamem,
+      lastnamem: this.user.lastnamem,
+      phone: this.user.phone,
+      institution_id: this.user.institution_id,
+      thematic_id: this.user.thematic_id,
+      subthematic_id: this.user.subthematic_id,
+      snilevel: this.user.snilevel,
+      maxgrade: this.user.maxgrade,
+      invline: this.user.invline,
+      job: this.user.job,
+      email: this.user.email,
+      photo: null,
+    }),
+
+    photoPreview: null,
   }
-};
+},
 
 methods: {
-  (function () {
+  function () {
         window.onload = function () {
           const preloader = document.querySelector('.page-loading');
           preloader.classList.remove('active');
           setTimeout(function () {
             preloader.remove();
-          }, 1000);
+          }, 10);
         };
-      })();
-  
+      },
+
+    updateProfileInformation() {
+      if (this.$refs.photo) {
+        this.form.photo = this.$refs.photo.files[0]
+      }
+
+      this.form.post(route('user-profile-information.update'), {
+        errorBag: 'updateProfileInformation',
+        preserveScroll: true,
+        onSuccess: () => (this.clearPhotoFileInput()),
+      })
+    },
 }
+});
+
+
+
+
 </script>
 
 <style>

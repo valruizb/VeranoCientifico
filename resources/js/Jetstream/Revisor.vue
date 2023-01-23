@@ -13,8 +13,8 @@
            <a href="#" class="d-flex nav-link p-0" data-bs-toggle="dropdown" >
              <img src="../../../public/assets/img/avatar/09.jpg" class="rounded-circle" width="47" alt="Silicon">
                <div class="d-none d-sm-block ps-2">
-                   <div class="fs-xs lh-1 opacity-60">Bienvenido,</div>
-                   <div class="fs-sm dropdown-toggle">{{ $page.props.user.name}} {{ $page.props.user.lastnamep}}</div>
+                   <div class="fs-xs lh-1 opacity-60">Hola,</div>
+                   <div class="fs-sm dropdown-toggle">{{ $page.props.user.name}}{{ $page.props.user.lastnamep}}</div>
                </div>
            </a>
            <ul class="dropdown-menu" id="menu">

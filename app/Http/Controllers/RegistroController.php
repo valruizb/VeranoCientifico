@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Registro;
 use App\Models\Renapo;
 use App\Models\User;
-use App\Models\tematica;
-use App\Models\subtematica;
+use App\Models\Tematicas;
+use App\Models\Subtematicas;
 use App\Models\Instituciones;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -32,7 +32,7 @@ class RegistroController extends Controller
      */
 
     protected string $routeName;
-    protected string $source;
+    protected string $source, $source2;
     protected string $module = 'usuarios';
     protected User $model;
     private $disk = 'public';
@@ -42,13 +42,14 @@ class RegistroController extends Controller
         
         $this->routeName = "usuarios.";
         $this->source    = "Auth/";
+        $this->source2    = "Usuarios/";
         $this->model     = new User();
 
     }
 
     public function index()
     {
-        //
+        
     }
 
     /**
@@ -58,13 +59,13 @@ class RegistroController extends Controller
      */
     public function create()
     {  
-        $thematic = tematica::all();
+        $thematic = Tematicas::all();
         $thematic->load('subtematica');
         return Inertia::render("{$this->source}Register", [
             'tematica'=>$thematic,
             'instituto' =>Instituciones::orderBy('id')->get(),
             'roles'=> Role::with('permissions:id,name,description,module_key')->orderBy('name')->select('id', 'name', 'description')->where('id', '!=', '1')->get(),
-            'subtematica' => subtematica::get(),
+            'subtematica' => Subtematicas::get(),
            
         ]);
     }

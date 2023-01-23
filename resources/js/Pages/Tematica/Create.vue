@@ -1,66 +1,74 @@
-<template>
-  <Head>   </Head>
+<template >
+    <Head>   </Head>
 
-  <Admin v-if="$page.props.user.rol == 1"> </Admin>
+    <Admin v-if="$page.props.user.rol == 1"> </Admin>
+  
   
       <div class="contenido">
-          <div class="forma1">
-            <h2 class="h4 font-weight-bold text-center">
-              <br><i class="bi bi-bricks"></i> {{ titulo }}
-            </h2>
-            <div class="card-body border-right border-bottom p-3 h-100">
-                <form class="row g-3 needs-validation" @submit.prevent="guardar">
-                  <div class="col-md-8">
-                    <jet-label for="nombre" value="*Nombre del Proyecto:" /><br>
-                    <jet-input id="nombre"
+              <div class="forma1">
+                <h2 class="h4 font-weight-bold text-center">
+                  <br><i class='boxi bx bx-book' style='color:#030664'></i> {{ titulo }}
+                </h2>
+                <div class="card-body border-right border-bottom p-3 h-100">
+                  <form class="row g-3 needs-validation" @submit.prevent="guardar">
+                    <div class="col-md-8">
+                    <jet-label id="titulo" for="nombre" value="*Nombre de la Temática:" /><br>
+                    <div class="">
+                    <jet-input id="nombre" autofocus
                       type="text" 
                       v-model="form.name" 
-                      :class="{ 'is-invalid': form.errors.name  }" 
+                      :class="{ 'is-invalid': form.errors.name }" 
                       required 
-                      placeholder="Nombre del proyecto"   />
-                    <jet-input-error :message="form.errors.name " />
-                  </div>
-    
-                  <div class="px-6 py-4">
-                    <Link
-                      :href="route(`${routeName}index`)"
-                      class="btncancelar btn btn-outline-secondary me-4">
-                      <i class="bi bi-chevron-left"></i> Cancelar
-                    </Link>
-                    <jet-button
-                      @click="guardar"
-                      class="btnguardar btn btn-outline-secondary "
-                      :class="{ 'text-white-50': form.processing }"
-                      :disabled="form.processing">
-                      <i class="bi bi-save"></i> Guardar
-                    </jet-button>
-                  </div>
-                </form>
-            </div>
-        </div>             
-      </div>
+                      placeholder="Nombre de la temática"   />
+                    <jet-input-error :message="form.errors.name" />
+                  </div></div>
+      
+                    <div class="px-6 py-4">
+                      <Link
+                        :href="route(`${routeName}index`)"
+                        class="btncancelar btn btn-outline-secondary me-4">
+                        <i class="bi bi-chevron-left"></i> Cancelar
+                      </Link>
+                      <jet-button
+                        @click="guardar"
+                        class="btnguardar btn btn-outline-secondary "
+                        :class="{ 'text-white-50': form.processing }"
+                        :disabled="form.processing">
+                        <i class="bi bi-save"></i> Guardar
+                      </jet-button>
+                    </div>
+                  </form>
+              </div>
+            </div>             
+          </div>
   </template>
   
   <script>
-  import AppLayout from "@/Layouts/AppLayout.vue";
-  import { Link } from "@inertiajs/inertia-vue3";
-  import JetLabel from "@/Jetstream/Label.vue";
-  import JetInput from "@/Jetstream/Input.vue";
-  import JetInputError from "@/Jetstream/InputError.vue";
-  import JetButton from "@/Jetstream/Button.vue";
-  import { useForm } from "@inertiajs/inertia-vue3";
-  import 'sweetalert2/dist/sweetalert2.min.css';
-  import { defineComponent } from 'vue'
-  import Swal from 'sweetalert2';
-  import 'sweetalert2/dist/sweetalert2.min.css';
-  import Admin from "@/Jetstream/Admin.vue";
-  import Head from '@/Jetstream/Head.vue';
+import { defineComponent } from 'vue'
+import JetAuthenticationCard from '@/Jetstream/AuthenticationCard.vue'
+import JetAuthenticationCardLogo from '@/Jetstream/AuthenticationCardLogo.vue'
+import JetCheckbox from "@/Jetstream/Checkbox.vue";
+import JetValidationErrors from '@/Jetstream/ValidationErrors.vue'
+import {Link } from '@inertiajs/inertia-vue3'
+import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
+import axios from 'axios';
+import AppLayout from "@/Layouts/AppLayout.vue";
+import JetLabel from "@/Jetstream/Label.vue";
+import JetInput from "@/Jetstream/Input.vue";
+import JetInputError from "@/Jetstream/InputError.vue";
+import JetButton from "@/Jetstream/Button.vue";
+import { useForm } from "@inertiajs/inertia-vue3";
+import { ref } from "vue";
+import JetDropdownLink from '@/Jetstream/DropdownLink.vue';
+import Admin from "@/Jetstream/Admin.vue";
+import Head from '@/Jetstream/Head.vue';
+  
   
   export default {
-    name: "Edit",
+    name: "Create",
     props: {
       titulo: { type: String, required: true },
-      institucion: { type: Object, required: true },
       routeName: { type: String, required: true },
     },
     components: {
@@ -70,19 +78,25 @@
       JetInput,
       JetInputError,
       JetButton,
+      JetDropdownLink,
       Head,
       Admin,
     },
     setup(props) {
-      const form = useForm({ ...props.institucion });
-      const guardar = () => {
-        form.put(route("instituciones.update", props.institucion.id));
-      };
-      return { form, guardar};
-    },
-  };
-  </script>
+      const form = useForm({ 
+        name: "", 
+      });
   
+      const guardar = () => {
+        form.post(route("tematicas.store"));
+      };
+  
+      return { form, guardar };
+    },
+     
+  };
+  
+  </script>
   
   <style scoped>    
       
@@ -194,3 +208,5 @@
         
       
       </style>
+  
+  

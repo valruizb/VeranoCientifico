@@ -2,37 +2,37 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Instituciones;
-use App\Http\Requests\StoreInstitucionesRequest;
-use App\Http\Requests\UpdateInstitucionesRequest;
+use App\Models\Tematicas;
+use App\Http\Requests\StoreTematicasRequest;
+use App\Http\Requests\UpdateTematicasRequest;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 
-class InstitucionesController extends Controller
+class TematicasController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+
         protected string $routeName;
         protected string $source;
-        protected string $module = 'instituciones';
-        protected Instituciones $model;
+        protected string $module = 'tematicas';
+        protected Tematicas $model;
     
         public function __construct()
         {
-            $this->source = 'Instituciones/';
-        $this->model = new Instituciones();
-        $this->routeName = 'instituciones.';
+            $this->source = 'Tematica/';
+            $this->model = new Tematicas();
+            $this->routeName = 'tematicas.';
 
-            
             $this->middleware("permission:{$this->module}.index")->only(['index', 'show']);
             $this->middleware("permission:{$this->module}.store")->only(['store', 'create']);
             $this->middleware("permission:{$this->module}.update")->only(['update', 'edit']);
             $this->middleware("permission:{$this->module}.delete")->only(['destroy', 'edit']); 
         }
-        
+
     public function index(Request $request)
     {
         $request->status = $request->status === null ? true : $request->status;
@@ -43,10 +43,10 @@ class InstitucionesController extends Controller
             }
         });
 
-         return Inertia::render("Instituciones/Index", [
+         return Inertia::render("Tematica/Index", [
              'titulo '          => 'Instituciones Registradas',
              'routeName'      => $this->routeName,
-             'institucion'=>  $records->orderBy('id') -> paginate(6),
+             'tematicas'=>  $records->orderBy('id') -> paginate(6),
              'loadingResults' => false,
              'search'         => $request->search ?? '',
              'status'         => (bool) $request->status, ]);
@@ -62,29 +62,29 @@ class InstitucionesController extends Controller
         return Inertia::render("{$this->source}Create", [
             'titulo'=>'Agregar Institución',
             'routeName'=>$this->routeName,
-            'instituciones'=>instituciones::orderBy('id')->get(),
+            'tematicas'=>tematicas::orderBy('id')->get(),
         ]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreInstitucionesRequest  $request
+     * @param  \App\Http\Requests\StoreTematicasRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreInstitucionesRequest $request)
+    public function store(StoreTematicasRequest $request)
     {
         $this->model::create($request->validated());
-        return redirect()->route('instituciones.index')->with('success', 'Permiso guardado con éxito!');
+        return redirect()->route('tematicas.index')->with('success', 'Temática guardado con éxito!');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Instituciones  $instituciones
+     * @param  \App\Models\Tematicas  $tematicas
      * @return \Illuminate\Http\Response
      */
-    public function show(Instituciones $instituciones)
+    public function show(Tematicas $tematicas)
     {
         abort(405);
     }
@@ -92,41 +92,40 @@ class InstitucionesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Instituciones  $instituciones
+     * @param  \App\Models\Tematicas  $tematicas
      * @return \Illuminate\Http\Response
      */
-    public function edit(Instituciones $instituciones)
+    public function edit(Tematicas $tematicas)
     {
         return Inertia::render("{$this->source}Edit", [
             'titulo'          => 'Editar Institución',
             'routeName'      => $this->routeName,
-            'institucion' => $instituciones
+            'tematicas' => $tematicas
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateInstitucionesRequest  $request
-     * @param  \App\Models\Instituciones  $instituciones
+     * @param  \App\Http\Requests\UpdateTematicasRequest  $request
+     * @param  \App\Models\Tematicas  $tematicas
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateInstitucionesRequest $request, Instituciones $instituciones)
+    public function update(UpdateTematicasRequest $request, Tematicas $tematicas)
     {
-        //dd($request);
-        $instituciones->update($request->validated());
-        return redirect()->route('instituciones.index')->with('success', 'Institución actualizado correctamente!');
+        $tematicas->update($request->validated());
+        return redirect()->route('tematicas.index')->with('success', 'Temática actualizado correctamente!');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Instituciones  $instituciones
+     * @param  \App\Models\Tematicas  $tematicas
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Instituciones $instituciones)
+    public function destroy(Tematicas $tematicas)
     {
-        $instituciones->delete();
-        return redirect()->route('instituciones.index')->with('success', 'Proyecto eliminado con éxito');
+        $tematicas->delete();
+        return redirect()->route('tematicas.index')->with('success', 'Temática eliminado con éxito');
     }
 }

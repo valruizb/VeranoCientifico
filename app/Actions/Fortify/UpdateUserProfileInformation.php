@@ -6,6 +6,10 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Laravel\Fortify\Contracts\UpdatesUserProfileInformation;
+use App\Models\Tematicas;
+use App\Models\Subtematicas;
+use App\Models\Instituciones;
+use Inertia\Inertia;
 
 class UpdateUserProfileInformation implements UpdatesUserProfileInformation
 {
@@ -16,12 +20,27 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
      * @param  array  $input
      * @return void
      */
+
     public function update($user, array $input)
     {
+        dd($user);
+        return Inertia::render( [
+            
+            'instituciones'=> Instituciones::orderBy('id')->get(),
+        ]);
+
         Validator::make($input, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
-            'photo' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
+            'name' => ['nullable', 'string', 'max:255'],
+            'lastnamep' => ['nullable', 'string', 'max:255'],
+            'lastnamem' => ['nullable', 'string', 'max:255'],
+            'phone' => ['nullable', 'string', 'max:255'],
+            'institution_id' => ['nullable', 'string', 'max:255'],
+            'thematic_id' => ['nullable', 'string', 'max:255'],
+            'subthematic_id' => ['nullable', 'string', 'max:255'],
+            'job' => ['nullable', 'string', 'max:255'],
+            'snilevel' => ['nullable', 'string', 'max:255'],
+            'invline' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
+            'maxgrade' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
         ])->validateWithBag('updateProfileInformation');
 
         if (isset($input['photo'])) {
@@ -51,6 +70,16 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
         $user->forceFill([
             'name' => $input['name'],
             'email' => $input['email'],
+            'lastnamep' => $input['lastnamep'],
+            'lastnamem' => $input['lastnamem'],
+            'phone' => $input['phone'],
+            'institution_id' => $input['institution_id'],
+            'thematic_id' => $input['thematic_id'],
+            'subthematic_id' => $input['subthematic_id'],
+            'job' => $input['job'],
+            'snilevel' => $input['snilevel'],
+            'invline' => $input['invline'],
+            'maxgrade' => $input['maxgrade'],
             'email_verified_at' => null,
         ])->save();
 

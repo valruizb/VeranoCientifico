@@ -1,120 +1,129 @@
 <template>
-  <app-layout title="Catálogo de Documentos Probatorios">
-    <template #header>
-      <h2 class="h4 font-weight-bold">
-        <i class="bi bi-file-text-fill"></i> {{ titulo }}
-      </h2>
-    </template>
-    <div class="card shadow-sm">
-      <div class="row">
-        <div class="col-md-12 pe-0">
-          <div class="card-body border-right border-bottom p-3 h-100">
-            <div v-if="$page.props.flash.success" class="alert alert-success" role="alert">
-              {{ $page.props.flash.success }}
-            </div>
-            <div class="mb-2 d-flex justify-content-start">
-              <Link
-                :href="route(`${routeName}create`)"
-                class="btn btn-outline-secondary btn-sm"
-              >
-                <i class="bi bi-plus"></i>
-                Agregar Documento
-              </Link>
-            </div>
+    <!----<Head>   </Head>
 
-            <div class="d-flex flex-row bd-highlight pt-2">
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Acciones</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="item in documentos.data" :key="item.id">
-                    <td>
-                      <Link
-                        :href="route('documento.edit', item.id)"
-                        class="d-flex text-decoration-none text-reset"
-                        >{{ item.id }}</Link
-                      >
-                    </td>
-                    <td>
-                      <Link
-                        :href="route('documento.edit', item.id)"
-                        class="d-flex text-decoration-none text-reset"
-                        >{{ item.descripcion }}</Link
-                      >
-                    </td>
-                    <td>
-                      <Link
-                        :href="route('documento.edit', item.id)"
-                        class="d-flex text-decoration-none text-reset"
-                      >
-                        <i class="bi bi-caret-right-fill"></i>
-                      </Link>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <RecordsHelper
-            :thereAreResults="thereAreResults"
-            :loadingResults="loadingResults"
-          />
-            <pagination :links="documentos.links" :total="documentos.total" />
-            
-          </div>
-        </div>
-      </div>
-    </div>
-  </app-layout>
+    <Admin v-if="$page.props.user.rol == 1"> </Admin>-->
+
+<body><br><br><br><br>
+  <div class="nav_bar">
+    <ul>
+      <li><a id="onlink" :href="route('instituciones.index')" class="nav-link">Paso 4</a></li>
+      <li><a id="lista" :href="route('instituciones.index')" class="nav-link">Paso 4</a></li>
+      <li><a id="lista" :href="route('instituciones.index')" class="nav-link">Paso 3</a></li>
+      <li><a id="lista" :href="route('instituciones.index')" class="nav-link">Paso 5</a></li>
+      <li><a id="lista" :href="route('instituciones.index')" class="nav-link">Paso 5</a></li>
+      <li><a id="lista" :href="route('instituciones.index')" class="nav-link">Paso 6</a></li>
+    </ul>
+  </div>
+  <div class="container">
+    <p>Cargar archivos</p>
+
+  </div>
+</body>
 </template>
+
 <script>
-import AppLayout from "@/Layouts/AppLayout.vue";
-import { Link } from "@inertiajs/inertia-vue3";
-import Pagination from "@/Shared/Pagination.vue";
-import RecordsHelper from "@/Shared/RecordsHelper.vue";
-import { computed, onMounted, reactive, toRefs, watch } from "vue";
-import { Inertia } from "@inertiajs/inertia";
-import Input from "@/Jetstream/Input.vue";
-import { ref } from "vue";
+    import Input from "@/Jetstream/Input.vue";
+    import JetDropdownLink from '@/Jetstream/DropdownLink.vue';
+    import JetLabel from "@/Jetstream/Label.vue";
+    import JetInput from "@/Jetstream/Input.vue";
+    import JetInputError from "@/Jetstream/InputError.vue";
+    import JetButton from "@/Jetstream/Button.vue";
+    import 'sweetalert2/dist/sweetalert2.min.css';
+    import Admin from "@/Jetstream/Admin.vue";
+    import Head from '@/Jetstream/Head.vue';
 
-export default {
-  name: "Index",
-  props: {
-    titulo: { type: String, required: true },
-    documentos: {
-      type: Object,
-      default: {},
-      required: true,
-    },
-    routeName: { type: String, required: true },
-    loadingResults: { type: Boolean, required: true, default: true }
-  },
-  components: {
-    AppLayout,
-    Link,
-    Pagination,
-    RecordsHelper,
-    Input,
-  },
-  setup(props) {
-    const thereAreResults = computed(() => props.documentos.total > 0);
-    
-    const search = () => {
-      props.loadingResults = true;
-      Inertia.replace(route(`${props.routeName}index`, state.filters));
-    };
+    export default {
+        name: "Index",
+        props: {
 
-    return {
-      search,
-      thereAreResults,
-    };
-  },
-};
+        },
+        components: {
+            Admin,
+            Head,
+        },
+
+    }
 </script>
+<style :scope>
+  body{
+    margin: auto;
+    background: #efefefef ;
+  }
 
-<style>
+  .nav_bar{
+    margin: auto;
+    border-bottom: 1px solid rgb(12, 12, 12);
+    width: 860px;
+    padding: 0px 20px 0px 20px;
+    height: 56px;
+    margin-top: 30px;
+  }
+
+  .nav_bar ul{
+    padding: 0;
+    list-style: none;
+  }
+
+  .nav_bar ul li{
+    float: left;
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 10px;
+  }
+
+  .nav_bar ul li a{
+    text-decoration: none;
+    color: #000000;
+    background-color: aqua;
+    border: 1px solid #000000;
+    border-bottom: none;
+    padding: 23px 20px 22px 20px;
+    margin-top: -17px;
+    -webkit-border-top-right-radius: 10px;
+    -webkit-border-top-left-radius: 10px;
+    -moz-border-radius-topleft: 10px;
+    -moz-border-radius-topright: 10px;
+    width: 110px;
+    display: block;
+    text-align: center;
+  }
+
+  .nav_bar ul li a:hover{
+    text-decoration: none;
+    color: #000000;
+    background: #b81111ef ;
+    -moz-transition: background 200ms ease-in;
+    -webkit-transition: background 200ms ease-in;
+    -ms-transition: background 200ms ease-in;
+    -o-transition: background 200ms ease-in;
+    transition: background 200ms ease-in;
+  }
+
+  .nav_bar ul li a#onlink{
+    background: #efefefef;
+    color: #000000;
+    border-bottom: 1px solid #ffffff;
+  }
+
+  .nav_bar ul li a#onlink:hover{
+    background: #ffffff ;
+    color: #000000;
+  }
+
+  .container{
+    margin: auto;
+    width: 860px;
+    padding: 20px;
+    border: 1px solid #000000;
+    min-height: 400px;
+    border-top: none;
+    background-color: #ffffffff;
+  }
+
+  .container p{
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+  }
+
 </style>

@@ -16,6 +16,8 @@ use App\Http\Controllers\EventoController;
 use App\Http\Controllers\CalendarioConvocatoriaController;
 use App\Http\Controllers\DocumentoController;
 use App\Http\Controllers\InstitucionesController;
+use App\Http\Controllers\TematicasController;
+use App\Http\Controllers\SubtematicasController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 
@@ -84,6 +86,8 @@ Route::middleware([
     Route::resource('documento', DocumentoController::class)->parameters(['documento' => 'documento']);
     Route::resource('proyectos', ProyectosController::class)->parameters(['proyectos' => 'proyectos']);
     Route::resource('instituciones', InstitucionesController::class)->parameters(['instituciones' => 'instituciones']);
+    Route::resource('tematicas', TematicasController::class)->parameters(['tematicas' => 'tematicas']);
+    Route::resource('subtematicas', SubtematicasController::class)->parameters(['subtematicas' => 'subtematicas']);
     
     
 });

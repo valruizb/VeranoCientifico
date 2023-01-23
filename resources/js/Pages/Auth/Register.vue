@@ -1,71 +1,11 @@
 <template >
-  <head lang="en"><meta charset="UTF-8"><title>Registro</title>
-  <!-- Viewport -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+ 
+  <Head> </Head>
 
-<!-- Favicon and Touch Icons -->
-    <link rel="icon" type="image/png" sizes="32x32" href="../../../../public/img/TecNM_logo.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="../../../../public/img/TecNM_logo.png">
-    <link rel="manifest" href="../assets/favicon/site.webmanifest">
-    <link rel="mask-icon" href="../assets/favicon/safari-pinned-tab.svg" color="#6366f1">
-    <link rel="shortcut icon" href="../assets/favicon/favicon.ico">
-    <meta name="msapplication-TileColor" content="#080032">
-    <meta name="msapplication-config" content="../assets/favicon/browserconfig.xml">
-    <meta name="theme-color" content="#ffffff">
+  <Navbar> </Navbar>
 
-    <!-- Vendor Styles -->
-    <link rel="stylesheet" media="screen" href="../assets/vendor/boxicons/css/boxicons.min.css"/>
-
-    <!-- Main Theme Styles + Bootstrap -->
-    <link rel="stylesheet" media="screen" href="../assets/css/theme.min.css">
-  
-  </head>
-  <header class="header navbar navbar-expand-lg navbar-light bg-light shadow-sm">
-  <div class="container">
-    <a class="navbar-brand" id="logo">
-      <img src="../../../../public/img/logo.png" width="47" alt="Silicon">
-      TecNM/Cenidet 
-    </a>
-    <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse2" aria-expanded="false">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="form-check form-switch mode-switch order-lg-2 ms-4 ms-lg-auto me-lg-4" data-bs-toggle="mode">
-      <input type="checkbox" class="form-check-input" id="theme-mode">
-      <label class="form-check-label d-none d-sm-block d-lg-none d-xl-block" for="theme-mode">Light</label>
-      <label class="form-check-label d-none d-sm-block d-lg-none d-xl-block" for="theme-mode">Dark</label>
-    </div>
-    <a id="btn" :href="route('login')" class="btn btn-secondary btn-sm fs-sm rounded order-lg-3 my-3 d-none d-lg-inline-flex">
-      <i id="boxi" class='bx bx-user bx-flashing' ></i>
-      Acceder al sistema
-    </a>
-    <nav id="navegador" class="collapse navbar-collapse">
-      <hr class="d-lg-none mt-3 mb-2">
-      <ul class="navbar-nav me-auto">
-        <li class="nav-item">
-          <a id="lista" :href="route('proyectos.create')" class="nav-link">Proyectos</a>
-        </li>
-        <li class="nav-item">
-          <a id="lista" :href="route('registro.create')" class="nav-link">Investigadores</a>
-        </li>
-        <li class="nav-item">
-          <a id="lista" :href="route('registro.create')" class="nav-link">Acerca del Verano</a>
-        </li>
-        <li class="dropdown" id="cont">
-          <a id="text" class="dropdown-item" data-bs-toggle="dropdown" aria-expanded="false">Registro</a>
-            <ul class="dropdown-menu" id="menu">
-              <li><a id="opt" class="dropdown-item" :href="route('registro.create')">Registrate aquí</a></li>
-            </ul>
-        </li>
-      </ul>
-    </nav>
-  </div>
-</header>
-
-      
   <div class="contenido">
-      
     <!---<a target="blank" href="https://api.whatsapp.com/send?phone=7774525374&text=Hola,%20%C2%BFme%20puedes%20apoyar?" class="circulo"><i class='bx bxl-whatsapp'></i></a>-->
-      
     <div class="forma1">
 
       <div class="alumno" v-if="form.rol === 4"><br>
@@ -247,11 +187,7 @@
     </div>
   </div>
 </div><br><br><hr><br><br><br>
-      <div class="pie">
-        <h1>Accede a Nuestro Sistema o </h1>
-        <h1>Suscríbete</h1><br>
-        <p>© Todos los derechos Reservados. Hecho con por el<i class='bx bxs-heart bx-flashing' style='color: #f30909'> </i><a id="linktec" target="blank" href="https://cenidet.tecnm.mx/">TecNM/Cenidet</a></p><br><br>
-      </div>
+<Footer> </Footer>
 </template>
 
 <script>
@@ -262,11 +198,14 @@ import JetInput from '@/Jetstream/Input.vue'
 import JetCheckbox from "@/Jetstream/Checkbox.vue";
 import JetLabel from '@/Jetstream/Label.vue'
 import JetValidationErrors from '@/Jetstream/ValidationErrors.vue'
-import { Head, Link } from '@inertiajs/inertia-vue3'
+import { Link } from '@inertiajs/inertia-vue3'
 import { useForm } from "@inertiajs/inertia-vue3";
 import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 import axios from 'axios';
+import Navbar from '@/Jetstream/Navbar.vue';
+import Head from '@/Jetstream/Head.vue';
+import Footer from '@/Jetstream/Footer.vue';
 
 
 export default{
@@ -290,6 +229,8 @@ export default{
     JetLabel,
     JetValidationErrors,
     Link,
+    Navbar,
+    Footer
   },
 
   
