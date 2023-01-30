@@ -14,10 +14,6 @@ use Inertia\Inertia;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
-use App\Models\Tematicas;
-use App\Models\Subtematicas;
-use App\Models\Instituciones;
-
 
 class UsuarioController extends Controller
 {
@@ -39,8 +35,6 @@ class UsuarioController extends Controller
 
     public function index(Request $request): Response
     {
-        
-        //User::where('rol', $id)->get();
         $request->validate(['search' => 'nullable']);
 
         $usuarios = $this->model::filtro($request->all('search', 'profile'))
@@ -48,11 +42,11 @@ class UsuarioController extends Controller
             ->orderBy('id')
             ->paginate(10)
             ->withQueryString();
-
+           
         return Inertia::render("{$this->source}Index", [
             'titulo'   => 'Catálogo de Usuarios',
             'usuarios' =>$usuarios,
-            'roles'=> Role::with('permissions:id,name,description,module_key')->orderBy('name')->select('id', 'name', 'description')->where('id', '=', '2')->get(),
+            'profiles' => Role::get(['id', 'name']),
             'routeName'=> $this->routeName,
             'loadingResults' => false,
             'filtro' => $request->all('search','profile'),
@@ -83,13 +77,10 @@ class UsuarioController extends Controller
         return redirect()->route('usuarios.index')->with('success', 'Usuario creado con éxito!');
 
     }
-    public function show($id)
+    public function show()
     {
-        
-
+        abort(405);
     }
-
-
     public function edit(User $usuarios):Response
     {
         //dd($usuarios);
@@ -99,7 +90,6 @@ class UsuarioController extends Controller
         /* $permissions = Cache::rememberForever('permissions', function () {
             return Permission::get(['id', 'name', 'description', 'module_key'])->groupBy('module_key')->toArray();
         }); */
-
         return Inertia::render("{$this->source}Edit", [
             'titulo'    => 'Editar Usuarios.',
             'routeName' => $this->routeName,

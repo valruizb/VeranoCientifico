@@ -133,6 +133,6 @@ class SubtematicasController extends Controller
     public function destroy(Subtematicas $subtematicas)
     {
         $subtematicas->delete();
-        return redirect()->route('subtematicas.index')->with('success', 'Temática eliminado con éxito');
+        return redirect()->route('subtematicas.index')->with('success', 'Subtemática eliminado con éxito');
     }
 }

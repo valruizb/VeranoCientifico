@@ -203,7 +203,7 @@ import JetInput from '@/Jetstream/Input.vue'
 import JetCheckbox from "@/Jetstream/Checkbox.vue";
 import JetLabel from '@/Jetstream/Label.vue'
 import JetValidationErrors from '@/Jetstream/ValidationErrors.vue'
-import { Head, Link } from '@inertiajs/inertia-vue3'
+import { Link } from '@inertiajs/inertia-vue3'
 import { useForm } from "@inertiajs/inertia-vue3";
 import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';

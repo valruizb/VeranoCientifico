@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('studentnum');
-            $table->string('thematic_id');
+            $table->unsignedBigInteger('thematic_id');
             $table->string('subthematic_id');
             $table->string('generalobject');
             $table->string('modality');
@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('keywords');
             $table->unsignedBigInteger('institution_id');
             $table->unsignedBigInteger('user_id');
+            $table->foreign('thematic_id')->references('id')->on('thematics');
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('institution_id')->references('id')->on('institutions');
             $table->timestamps();

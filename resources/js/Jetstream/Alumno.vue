@@ -35,9 +35,9 @@
                    </ul>
              </li>
              <li class="dropdown drop" id="cont1">
-                 <a href="#" class="nav-link" data-bs-toggle="dropdown">Solicitudes</a>
+                 <a href="#" class="nav-link" data-bs-toggle="dropdown">Documentos</a>
                    <ul class="dropdown-menu">
-                     <li><a id="lista" :href="route('proyectos.index')" class="nav-link">Mis solicitudes</a></li>
+                     <li><a id="lista" :href="route('documento.index')" class="nav-link">Mis solicitudes</a></li>
                    </ul>
              </li>
            </ul>

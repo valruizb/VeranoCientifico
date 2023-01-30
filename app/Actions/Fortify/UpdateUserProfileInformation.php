@@ -9,6 +9,7 @@ use Laravel\Fortify\Contracts\UpdatesUserProfileInformation;
 use App\Models\Tematicas;
 use App\Models\Subtematicas;
 use App\Models\Instituciones;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class UpdateUserProfileInformation implements UpdatesUserProfileInformation
@@ -23,12 +24,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
 
     public function update($user, array $input)
     {
-        dd($user);
-        return Inertia::render( [
-            
-            'instituciones'=> Instituciones::orderBy('id')->get(),
-        ]);
-
+        
         Validator::make($input, [
             'name' => ['nullable', 'string', 'max:255'],
             'lastnamep' => ['nullable', 'string', 'max:255'],
@@ -39,8 +35,8 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             'subthematic_id' => ['nullable', 'string', 'max:255'],
             'job' => ['nullable', 'string', 'max:255'],
             'snilevel' => ['nullable', 'string', 'max:255'],
-            'invline' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
-            'maxgrade' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
+            'invline' => ['nullable', 'email', 'max:255'],
+            'maxgrade' => ['nullable', 'max:1024'],
         ])->validateWithBag('updateProfileInformation');
 
         if (isset($input['photo'])) {

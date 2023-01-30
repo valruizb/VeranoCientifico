@@ -27,6 +27,13 @@ class AdminSeeder extends Seeder
         $profe->givePermissionTo(Permission::where('name', 'modulo.profesores')->get());
         $profe->givePermissionTo(Permission::where('name', 'proyectos.index')->get());
         $profe->givePermissionTo(Permission::where('name', 'proyectos.edit')->get());
+        $alum->givePermissionTo(Permission::where('name', 'documento.index')->get());
+        $alum->givePermissionTo(Permission::where('name', 'docuser.index')->get());
+        $alum->givePermissionTo(Permission::where('name', 'docuser.store')->get());
+        $alum->givePermissionTo(Permission::where('name', 'docuser.edit')->get());
+        $alum->givePermissionTo(Permission::where('name', 'docuser.update')->get());
+        $alum->givePermissionTo(Permission::where('name', 'docuser.show')->get());
+        $alum->givePermissionTo(Permission::where('name', 'docuser.destroy')->get());
         //$profe->givePermissionTo(Permission::where('module_key', 'cat')->get());
 
         /*$cap->givePermissionTo(Permission::where('name', 'modulo.catalogos')->get());

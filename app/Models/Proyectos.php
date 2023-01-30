@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Permission\Traits\HasRoles;
+use App\Models\Tematicas;
 
 class Proyectos extends Model
 {
@@ -24,5 +25,10 @@ class Proyectos extends Model
         'institution_id',
         'user_id',
     ];
+
+    public function thematics()
+    {
+        return $this->belongsTo(Tematicas::class, 'thematic_id');
+    }
 
 }

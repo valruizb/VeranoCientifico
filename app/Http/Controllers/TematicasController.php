@@ -7,6 +7,7 @@ use App\Http\Requests\StoreTematicasRequest;
 use App\Http\Requests\UpdateTematicasRequest;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TematicasController extends Controller
 {
@@ -59,6 +60,7 @@ class TematicasController extends Controller
      */
     public function create()
     {
+        //dd(Auth::user());
         return Inertia::render("{$this->source}Create", [
             'titulo'=>'Agregar Institución',
             'routeName'=>$this->routeName,

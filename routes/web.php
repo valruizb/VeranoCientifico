@@ -18,6 +18,8 @@ use App\Http\Controllers\DocumentoController;
 use App\Http\Controllers\InstitucionesController;
 use App\Http\Controllers\TematicasController;
 use App\Http\Controllers\SubtematicasController;
+use App\Http\Controllers\DocumentoUsuarioController;
+use App\Http\Controllers\PublicoController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 
@@ -36,6 +38,7 @@ use Illuminate\Http\Request;
 //Rutas publicas
 Route::resource('registro', RegistroController::class);
 Route::resource('acercaverano', AcercaVeranoController::class);
+Route::resource('verano', PublicoController::class);
 
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
@@ -72,14 +75,14 @@ Route::middleware([
 
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
-    })->name('dashboard');
+        })->name('dashboard');
 
     Route::resource('permissions', PermissionController::class)->names('permissions');
     Route::resource('modulo', ModuloController::class)->parameters(['modulo' => 'modulo']);
     //Route::resource('permissions', PermissionController::class)->parameters(['permissions' => 'permissions']);
     Route::resource('usuarios', UsuarioController::class)->parameters(['usuarios' => 'usuarios']);
     Route::resource('perfiles', PerfilesController::class)->parameters(['perfiles' => 'perfiles']);
-    
+    Route::resource('docuser', DocumentoUsuarioController::class)->parameters(['docuser' => 'docuser']);
     Route::resource('convocatoria', ConvocatoriaController::class)->parameters(['convocatoria' => 'convocatoria']);
     Route::resource('evento', EventoController::class)->parameters(['evento' => 'evento']);
     Route::resource('calendario', CalendarioConvocatoriaController::class)->parameters(['calendario' => 'calendario']);
@@ -87,9 +90,7 @@ Route::middleware([
     Route::resource('proyectos', ProyectosController::class)->parameters(['proyectos' => 'proyectos']);
     Route::resource('instituciones', InstitucionesController::class)->parameters(['instituciones' => 'instituciones']);
     Route::resource('tematicas', TematicasController::class)->parameters(['tematicas' => 'tematicas']);
-    Route::resource('subtematicas', SubtematicasController::class)->parameters(['subtematicas' => 'subtematicas']);
-    
-    
+    Route::resource('subtematicas', SubtematicasController::class)->parameters(['subtematicas' => 'subtematicas']);    
 });
 
 

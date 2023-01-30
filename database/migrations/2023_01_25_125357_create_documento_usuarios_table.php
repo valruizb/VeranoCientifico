@@ -13,15 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('documents', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('document_name');
+        Schema::create('documents_user', function (Blueprint $table) {
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('document_id');
+            $table->foreign('document_id')->references('id')->on('documents');
+            $table->string('name_doc');
+            $table->string('status');
             $table->timestamps();
             $table->softDeletes();
         });
-
-        
     }
 
     /**
@@ -31,7 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('documents');
         Schema::dropIfExists('documents_user');
     }
 };

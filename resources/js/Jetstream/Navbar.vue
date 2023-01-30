@@ -19,7 +19,7 @@
                 <div class="d-lg-flex">
                   <div class="mega-dropdown-column pt-lg-3 pb-lg-4">
                     <ul class="list-unstyled mb-0">
-                      <li><a id="lista2" :href="route('proyectos.create')" class="dropdown-item">Proyectos 2023</a></li>
+                      <li><a id="lista2" :href="route('verano.index')" class="dropdown-item">Proyectos 2023</a></li>
                     </ul>
                   </div>
                 </div>

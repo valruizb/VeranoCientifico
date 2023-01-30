@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreInstitucionesRequest extends FormRequest
+class UpdateDocumentoUsuarioRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class StoreInstitucionesRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return false;
     }
 
     /**
@@ -24,14 +24,7 @@ class StoreInstitucionesRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'max:255|unique',
-        ];
-    }
-
-    public function attributes(): array
-    {
-        return [
-            'name' => 'Nombre',
+            //
         ];
     }
 }

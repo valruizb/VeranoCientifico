@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use Inertia\Inertia;
 use App\Models\documento;
+use App\Models\DocumentoUsuario;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoredocumentoRequest;
 use App\Http\Requests\UpdatedocumentoRequest;
-
-use Inertia\Inertia;
-use Illuminate\Http\RedirectResponse;
 
 class DocumentoController extends Controller
 {
@@ -32,13 +35,33 @@ class DocumentoController extends Controller
 
     public function index()
     {
+        $curp = Auth::user()->curp;
+
+        $doc1 = DocumentoUsuario::select('name_doc')->where('user_id', Auth::id())->where('document_id', 1)->first();
+        $doc2 = DocumentoUsuario::select('name_doc')->where('user_id', Auth::id())->where('document_id', 2)->first();
+        $doc3 = DocumentoUsuario::select('name_doc')->where('user_id', Auth::id())->where('document_id', 3)->first();
+        $doc4 = DocumentoUsuario::select('name_doc')->where('user_id', Auth::id())->where('document_id', 4)->first();
+        $doc5 = DocumentoUsuario::select('name_doc')->where('user_id', Auth::id())->where('document_id', 5)->first();
+        $doc6 = DocumentoUsuario::select('name_doc')->where('user_id', Auth::id())->where('document_id', 6)->first();
+
+        
+        //dd(asset('Expedientes/'.$curp.'/'.$doc1->name_doc));
+        
         return Inertia::render("{$this->source}Index", [
             'documentos'   =>  $this->model::paginate(10),
             'titulo'          => 'Catálogo de Documentos Probatorios',
             'routeName'      => $this->routeName,
-            'loadingResults' => false
+            'loadingResults' => false,
+            'doc' => $doc1->name_doc,
+            'doc2' => $doc2,
+            'doc3' => $doc3,
+            'doc4' => $doc4,
+            'doc5' => $doc5,
+            'doc6' => $doc6,
         ]);
     }
+
+
     public function create()
     {
         return Inertia::render("{$this->source}Create", [
@@ -46,6 +69,8 @@ class DocumentoController extends Controller
             'routeName'      => $this->routeName
         ]);
     }
+
+
     public function store(StoredocumentoRequest $request)
     {
         documento::create($request->validated());

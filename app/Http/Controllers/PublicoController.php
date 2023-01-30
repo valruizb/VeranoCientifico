@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Inertia\Inertia;
 use App\Models\Publico;
+use App\Models\Proyectos;
+use App\Models\Tematicas;
 use App\Http\Requests\StorePublicoRequest;
 use App\Http\Requests\UpdatePublicoRequest;
 
@@ -10,12 +13,23 @@ class PublicoController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
+     *$proyectos = Proyectos::with(['thematics' => function($query) {
+      *      $query->select('name');
+       * }])->get();
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        //
+        
+        $proyectos = Proyectos::with('thematics')->get();
+        //dd($proyectos);
+        return Inertia::render("Verano", ['proyectos' => $proyectos],[
+            //'proyectos'=> Proyectos::orderBy('id')->get(),
+            //'tematicas' => Tematicas::orderby('id')->get(),
+            'proyecto' => $proyectos,
+            
+            
+        ]);
     }
 
     /**

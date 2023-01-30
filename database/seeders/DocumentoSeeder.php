@@ -15,45 +15,42 @@ class DocumentoSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('c_documento')->truncate();
+        //DB::table('documents')->truncate();
 
-        DB::table('c_documento')->insert([
+        DB::table('documents')->insert([
             [
-                'descripcion' => 'IDENTIFICACIÓN OFICIAL VIGENTE (INE, PASAPORTE, CÉDULA PROFESIONAL)',
-                'created_at' => date('Y-m-d H:m:s'),
-
-            ],
-            [
-                'descripcion' => 'RFC',
+                'name' => 'Formato solicitud',
+                'document_name' => 'formato_solicitud',
                 'created_at' => date('Y-m-d H:m:s'),
 
             ],
             [
-                'descripcion' => 'CURP',
+                'name' => 'Carta academica',
+                'document_name' => 'carta_academica',
                 'created_at' => date('Y-m-d H:m:s'),
 
             ],
             [
-                'descripcion' => 'ÚLTIMO COMPROBANTE DE ESTUDIOS',
+                'name' => 'Carta motivos',
+                'document_name' => 'carta_motivos',
                 'created_at' => date('Y-m-d H:m:s'),
-            ],
-            [
-                'descripcion' => 'ACTA DE NACIMIENTO',
-                'created_at' => date('Y-m-d H:m:s'),
-            ],
-            [
-                'descripcion' => 'CURRÍCULUM VITAE CON FOTOGRAFÍA Y FIRMA',
-                'created_at' => date('Y-m-d H:m:s'),
-            ],
-            [
-                'descripcion' => 'COMPROBANTE DE DOMICILIO (AGUA, PREDIO, LUZ)',
-                'created_at' => date('Y-m-d H:m:s'),
-            ],
-            [
-                'descripcion' => 'CARTILLA DEL SERVICIO MILITAR',
-                'created_at' => date('Y-m-d H:m:s'),
-            ],
 
+            ],
+            [
+                'name' => 'INE',
+                'document_name' => 'INE',
+                'created_at' => date('Y-m-d H:m:s'),
+            ],
+            [
+                'name' => 'CVU',
+                'document_name' => 'CVU',
+                'created_at' => date('Y-m-d H:m:s'),
+            ],
+            [
+                'name' => 'Fotografía',
+                'document_name' => 'fotografia',
+                'created_at' => date('Y-m-d H:m:s'),
+            ],
         ]);
     }
 }

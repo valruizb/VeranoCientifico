@@ -9,7 +9,7 @@
     <div class="forma1">
 
       <div class="alumno" v-if="form.rol === 4"><br>
-        <h2>Solicitud de Registro para Estudiantes</h2><br>
+        <h3>Solicitud de Registro para Estudiantes</h3><br>
         <p>Para registrarte en algunas de las temáticas del verano debes primero tener un perfil.</p>
         <p>Ingresa la siguiente información para crearlo. Posteriormente, revisa la bandeja de entrada</p>
         <p>del correo proporcionado y activa tu cuenta. Dependiendo de la configuración del correo</p> 
@@ -17,7 +17,7 @@
       </div>
 
       <div class="revisor" v-if="form.rol === 3"><br>
-        <h2>Solicitud de Registro para Revisores Institucionales</h2><br>
+        <h3>Solicitud de Registro para Revisores Institucionales</h3><br>
         <p>Para registrarte en algunas de las temáticas del verano debes primero tener un perfil.</p>
         <p>Ingresa la siguiente información para crearlo. Posteriormente, revisa la bandeja de entrada</p>
         <p>del correo proporcionado y activa tu cuenta. Dependiendo de la configuración del correo</p> 
@@ -26,143 +26,169 @@
       </div>
 
       <div class="profesor2" v-if="form.rol === 2"><br>
-        <h2 class="h2pro">Solicitud de Registro para Profesores Nuevo</h2>
-        <h2 class="h2pro">Ingreso</h2><br>
+        <h3 class="h2pro">Solicitud de Registro para Profesores Nuevo Ingreso</h3><br>
         <p>Ingresa los siguientes datos. Posteriormente, el Administrador validará tu cuenta. Una vez</p>
         <p>que te notifique el Administrador que tu cuenta ya fue activada, ya podrás empezar a crear</p>
         <p>proyectos.</p><br><br>
       </div>
 
       <jet-validation-errors class="mb-3"/>
-      <div class="forma2"> 
-
-        <div class="mb-0 m-4">
-          <b> Teclee su curp </b>
-          <div class="d-flex justify-content-end align-items-baseline">
-            <jet-input
-              v-on:keyup.enter="formSubmit()"
-              id="curp"
-              type="text"
-              v-model="curp.curp"
-              required
-            />
-            
-
-            <jet-button
-              class="col-md-4 m-4"
-              :class="{ 'text-white-10': form.processing }"
-              :disabled="form.processing"
-              v-on:click="formSubmit()"
-            >
-              <i class="bi bi-search"></i>
-            </jet-button>
-          </div>
-          <div>
+      <div class="formulario forma2"> 
+        <div class="curp col-sm-10 mb-5">
+          <br><jet-label class="label form-label fs-base" for="name" value="*CURP" />
+            <div class="input-group">
+              <jet-input v-on:keyup.enter="formSubmit()" id="curp" type="text" v-model="curp.curp" required />
+              <button class="btn btn-primary" type="button"  v-on:click="formSubmit()" > <i class="bi bi-search"></i></button>
+            </div>
+            <div>
             <div class="me-3 text-decoration-none" v-if="form.feedback != ''">
               <span style="color: red" v-text="form.feedback"></span>
             </div>
           </div>
-        </div>
-        
+        </div><br>
       <form @submit.prevent="guardar" enctype="multipart/form-data" v-if="form.curp!=''">
-        <div class="forma">
-          <label for="tipouser">*Tipo de Usuario</label>
-          <select required class="" id="tipouser" :class="{'is-invalid':form.errors.rol}" v-model="form.rol">
-            <option disabled value="">Seleccione un elemento</option>
-            <option v-for="rol in roles" v-bind:value="rol.id" v-bind:key="rol.id">{{ rol.name }}</option>
-            </select>
+        <div class=" row pb-5">
+        <div class="tipo">
+          <div class="col-sm-5 mb-5">
+              <jet-label class="label form-label fs-base" for="name" value="*Tipo de usuario" />
+                <select required class="form-control form-control-lg" id="tipouser" :class="{'is-invalid':form.errors.rol}" v-model="form.rol">
+                  <option disabled value="">Seleccione un elemento</option>
+                  <option v-for="rol in roles" v-bind:value="rol.id" v-bind:key="rol.id">{{ rol.name }}</option>
+                </select>
+          </div>
+        </div>
+
+          <div class="col-sm-4 mb-4">
+                    <jet-label class="label form-label fs-base" for="name" value="*Nombre" />
+                    <jet-input type="text" class="form-control form-control-lg" v-model="form.name" disabled />
+                    <jet-input-error :message="form.errors.name" />
           </div>
 
-        <div class="forma">
-          <label for="nombre">*Nombre(s)</label> <label for="apellidop">*Apellido Paterno</label><label for="apellidom" >*Apellido Materno</label> 
-          <input  :class="{ 'is-invalid': form.errors.name }" id="nombre" type="text"  v-model="form.name"  required autofocus placeholder="Teclee su Nombre" disabled>
-          <input  :class="{ 'is-invalid': form.errors.lastnamep }" id="apellidop" type="text"  v-model="form.lastnamep" required autofocus placeholder="Teclee su Apellido Paterno" disabled> 
-          <input  :class="{ 'is-invalid': form.errors.lastnamem }" id="apellidom" type="text"  v-model="form.lastnamem" required autofocus placeholder="Teclee su Apellido Materno" disabled>
-        </div>
+          <div class="col-sm-4 mb-4">
+                    <jet-label class="label form-label fs-base" for="name" value="*Apellido Paterno" />
+                    <jet-input type="text" class="form-control form-control-lg" v-model="form.lastnamep" disabled />
+                    <jet-input-error :message="form.errors.lastnamep" />
+          </div>
+
+          <div class="col-sm-4 mb-5">
+                    <jet-label class="label form-label fs-base" for="name" value="*Apellido Materno" />
+                    <jet-input type="text" class="form-control form-control-lg" v-model="form.lastnamem"  disabled/>
+                    <jet-input-error :message="form.errors.lastnamem" />
+          </div>
+
+          <div class="col-sm-4 mb-4" v-if="form.rol != 3 && form.rol != 2">
+                    <jet-label  class="label form-label fs-base" for="name" value="*CURP" />
+                    <jet-input  type="text" class="form-control form-control-lg" v-model="form.curp"  disabled />
+                    <jet-input-error :message="form.errors.curp" />
+          </div>
+
+          <div class="col-sm-4 mb-4" v-if="form.rol === 3 | form.rol === 2">
+                    <jet-label  class="label form-label fs-base" for="name" value="*RFC" />
+                    <jet-input  type="text" class="form-control form-control-lg" v-model="form.rfc"  disabled />
+                    <jet-input-error :message="form.errors.rfc" />
+          </div>
+
+          <div class="col-sm-4 mb-4" >
+                    <jet-label class="label form-label fs-base" for="name" value="*Correo" />
+                    <div class="invalid-feedback">Please enter your first name!</div>
+
+                    <jet-input placeholder="Teclee su correo" type="email" id="sn" class="form-control form-control-lg" v-model="form.email"  :class="{ 'is-invalid': form.errors.email }" required/>
+                    <jet-input-error :message="form.errors.email" />
+          </div>
+          <div class="col-sm-4 mb-5" >
+                    <jet-label class="label form-label fs-base" for="name" value="*Confirmar correo" />
+                    <jet-input placeholder="Teclee su correo nuevamente" type="email" id="sn" class="form-control form-control-lg" v-model="form.emailcon"  :class="{ 'is-invalid': form.errors.emailcon }"  required />
+                    <jet-input-error :message="form.errors.emailcon" />
+          </div>
+
+          <div class="col-sm-4 mb-4" >
+                    <jet-label class="label form-label fs-base" for="name" value="*Teléfono" />
+                    <jet-input placeholder="Teclee su teléfono" type="text" id="sn" class="form-control form-control-lg" v-model="form.phone"  :class="{ 'is-invalid': form.errors.phone }" />
+                    <jet-input-error :message="form.errors.phone" />
+          </div>
+
+          <div class="col-sm-4 mb-4" >
+                    <jet-label class="label form-label fs-base" for="name" value="*Institución de procedencia" />
+                    <select class="form-control form-control-lg" v-model="form.institution_id">
+                      <option disabled value="">Seleccione un elemento </option>
+                      <option v-for="item in instituto" v-bind:value="item.id" v-bind:key="item.id">{{ item.name }}</option>
+                    </select>
+          </div>
+
+          <div class="col-sm-4 mb-5" v-if="form.rol === 2" >
+                    <jet-label class="label form-label fs-base" for="name" value="*Área de conocimiento" />
+                    <select class="form-control form-control-lg" id="areaconoci" :class="{'is-invalid':form.errors.thematic_id}" v-model="form.thematic_id">
+                      <option disabled value="">Seleccione un elemento</option>
+                      <option v-for="tema in tematica"  v-bind:value="tema.id" v-bind:key="tema.id">{{ tema.name }}</option>
+                    </select>
+          </div>
+
+          <div class="col-sm-4 mb-4" v-if="form.rol === 2" >
+                    <jet-label v-if="form.thematic_id != ''" class="label form-label fs-base" for="name" value="*Subárea de conocimiento" />
+                    <select  class="form-control form-control-lg" v-if="form.thematic_id != ''" id="subareaconoc" :class="{'is-invalid':form.errors.subthematic_id}" v-model="form.subthematic_id">
+                      <option disabled value="">Seleccione un elemento</option>
+                      <option v-for="item in tematica[form.thematic_id-1].subtematica" :value="item.id" :key="item">{{ item.name }}</option>
+                    </select>
+          </div>
+
+          <div class="col-sm-4 mb-4" v-if="form.rol === 2" >
+                    <jet-label class="label form-label fs-base" value="*Grado Máximo de Estudios" />
+                    <jet-input placeholder="Teclee su Máximo Grado de Estudios" type="text" class="form-control form-control-lg" v-model="form.maxgrade"  :class="{ 'is-invalid': form.errors.maxgrade }" />
+                    <jet-input-error :message="form.errors.maxgrade" />
+          </div>
+
+          <div class="col-sm-4 mb-5" v-if="form.rol === 2" >
+                    <jet-label class="label form-label fs-base" value="*Línea de Investigación" />
+                    <jet-input placeholder="Teclee su Línea de Investigación" type="text" class="form-control form-control-lg" v-model="form.invline"  :class="{ 'is-invalid': form.errors.invline }" />
+                    <jet-input-error :message="form.errors.invline" />
+          </div>
+
+          <div class="col-sm-4 mb-4" v-if="form.rol === 2" >
+                    <jet-label class="label form-label fs-base" value="*Nivel SNI" />
+                    <jet-input placeholder="Teclee su Nivel SNI" type="text" class="form-control form-control-lg" v-model="form.snilevel"  :class="{ 'is-invalid': form.errors.snilevel }" />
+                    <jet-input-error :message="form.errors.snilevel" />
+          </div>
+
+          <div class="col-sm-4 mb-4" v-if="form.rol === 2" >
+                    <jet-label class="label form-label fs-base" value="*Puesto que Desempeña" />
+                    <jet-input placeholder="Teclee su Puesto que Desempeña" type="text" class="form-control form-control-lg" v-model="form.job"  :class="{ 'is-invalid': form.errors.job }" />
+                    <jet-input-error :message="form.errors.job" />
+          </div>
+
+          <div class="col-sm-4 mb-5" >
+                    <jet-label class="label form-label fs-base" value="*Contraseña" />
+                    <jet-input placeholder="Teclee su contraseña" type="password" id="password" class="form-control form-control-lg" v-model="form.password"  :class="{ 'is-invalid': form.errors.password }" />
+                    <jet-input-error :message="form.errors.password" />
+          </div>
+
+          <div class="col-sm-4 mb-2" >
+                    <jet-label for="password_confirmation" class="label form-label fs-base" value="*Confirmar Contraseña" />
+                    <div class="password-toggle">
+                    <jet-input placeholder="Teclee Nuevamente su Contraseña" type="password" id="password" class="form-control form-control-lg" v-model="form.password_confirmation"  :class="{ 'is-invalid': form.errors.password_confirmation }" />
+                    <label class="password-toggle-btn" aria-label="Show/hide password">
+                        <input class="password-toggle-check" type="checkbox">
+                        <span class="password-toggle-indicator"></span>
+                      </label>
+                    </div>
+                    <jet-input-error :message="form.errors.password_confirmation" />
+          </div>
+
+          <div class="col-sm-8 mb-2" v-if="form.rol === 2" >
+                    <jet-label class="label form-label fs-base" value="*Constancia de personal activo o comprobante de pago" />
+                    <jet-input type="file" class="form-control form-control-lg" @input="form.constancy = $event.target.files[0]" required  :class="{ 'is-invalid': form.errors.constancy }" />
+                    <jet-input-error :message="form.errors.constancy" />
+          </div>
+
+          <div class="col-sm-8 mb-2" v-if="form.rol === 3" >
+                    <jet-label class="label form-label fs-base" value="*Formato de solicitud" />
+                    <jet-input placeholder="Teclee su *Puesto que Desempeña" type="file" class="form-control form-control-lg" @input="form.requestform = $event.target.files[0]" required  :class="{ 'is-invalid': form.errors.requestform }" />
+                    <jet-input-error :message="form.errors.requestform" />
+          </div>
+      </div>
 
         <div class="forma">
-          <label v-if="form.rol != 3 " for="curp" value="CURP*" >CURP</label><label v-if="form.rol === 3 " for="curp" value="RFC" >*RFC</label><label for="correo" >*Correo</label><label for="correocon">*Confirmar correo</label> 
-          <input  v-if="form.rol != 3 " :class="{ 'is-invalid': form.errors.curp }" id="curp" type="text"  v-model="form.curp" required autofocus placeholder="Teclee su Curp" disabled/>
-          <input  v-if="form.rol === 3 " :class="{ 'is-invalid': form.errors.rfc }" id="curp" type="text"  v-model="form.rfc" required autofocus placeholder="Teclee su Curp" disabled/>
-          <input  id="correo" type="email"  v-model="form.email" required autofocus placeholder="Teclee su Correo" />
-          <input  id="correocon" type="email"  v-model="form.emailcon" required autofocus placeholder="Teclee nuevamente su Correo" />
-        </div>
-
-        <div class="forma">
-          <label for="telefono">*Teléfono</label><label for="institucionproced">*Institución de procedencia</label><label for="password">*Contraseña</label><br>
-          <input  id="telefono" type="text"  v-model="form.phone" required autofocus placeholder="Teclee su Número de Telefono" />
-          <select id="institucionproced" v-model="form.institution_id">
-            <option disabled value="">Seleccione un elemento</option>
-            <option v-for="item in instituto" v-bind:value="item.id" v-bind:key="item.id">{{ item.name }}</option>
-          </select>
-          <input 
-            id="password" 
-            type="password" 
-            v-model="form.password" 
-            required 
-            placeholder="Teclee su Contraseña"
-            :class="{ 'is-invalid': form.errors.password }"
-          />
-          
-        </div>
-        
-        <div class="forma">
-          <label for="password_confirmation">*Confirmar contraseña</label><br>
-          <input 
-            id="password_confirmation" 
-            type="password" 
-            v-model="form.password_confirmation" 
-            required 
-            placeholder="Teclee Nuevamente su Contraseña"
-            :class="{ 'is-invalid': form.errors.password_confirmation }"
-          />
-        </div>
-
-        <div class="profesor" v-if="form.rol === 2">
-          <label for="areaconoc" >*Área de conocimiento</label><label v-if="form.thematic_id != ''" for="subareaconoc">*Subarea de conocimiento</label><br>
-          <select id="areaconoci" :class="{'is-invalid':form.errors.thematic_id}" v-model="form.thematic_id">
-            <option disabled value="">Seleccione un elemento</option>
-            <option v-for="tema in tematica"  v-bind:value="tema.id" v-bind:key="tema.id">{{ tema.name }}</option>
-          </select>
-          <select  v-if="form.thematic_id != ''" id="subareaconoc" :class="{'is-invalid':form.errors.subthematic_id}" v-model="form.subthematic_id">
-            <option disabled value="">Seleccione un elemento</option>
-            <option v-for="item in tematica[form.thematic_id-1].subtematica" :value="item.id"
-                :key="item">{{ item.name }}</option>
-          </select>
-        </div>
-
-        <div class="forma" v-if="form.rol === 2">
-          <label for="gradomax">Grado Maximo de Estudios</label><label for="lineainv">*Su Línea de Investigación</label><label for="nivelsni">Nivel SNI</label>
-          <input  id="nivelsni" type="text"  v-model="form.snilevel" required placeholder="Teclee su Nivel SNI" />         
-          <input  id="gradomax" type="text"  v-model="form.maxgrade" required  placeholder="Teclee su Máximo Grado de Estudios" />
-          <input  id="lineainv" type="text"  v-model="form.invline" required  placeholder="Teclee su Línea de Investigación" />
-        </div>
-
-        <div class="forma" v-if="form.rol === 2">
-          <label for="puesto">*Puesto que desempeña</label><label for="constancia">*Constancia</label><br>
-          <input  id="puesto" type="text"  v-model="form.job" required  placeholder="Teclee su Puesto que Desempeña" />
-          <input id="constancia"
-              class="block w-full text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-              type="file" @input="form.constancy = $event.target.files[0]" required/>
-              <jet-input-error :message="form.errors.constancy" />
-             
-        </div>         
-  
-        <div class="revisorins" v-if="form.rol === 3">
-          <label for="formatosolicitud">*Formato de solicitud</label><br>
-          <input id="formatosolicitud"
-              class="block w-full text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-              type="file" @input="form.requestform = $event.target.files[0]" />
-              <jet-input-error :message="form.errors.requestform" />
-        </div>
-
-        <div class="forma">
-          
           <i class='bx bxs-x-circle bx-flip-horizontal bx-tada' v-if="form.password != form.password_confirmation"  style='color:#ff0000' ></i><label 
-          for="password" 
-          value="Password" 
-          v-if="form.password != form.password_confirmation" 
-          style="color: red"
+          for="password" value="Password"  v-if="form.password != form.password_confirmation"  style="color: red"
           >No coinciden las Contraseñas*</label>
         </div>
 
@@ -177,16 +203,16 @@
         </div>
 
         <div class="info">
-            <a :href="route('login')"><button id="cuenta" type="button" class="btn btn-info"><i id="boxi3" class="bi bi-box-arrow-in-right"></i> ¿Ya tienes cuenta?</button></a>
+            <a :href="route('login')"><button id="cuenta" type="button" class="add btn btn-info"><i id="boxi3" class="bi bi-box-arrow-in-right"></i> ¿Ya tienes cuenta?</button></a>
 
-            <button @click="guardar" id="guardar" :class="{ 'text-white-50': form.processing }" :disabled="form.password != form.password_confirmation">
+            <button @click="guardar" id="guardar" class="add btn btn" :class="{ 'text-white-50': form.processing }" :disabled="form.password != form.password_confirmation">
                 <i id="boxi3" class="bi bi-save"></i> Guardar
             </button>
         </div><br>
       </form>
     </div>
   </div>
-</div><br><br><hr><br><br><br>
+</div><br><br><hr><br><br>
 <Footer> </Footer>
 </template>
 
@@ -410,11 +436,24 @@ export default{
     --white: #ffffff;
   }
 
+  .formulario{
+    padding: 0px 20px 0px 20px;
+  }
+
+  .tipo{
+    margin-left: 28%;
+    text-align: center;
+  }
+
+  select{
+    text-align: center;
+  }
+
   .forma1{
   width: 75%;
   border-radius: 20px;
   box-sizing: border-box;
-  background-color: #ffffff;
+  background-color: #ffffffef;
   margin-top: 10%;
   margin-left: 13%;
   box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px rgba(216, 213, 213, 0.137);
@@ -424,92 +463,28 @@ export default{
     background-color: #ffffff;
   }
 
-  .forma{
-    padding: 0px;
+  .label{
+          color: #092252;
   }
 
-  form input[id="curp"], [id="nombre"], [id="apellidop"], [id="apellidom"]{
-    cursor:not-allowed;
+  .add{
+    font-size: 15px;
   }
 
-  form input[type="text"],[type="email"], [type="password"], select{
-    display: inline;
-    border-color: rgba(39, 38, 38, 0.363);
-    background-color:#f6f7f800  ;
-    width: 30%;
-    padding: 11px;
-    margin: 17px;
-    margin-top: -28px;
-    border-radius: 6px;
+  .curp{
+    margin-left: 8%;
   }
 
-  i{
-    font-size: 25px;
+  .alumno, .revisor, .profesor2{
+    text-align: center;
   }
 
-  form select[id="areaconoci"], [id="subareaconoc"]{
-    border-color: rgba(39, 38, 38, 0.363);
-    width: 45%;
-    padding: 0px 120px 0px 0px;
-    padding: 15px;
-    margin: 18px;
-    margin-top: -28px;
-    border-radius: 6px;
+  p{
+    margin-bottom: 0 ;
+    font-size: 18px;
   }
-
-  form label[for="subareaconoc"],[for="areaconoc"], [for="subarea"]{
-    margin: 18px;
-    width: 45%;
-    font-weight:bold;
-    color: black;
-    font-size: 16px;
-  }
-
-  .profesor{
-    margin-top: -10%;
-    padding: 0px 10px 10px 365px;
-    margin-left: 5px;
-  }
-
-  .revisorins{
-    margin-top: -10%;
-    padding: 0px 10px 10px 365px;
-    margin-left: 5px;
-  }
-
-  form label[for="nombre"],[for="apellidop"], [for="apellidom"], [for="tipouser"], [for="puesto"], [for="constancia"], [for="password_confirmation"], [for="password"], [for="curp"], [for="correo"],[for="correocon"],[for="telefono"],[for="rfc"], [for="institucionproced"], [for="extension"], [for="nivelsni"], [for="gradomax"], [for="lineainv"]{
-    padding: 0px 257px 0px 0px;
-    padding: 0;
-    margin: 19px;
-    width: 30%;
-    margin-left: 15px;
-    font-weight:bold;
-    color: black;
-    font-size: 16px;
-    
-  }
-
-  form label[for="formatosolicitud"]{
-    margin: 18px;
-    width: 45%;
-    font-weight:bold;
-    color: black;
-    font-size: 16px;
-  }
-
-  form input[id="formatosolicitud"], input[for="constancia"]{
-    border-color: rgba(39, 38, 38, 0.363);
-    width: 95%;
-    padding: 0px 120px 0px 0px;
-    padding: 11px;
-    margin: 18px;
-    margin-top: -28px;
-    border-radius: 6px;
-  }
-
-  .info{
-    margin-left: -17px;
-    padding: 10px 0px 5px 0px;
+  .h2pro{
+    margin-bottom: 0;
   }
 
   [id="cuenta"]{
@@ -518,17 +493,13 @@ export default{
     width: 16%;
     border-radius: 10px;
     padding: 12px;
-    margin-left: 40px;
+    margin-left: 5px;
     margin-right: -8%;
     border: #a70d0d;
   }
 
   a{
     text-decoration: none;
-  }
-
-  a[id="linktec"]{
-    text-decoration:underline;
   }
 
   [id="cuenta"]:hover{
@@ -579,118 +550,6 @@ export default{
     background-color: rgba(6, 42, 107, 0.986);
     color: rgb(255, 255, 255);
     font-style: bold;
-  }
-
-  /*Barra de navegacion */
-  .header{
-    position: fixed;
-  }
-
-  i[id="boxi"]{
-    font-size: 19px;
-    padding: 5px;
-  }
-
- 
-  .navbar{
-    width: 100%;
-  }
-
-  a[id="text"]{
-    font-size: bold;
-    padding-top: 10px;
-    display: block;
-  }
-
-  nav[id="navegador"]{
-  font-size: 18px;
-  color: #092252; 
-  margin-left: 2%;
-  }
-
-  li{
-    padding: 10px;
-  }
-
-  a[id="logo"]{
-    margin-left: -8%;
-    height: 80px;
-  }
-
-  a[id="lista"]:hover{
-    background-color:rgba(195, 197, 214, 0.795);
-    border-radius: 15px;
-  }
-
-
-  a[id="opt"]:hover{
-    background-color:rgba(230, 231, 240, 0.932);
-    color: #092252; 
-    border-radius: 12px;
-  }
-
-  a[id="opt"]{
-    cursor: pointer;
-    background-color:rgb(255, 255, 255);
-    color: #092252; 
-    padding-top: 5px;
-    border-radius: 10px;
-  }
-
-  li[id="cont"]::after, li[id="cont"]::before{
-    content: '';
-    position: absolute;
-    background-color: rgb(22, 9, 82);
-    width: 3px;
-    height: 12px;
-    top: 27px;
-    border-radius: 5px;
-    transition: all 0.3s;
-  }
-
-  li[id="cont"]{
-    min-height: 45px;
-    position: relative;
-    width: 150px;
-    margin-left: -10px;
-    text-align: center;
-    cursor: pointer;
-    color: #092252; 
-  }
-
-  li[id="cont"]::after{
-    transform: rotate(45deg);
-    left:85%;
-  }
-
-  li[id="cont"]::before{
-    transform: rotate(-45deg);
-    left:89%;
-  }
-
-  li[id="cont"]:hover::after{
-    transform: rotate(135deg);
-  }
-
-  li[id="cont"]:hover::before{
-    transform: rotate(-135deg);
-  }
-
-  .alumno, .revisor, .profesor2{
-    text-align: center;
-  }
-
-  p{
-    margin-bottom: 0 ;
-    font-size: 18px;
-  }
-
-  .h2pro{
-    margin-bottom: 0;
-  }
-
-  .pie{
-    text-align: center;
   }
 
   .circulo{

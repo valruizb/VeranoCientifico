@@ -75,7 +75,7 @@ class InstitucionesController extends Controller
     public function store(StoreInstitucionesRequest $request)
     {
         $this->model::create($request->validated());
-        return redirect()->route('instituciones.index')->with('success', 'Permiso guardado con éxito!');
+        return redirect()->route('instituciones.index')->with('success', 'Institución guardado con éxito!');
     }
 
     /**

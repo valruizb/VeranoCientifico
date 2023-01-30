@@ -24,6 +24,9 @@
   
   <style scoped>
   
+  .pie{
+    text-align: center;
+  }
   
   
   </style>

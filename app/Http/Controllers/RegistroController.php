@@ -208,9 +208,26 @@ class RegistroController extends Controller
      * @param  \App\Models\Registro  $registro
      * @return \Illuminate\Http\Response
      */
-    public function edit(Registro $registro)
+    public function edit(User $user)
     {
-        //
+        $thematic = Tematicas::all();
+        $subthematic = Subtematicas::all();
+        //$thematic->load('subtematica');
+
+        //d($user->institution_id)
+        //dd($inst);
+        //dd(Instituciones::where('id', $them)->get());
+        return Inertia::render("{$this->source2}Index", [
+            'user'=>Auth::user(),
+            'tematicas'=>$thematic,
+            'subtematicas'=>$subthematic,
+            'tematica'=>Tematicas::where('id', $user->thematic_id),
+            'subtematica'=>Subtematicas::where('id', $user->subthematic_id),
+            'instituto'=>Instituciones::where('id', $user->institution)->get(),
+            'instituciones' =>Instituciones::orderBy('id')->get(),
+            'subtematicas' => Subtematicas::where('id', $user->subthematic_id),
+           
+        ]);
     }
 
     /**
@@ -222,7 +239,8 @@ class RegistroController extends Controller
      */
     public function update(UpdateRegistroRequest $request, Registro $registro)
     {
-        //
+        $registro->update($request->validated());
+        return redirect()->route('dashboard')->with('success', 'Información actualizada!');
     }
 
     /**

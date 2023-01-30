@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Models\Proyectos;
+use Illuminate\Http\Request;
 
 class AcercaVeranoController extends Controller
 {
@@ -14,8 +15,8 @@ class AcercaVeranoController extends Controller
      */
     public function index()
     {
-        return Inertia::render("AcercaVerano", [
-            'titulo'=> 'Agregar Usuarios',
+        return Inertia::render("Verano", [
+            'proyectos'=> Proyectos::all()->paginate(9), 
         ]);
     }
 

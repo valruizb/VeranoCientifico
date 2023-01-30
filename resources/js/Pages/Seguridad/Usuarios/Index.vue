@@ -21,9 +21,9 @@
                 Agregar Usuarios
               </Link>
               <form @submit.prevent="filtrar" class="d-flex-row d-md-inline-flex flex-nowrap align-items-center flex-grow-1">
-                    <select class="form-select form-select-sm" v-model="form.item">
+                    <select class="form-select form-select-sm" v-model="form.profile">
                         <option value="null">Seleccione una opción</option>
-                        <option v-for="profile in usuarios" v-bind:value="item.id" v-bind:key="item.id" v-text="item.name"></option>
+                        <option v-for="profile in profiles" v-bind:value="profile.id" v-bind:key="profile.id" v-text="profile.name"></option>
                     </select>
                     <input
                         type="text"
@@ -48,7 +48,7 @@
               <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th v-if="rol=1">Nombre</th>
+                        <th>Nombre</th>
                         <th>Correo</th>
                         <th>Rol</th>
                         <th>&nbsp;</th>
