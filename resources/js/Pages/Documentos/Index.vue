@@ -20,8 +20,9 @@
         <p>A continuación se pide llenar el formulario con los respectivos documentos, lo más legible posible</p>
           <div class="col-sm-11 mb-5">
                     <jet-label class="label form-label fs-base" value="*Formato solicitud" />
-                    <jet-input type="text" class="form-control form-control-lg" v-model="form.requestform" required  :class="{ 'is-invalid': form.errors.requestform }" />
-                    <jet-input type="file" class="form-control form-control-lg" @input="form.requestform = $event.target.files[0]" required  :class="{ 'is-invalid': form.errors.requestform }" />
+                    
+                    <jet-input type="file" v-model="form.requestform" class="form-control form-control-lg" @input="form.requestform = $event.target.files[0]" required  :class="{ 'is-invalid': form.errors.requestform }" />
+                    
                     <jet-input-error :message="form.errors.requestform" />
           </div>
 
@@ -98,7 +99,6 @@
     import Head from '@/Jetstream/Head.vue';
 
     export default {
-
       
         name: "Index",
         props: {
@@ -109,8 +109,6 @@
           doc5: {type: Object, required: true},
           doc6: {type: Object, required: true},
         },
-        
-
 
         components: {
             Alumno,
@@ -124,7 +122,6 @@
             JetInput,
             JetInputError,
             JetButton,
-
         },
 
         setup(props) {
@@ -146,8 +143,6 @@
           return {guardar, form};
 
         },
-
-
     }
 </script>
 <style scoped>

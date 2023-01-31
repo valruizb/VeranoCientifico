@@ -1,5 +1,5 @@
 <template>
-  <app-layout title="Catálogo de Documentos Probatorios">
+  <!--<app-layout title="Catálogo de Documentos Probatorios">
     <template #header>
       <h2 class="h4 font-weight-bold">
         <i class="bi bi-file-text-fill"></i> {{ titulo }}
@@ -43,41 +43,42 @@
         </div>
       </div>
     </div>
-  </app-layout>
+  </app-layout>-->
+
+  <div>
+    <form>
+      <input type="file" @change="onFileChange"/>
+    </form>
+    <pdf :src="pdfSrc" />
+  </div>
+
+
 </template>
 <script>
-import AppLayout from "@/Layouts/AppLayout.vue";
-import { Link } from "@inertiajs/inertia-vue3";
-import JetLabel from "@/Jetstream/Label.vue";
-import JetInput from "@/Jetstream/Input.vue";
-import JetInputError from "@/Jetstream/InputError.vue";
-import JetButton from "@/Jetstream/Button.vue";
-import { useForm } from "@inertiajs/inertia-vue3";
-import { ref } from "vue";
+import pdf from 'vue-pdf';
 
 export default {
-  name: "Create",
-  props: {
-    titulo: { type: String, required: true },
-    routeName: { type: String, required: true },
-  },
   components: {
-    AppLayout,
-    Link,
-    JetLabel,
-    JetInput,
-    JetInputError,
-    JetButton,
+    Pdf
   },
-  setup(props) {
-    const form = useForm({ descripcion: ""});
-    const guardar = () => {
-      form.post(route("documento.store"));
+  data() {
+    return {
+      pdfSrc: null
     };
-
-    return { form, guardar };
   },
+  methods: {
+    onFileChange(event) {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.pdfSrc = e.target.result;
+      };
+      reader.readAsArrayBuffer(file);
+    }
+  }
 };
+
+
 </script>
 
 <style>

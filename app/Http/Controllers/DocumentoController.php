@@ -36,14 +36,6 @@ class DocumentoController extends Controller
     public function index()
     {
         $curp = Auth::user()->curp;
-
-        $doc1 = DocumentoUsuario::select('name_doc')->where('user_id', Auth::id())->where('document_id', 1)->first();
-        $doc2 = DocumentoUsuario::select('name_doc')->where('user_id', Auth::id())->where('document_id', 2)->first();
-        $doc3 = DocumentoUsuario::select('name_doc')->where('user_id', Auth::id())->where('document_id', 3)->first();
-        $doc4 = DocumentoUsuario::select('name_doc')->where('user_id', Auth::id())->where('document_id', 4)->first();
-        $doc5 = DocumentoUsuario::select('name_doc')->where('user_id', Auth::id())->where('document_id', 5)->first();
-        $doc6 = DocumentoUsuario::select('name_doc')->where('user_id', Auth::id())->where('document_id', 6)->first();
-
         
         //dd(asset('Expedientes/'.$curp.'/'.$doc1->name_doc));
         
@@ -52,12 +44,7 @@ class DocumentoController extends Controller
             'titulo'          => 'Catálogo de Documentos Probatorios',
             'routeName'      => $this->routeName,
             'loadingResults' => false,
-            'doc' => $doc1->name_doc,
-            'doc2' => $doc2,
-            'doc3' => $doc3,
-            'doc4' => $doc4,
-            'doc5' => $doc5,
-            'doc6' => $doc6,
+
         ]);
     }
 
