@@ -22,6 +22,7 @@ class PublicoController extends Controller
     {
         
         $proyectos = Proyectos::with('thematics')->get();
+        //$proyectos = Proyectos::with('subthematics')->get();
         //dd($proyectos);
         return Inertia::render("Verano", ['proyectos' => $proyectos],[
             //'proyectos'=> Proyectos::orderBy('id')->get(),

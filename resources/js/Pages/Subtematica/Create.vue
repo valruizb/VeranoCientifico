@@ -127,10 +127,10 @@ import Head from '@/Jetstream/Head.vue';
           margin-top: -22px;
         }
       
-        .btnguardar{
-          background-color: #092252;
-          color: #ffffff;
-        }
+.btnguardar{
+  background-color: #092252;
+  color: #ffffff;
+}
 
       form input[id=]{
         display: inline;

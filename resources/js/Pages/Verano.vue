@@ -68,14 +68,12 @@
           {{ proyecto.thematics.name }}
          </p></aside>
          <div class="info">
-           <h3>{{ proyecto.title }}
- Institución que la imparte: CENIDET
- Temática: Tecnología 4.0
- Subtemática: Software como servicio
- Número de Alumnos Permitidos: 2
- Modalidad: Híbrida
- Profesor: ALFREDO TERRAZAS PORCAYO
- Fecha de Creación de Proyecto: 2022-11-18</h3>
+            <h3>{{ proyecto.title }}</h3>
+            <p>Institución que la imparte: CENIDET</p>
+            <p>Subtemática: </p>
+            <p>Número de Alumnos Permitidos: 2</p>
+            <p>Modalidad: Híbrida</p>
+            <p>Profesor: ALFREDO TERRAZAS PORCAYO</p>
          </div>
        </div>
      </div>

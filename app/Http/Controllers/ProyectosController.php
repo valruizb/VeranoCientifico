@@ -70,11 +70,13 @@ class ProyectosController extends Controller
      */
     public function create()
     {
+        $thematic = Tematicas::all();
+        $thematic->load('subtematica');
         return Inertia::render("{$this->source}Create", [
             'titulo'          => 'Agregar Proyecto',
             'routeName'      => $this->routeName,
-            'tem'=>Tematicas::orderBy('name')->get(),
-            'subtem'=>Subtematicas::orderBy('name')->get(),
+            'tematica'=>$thematic,
+            'subtematica' => Subtematicas::get(),
             'idlog' => Auth::id(),
             'idinstlog' => Auth::user()->institution_id,    
         ]);
@@ -89,6 +91,7 @@ class ProyectosController extends Controller
     public function store(StoreProyectosRequest $request)
     {
         Proyectos::create($request->validated());    
+        return redirect()->route('proyectos.index')->with('success', 'Proyecto guardado con éxito!');
     }
 
     /**
@@ -110,10 +113,14 @@ class ProyectosController extends Controller
      */
     public function edit(Proyectos $proyectos)
     {
+        $tematicas = Tematicas::all();
+        $tematicas->load('subtematica');
         return Inertia::render("{$this->source}Edit", [
             'titulo'          => 'Editar proyecto',
             'routeName'      => $this->routeName,
-            'proyectos' => $proyectos
+            'proyectos' => $proyectos,
+            'tematicas' => $tematicas,
+            'subtematica'=> Subtematicas::get(),
         ]);
     }
 
@@ -127,7 +134,7 @@ class ProyectosController extends Controller
     public function update(UpdateProyectosRequest $request, Proyectos $proyectos)
     {
         $proyectos->update($request->validated());
-        return redirect()->route('proyectos.index')->with('success', 'Módulo actualizado correctamente!');
+        return redirect()->route('proyectos.index')->with('success', 'Proyecto actualizado correctamente!');
     }
 
     /**

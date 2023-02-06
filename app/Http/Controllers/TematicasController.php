@@ -99,6 +99,7 @@ class TematicasController extends Controller
      */
     public function edit(Tematicas $tematicas)
     {
+        
         return Inertia::render("{$this->source}Edit", [
             'titulo'          => 'Editar Institución',
             'routeName'      => $this->routeName,

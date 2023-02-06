@@ -2,18 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreusuarioRequest;
-use App\Http\Requests\UpdateusuarioRequest;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
 use App\Models\User;
-use App\Models\modulo;
-use Inertia\Response;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Inertia\Response;
+use App\Models\modulo;
+use App\Models\Renapo;
+use App\Models\Tematicas;
+use App\Models\Subtematicas;
+use Illuminate\Http\Request;
+use App\Models\Instituciones;
+use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Storage;
+use Spatie\Permission\Models\Permission;
+use App\Http\Requests\StoreusuarioRequest;
+use App\Http\Requests\UpdateusuarioRequest;
 
 class UsuarioController extends Controller
 {
@@ -21,6 +28,7 @@ class UsuarioController extends Controller
     protected string $source;
     protected string $module = 'usuarios';
     protected User $model;
+    private $disk = 'public';
 
     public function __construct()
     {
@@ -35,6 +43,7 @@ class UsuarioController extends Controller
 
     public function index(Request $request): Response
     {
+        //$usuarios = User::with('institutions')->get();
         $request->validate(['search' => 'nullable']);
 
         $usuarios = $this->model::filtro($request->all('search', 'profile'))
@@ -43,7 +52,7 @@ class UsuarioController extends Controller
             ->paginate(10)
             ->withQueryString();
            
-        return Inertia::render("{$this->source}Index", [
+        return Inertia::render('Seguridad/Usuarios/Index', [
             'titulo'   => 'Catálogo de Usuarios',
             'usuarios' =>$usuarios,
             'profiles' => Role::get(['id', 'name']),
@@ -53,18 +62,102 @@ class UsuarioController extends Controller
         ]);
 
     }
-    public function create(): Response
+    public function create(StoreUsuarioRequest $request): RedirectResponse
     {
-        /* $permissions = Cache::rememberForever('permissions', function () {
-            return Permission::get(['id', 'name', 'description', 'module_key'])->groupBy('module_key')->toArray();
-        }); */
-        return Inertia::render("{$this->source}Create", [
-            'titulo'=> 'Agregar Usuarios',
-            'routeName'=> $this->routeName,
-            'profiles'=> Role::with('permissions:id,name,description,module_key')->orderBy('name')->select('id', 'name', 'description')->get(),
-            'permisos'=> Permission::get(['id', 'name', 'description', 'module_key'])->groupBy('module_key')->toArray(),
-            'modulos'=> modulo::orderBy('key')->get(['id', 'nombre', 'descripcion', 'key'])
-        ]);
+        if($request -> hasFile(key:'requestform')){
+            $file = $request->file('requestform');
+            $formatosolicitud = $request->input('name_doc') .$request->curp .".". $file->guessExtension();
+
+            if (!Storage::disk($this->disk)->exists('DocumentosRevisores/'.$formatosolicitud)){
+                
+                $fields= $request->validated();
+                
+                //$fields['constancia'] = $request -> constancia -> getClientOriginalName();
+                    
+                $fields['password'] = Hash::make($fields['password']);
+                $usuario = $this->model::create([
+                    'rol' => $fields['rol'],
+                    'name' => $fields['name'],
+                    'lastnamep' => $fields['lastnamep'],
+                    'lastnamem' => $fields['lastnamem'],
+                    'curp' => $fields['curp'],
+                    'email' => $fields['email'],
+                    'emailcon' => $fields['emailcon'],
+                    'phone' => $fields['phone'],
+                    'institution_id' => $fields['institution_id'],
+                    'thematic_id' => $fields['thematic_id'],
+                    'subthematic_id' => $fields['subthematic_id'],
+                    'snilevel' => $fields['snilevel'],
+                    'grademax' => $fields['maxgrade'],
+                    'invline' => $fields['invline'],
+                    'job' => $fields['job'],
+                    'password' => $fields['password'],
+                    'requestform' => $formatosolicitud
+                ] );
+                $roles = Role::where('id', $request->rol)->get();
+                $usuario->syncRoles($roles);
+                $file->storeAs('public/DocumentosRevisores', $formatosolicitud);
+                event(new Registered($usuario));
+                return redirect()->route('dashboard')->with('success', 'Usuario registrado!');
+            }else{
+                return 'Este documento ya fue subido';
+            }
+        }
+        
+        if($request -> hasFile(key:'constancy')){
+            $file = $request->file('constancy');
+            $constancia = $request->input('name_doc') .$request->curp .".". $file->guessExtension();
+            //dd($constancia); 
+            //$constancia = $request -> constancia -> getClientOriginalName();
+            //$request->constancia = $constancia;  
+            if (!Storage::disk($this->disk)->exists('DocumentosProfesores/'.$constancia)){
+                
+                $fields= $request->validated();
+                
+                //$fields['constancia'] = $request -> constancia -> getClientOriginalName();
+                    
+                $fields['password'] = Hash::make($fields['password']);
+                $usuario = $this->model::create([
+                    'rol' => $fields['rol'],
+                    'name' => $fields['name'],
+                    'lastnamep' => $fields['lastnamep'],
+                    'lastnamem' => $fields['lastnamem'],
+                    'curp' => $fields['curp'],
+                    'email' => $fields['email'],
+                    'emailcon' => $fields['emailcon'],
+                    'phone' => $fields['phone'],
+                    'institution_id' => $fields['institution_id'],
+                    'thematic_id' => $fields['thematic_id'],
+                    'subthematic_id' => $fields['subthematic_id'],
+                    'snilevel' => $fields['snilevel'],
+                    'grademax' => $fields['maxgrade'],
+                    'invline' => $fields['invline'],
+                    'job' => $fields['job'],
+                    'password' => $fields['password'],
+                    'constancy' => $constancia
+                ] );
+                $roles = Role::where('id', $request->rol)->get();
+                $usuario->syncRoles($roles);
+                $file->storeAs('public/DocumentosProfesores', $constancia);
+                event(new Registered($usuario));
+                return redirect()->route('registro.create')->with('success', 'Usuario registrado!');
+            }else{
+                return 'Este documento ya fue subido';
+            }
+                
+        }
+
+        if($request->rol == 4){
+            //dd($request);
+            $fields= $request->validated();
+            $fields['password'] = Hash::make($fields['password']);
+            $usuario = $this->model::create($fields);
+            $roles = Role::where('id', $request->rol)->get();
+            $usuario->syncRoles($roles);
+            //$file->storeAs('public/DocumentosProfesores', $constancia);
+            event(new Registered($usuario));
+            return redirect()->route('dashboard')->with('success', 'Usuario registrado!');
+        }
         
     }
     public function store(StoreusuarioRequest $request): RedirectResponse
@@ -77,36 +170,44 @@ class UsuarioController extends Controller
         return redirect()->route('usuarios.index')->with('success', 'Usuario creado con éxito!');
 
     }
-    public function show()
+    public function show($request)
     {
-        abort(405);
+        if(Renapo::where('curp',$request)->exists()){
+            $records = Renapo::where('curp',$request)->get();
+        }else{
+            $response = Http::get("https://curpws.bienestar.gob.mx/ServiceCurpPro/ConsultaPor/Curp/".$request);
+            $data = $response->object();
+            //dd($data);
+            $reg = new Renapo();
+            $reg->curp = $data->response->curp;
+            $reg->curpRespuesta = $data->response->curpRespuesta;
+            $reg->nombres = $data->response->nombres;
+            $reg->apellidopaterno = $data->response->apellidoPaterno;
+            $reg->apellidomaterno = $data->response->apellidoMaterno;
+            $reg->save();
+            $records = Renapo::where('curp',$request)->get();
+        }
+        return $records[0];
     }
-    public function edit(User $usuarios):Response
+    public function edit(User $usuarios)
     {
         //dd($usuarios);
-       /*  $perfil = Cache::rememberForever("profile.{$perfil->id}", function () use ($perfil) {
-            return $perfil->load('permissions:id,name,description,module_key');
-        }); */
-        /* $permissions = Cache::rememberForever('permissions', function () {
-            return Permission::get(['id', 'name', 'description', 'module_key'])->groupBy('module_key')->toArray();
-        }); */
+        $tematicas = Tematicas::all();
+        $instituciones = Instituciones::all();
+        $tematicas->load('subtematica');
         return Inertia::render("{$this->source}Edit", [
-            'titulo'    => 'Editar Usuarios.',
+            'titulo'    => 'Editar Usuario.',
             'routeName' => $this->routeName,
-            'record' => $usuarios->load('roles:id,name','permissions:id,name'),
-            'profiles' => Role::with('permissions:id,name,description,module_key')->orderBy('name')->select('id', 'name', 'description')->get(),
-            'permissions' => Permission::get(['id', 'name', 'description', 'module_key'])->groupBy('module_key')->toArray(),
-            'modules' => modulo::orderBy('key')->get(['id', 'nombre', 'descripcion', 'key'])
+            'user' => User::find($usuarios->id),
+            'tematicas' => $tematicas,
+            'instituciones' => $instituciones,
+            'subtematicas'=> Subtematicas::get(),
         ]);
     }
     public function update(UpdateusuarioRequest $request, User $usuarios)
     {
         //dd($usuarios);
         $usuarios->update($request->validated());
-        $roles = Role::whereIn('id', $request->profiles)->get();
-        //$permissions = Permission::whereIn('id', $request->permissions)->get();
-        $usuarios->syncRoles($roles);
-        //$usuario->syncPermissions($permissions);
         return redirect()->route('usuarios.index')->with('success', 'Usuario modificado con éxito');
     }
     public function destroy(User $usuarios)

@@ -1,5 +1,5 @@
 <template>
-  <Head title="Verificación de correo" />
+  <Head title="Verificación de correo"/>
     <br><br><img src="../../../../public/img/logo.png" width="">
 
   <jet-authentication-card >
@@ -94,7 +94,6 @@ export default defineComponent({
 
   .card{
     margin-top: -55px;
-     
   }
 
   .verificacion{
@@ -107,7 +106,7 @@ export default defineComponent({
   }
 
   .boton{
-    background-color: rgb(15, 17, 129);
+    background-color: rgb(7, 8, 70);
   }
 
   .text{

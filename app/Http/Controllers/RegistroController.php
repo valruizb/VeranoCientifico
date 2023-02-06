@@ -208,25 +208,18 @@ class RegistroController extends Controller
      * @param  \App\Models\Registro  $registro
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit($user)
     {
-        $thematic = Tematicas::all();
-        $subthematic = Subtematicas::all();
-        //$thematic->load('subtematica');
+        $datos = User::where('id', $user)->first();
+        $tematicas = Tematicas::all();
+        $instituciones = Instituciones::all();
+        $tematicas->load('subtematica');
 
-        //d($user->institution_id)
-        //dd($inst);
-        //dd(Instituciones::where('id', $them)->get());
-        return Inertia::render("{$this->source2}Index", [
+        return Inertia::render("{$this->source2}Edit", [
             'user'=>Auth::user(),
-            'tematicas'=>$thematic,
-            'subtematicas'=>$subthematic,
-            'tematica'=>Tematicas::where('id', $user->thematic_id),
-            'subtematica'=>Subtematicas::where('id', $user->subthematic_id),
-            'instituto'=>Instituciones::where('id', $user->institution)->get(),
-            'instituciones' =>Instituciones::orderBy('id')->get(),
-            'subtematicas' => Subtematicas::where('id', $user->subthematic_id),
-           
+            'tematicas' => $tematicas,
+            'instituciones' => $instituciones,
+            'subtematicas'=> Subtematicas::get(),
         ]);
     }
 
@@ -240,7 +233,7 @@ class RegistroController extends Controller
     public function update(UpdateRegistroRequest $request, Registro $registro)
     {
         $registro->update($request->validated());
-        return redirect()->route('dashboard')->with('success', 'Información actualizada!');
+        return redirect()->back()->with('success', 'Información actualizada!');
     }
 
     /**

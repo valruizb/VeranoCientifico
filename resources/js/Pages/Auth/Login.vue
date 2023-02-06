@@ -15,10 +15,9 @@
          <h1>Bienvenidos</h1>
  
        <jet-validation-errors class="mb-3" />
- 
-       <!---<div v-if="status" class="alert alert-success mb-3 rounded-0" role="alert">
+       <div v-if="status" class="alert alert-success mb-3 rounded-0" role="alert">
          {{ status }}
-       </div>-->
+       </div>
        
        <form @submit.prevent="submit">
          
@@ -85,6 +84,9 @@
  import { Link } from '@inertiajs/inertia-vue3';
  import Navbar from '@/Jetstream/Navbar.vue';
  import Head from '@/Jetstream/Head.vue';
+ import Swal from 'sweetalert2';
+ import 'sweetalert2/dist/sweetalert2.min.css';
+
  export default defineComponent({
    components: {
      Head,
@@ -107,7 +109,7 @@
        form: this.$inertia.form({
          email: '',
          password: '',
-         remember: false
+         remember: false,
        })
      }
    },
@@ -121,7 +123,7 @@
            .post(this.route('login'), {
              onFinish: () => this.form.reset('password'),
            })
-     }
+     },
    }
  })
  </script>

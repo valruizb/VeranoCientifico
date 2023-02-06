@@ -39,9 +39,7 @@
             <li class="dropdown drop" id="cont1">
                 <a href="#" class="nav-link" data-bs-toggle="dropdown">Gestión Usuarios</a>
                   <ul class="dropdown-menu">
-                    <li><a id="lista" :href="route('usuarios.index' )" class="nav-link">Profesores</a></li>
-                    <li><a id="lista" :href="route('usuarios.create')" class="nav-link">Revisores</a></li>
-                    <li><a id="lista" :href="route('usuarios.index')" class="nav-link">Alumnos</a></li>
+                    <li><a id="lista" :href="route('usuarios.index' )" class="nav-link">Usuarios</a></li>
                   </ul>
             </li>
             <li class="dropdown drop1" id="cont">

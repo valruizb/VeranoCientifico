@@ -31,5 +31,10 @@ class UpdateUserPassword implements UpdatesUserPasswords
         $user->forceFill([
             'password' => Hash::make($input['password']),
         ])->save();
+
+        return response()->json([
+            'message' => 'Contraseña actualizada correctamente'
+        ]);
+
     }
 }

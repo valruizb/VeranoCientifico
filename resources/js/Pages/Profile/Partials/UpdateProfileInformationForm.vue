@@ -52,6 +52,13 @@
           <jet-input-error :message="form.errors.name" />
         </div>
 
+        <div class="mb-3">
+          <jet-label for="name" value="Telefono" />
+          <jet-input id="name" type="text" v-model="form.phone"
+                     :class="{ 'is-invalid': form.errors.name }" autocomplete="name" />
+          <jet-input-error :message="form.errors.name" />
+        </div>
+
         <!-- Email -->
         <div class="mb-3">
           <jet-label for="email" value="Email" />
@@ -103,6 +110,7 @@ export default defineComponent({
         _method: 'PUT',
         name: this.user.name,
         email: this.user.email,
+        phone: this.user.phone,
         photo: null,
       }),
 

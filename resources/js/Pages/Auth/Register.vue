@@ -51,7 +51,7 @@
         <div class="tipo">
           <div class="col-sm-5 mb-5">
               <jet-label class="label form-label fs-base" for="name" value="*Tipo de usuario" />
-                <select required class="form-control form-control-lg" id="tipouser" :class="{'is-invalid':form.errors.rol}" v-model="form.rol">
+                <select required class="form-select form-select-lg" id="tipouser" :class="{'is-invalid':form.errors.rol}" v-model="form.rol">
                   <option disabled value="">Seleccione un elemento</option>
                   <option v-for="rol in roles" v-bind:value="rol.id" v-bind:key="rol.id">{{ rol.name }}</option>
                 </select>
@@ -109,7 +109,7 @@
 
           <div class="col-sm-4 mb-4" >
                     <jet-label class="label form-label fs-base" for="name" value="*Institución de procedencia" />
-                    <select class="form-control form-control-lg" v-model="form.institution_id">
+                    <select class="form-select form-select-lg" v-model="form.institution_id">
                       <option disabled value="">Seleccione un elemento </option>
                       <option v-for="item in instituto" v-bind:value="item.id" v-bind:key="item.id">{{ item.name }}</option>
                     </select>
@@ -117,7 +117,7 @@
 
           <div class="col-sm-4 mb-5" v-if="form.rol === 2" >
                     <jet-label class="label form-label fs-base" for="name" value="*Área de conocimiento" />
-                    <select class="form-control form-control-lg" id="areaconoci" :class="{'is-invalid':form.errors.thematic_id}" v-model="form.thematic_id">
+                    <select class="form-select form-select-lg" id="areaconoci" :class="{'is-invalid':form.errors.thematic_id}" v-model="form.thematic_id">
                       <option disabled value="">Seleccione un elemento</option>
                       <option v-for="tema in tematica"  v-bind:value="tema.id" v-bind:key="tema.id">{{ tema.name }}</option>
                     </select>
@@ -125,7 +125,7 @@
 
           <div class="col-sm-4 mb-4" v-if="form.rol === 2" >
                     <jet-label v-if="form.thematic_id != ''" class="label form-label fs-base" for="name" value="*Subárea de conocimiento" />
-                    <select  class="form-control form-control-lg" v-if="form.thematic_id != ''" id="subareaconoc" :class="{'is-invalid':form.errors.subthematic_id}" v-model="form.subthematic_id">
+                    <select  class="form-select form-select-lg" v-if="form.thematic_id != ''" id="subareaconoc" :class="{'is-invalid':form.errors.subthematic_id}" v-model="form.subthematic_id">
                       <option disabled value="">Seleccione un elemento</option>
                       <option v-for="item in tematica[form.thematic_id-1].subtematica" :value="item.id" :key="item">{{ item.name }}</option>
                     </select>
@@ -133,8 +133,12 @@
 
           <div class="col-sm-4 mb-4" v-if="form.rol === 2" >
                     <jet-label class="label form-label fs-base" value="*Grado Máximo de Estudios" />
-                    <jet-input placeholder="Teclee su Máximo Grado de Estudios" type="text" class="form-control form-control-lg" v-model="form.maxgrade"  :class="{ 'is-invalid': form.errors.maxgrade }" />
-                    <jet-input-error :message="form.errors.maxgrade" />
+                    <select  class="form-select form-select-lg" :class="{'is-invalid':form.errors.maxgrade}" v-model="form.maxgrade">
+                      <option disabled value="">Seleccione un elemento</option>
+                      <option>Licenciatura</option>
+                      <option>Doctorado</option>
+                      <option>Maestría</option>
+                    </select>
           </div>
 
           <div class="col-sm-4 mb-5" v-if="form.rol === 2" >
@@ -145,8 +149,14 @@
 
           <div class="col-sm-4 mb-4" v-if="form.rol === 2" >
                     <jet-label class="label form-label fs-base" value="*Nivel SNI" />
-                    <jet-input placeholder="Teclee su Nivel SNI" type="text" class="form-control form-control-lg" v-model="form.snilevel"  :class="{ 'is-invalid': form.errors.snilevel }" />
-                    <jet-input-error :message="form.errors.snilevel" />
+                    <select  class="form-select form-select-lg" :class="{'is-invalid':form.errors.snilevel}" v-model="form.snilevel">
+                      <option disabled value="">Seleccione un elemento</option>
+                      <option>C</option>
+                      <option>I</option>
+                      <option>II</option>
+                      <option>III</option>
+                      <option>Ninguno</option>
+                    </select>
           </div>
 
           <div class="col-sm-4 mb-4" v-if="form.rol === 2" >
@@ -445,9 +455,7 @@ export default{
     text-align: center;
   }
 
-  select{
-    text-align: center;
-  }
+ 
 
   .forma1{
   width: 75%;

@@ -22,7 +22,7 @@
                   </div>
                   <div class="col-sm-6 mb-4" >
                     <jet-label class="label form-label fs-base" value="Modalidad:" />
-                      <select class="form-control form-control-lg" :class="{'is-invalid':form.errors.modality}" v-model="form.modality">
+                      <select class="form-select form-select-lg" :class="{'is-invalid':form.errors.modality}" v-model="form.modality">
                         <option disabled value="">Seleccione un elemento</option>
                         <option value="Presencial">Presencial</option>
                         <option value="Virtual">Virtual</option>
@@ -31,16 +31,17 @@
                   </div>
                   <div class="col-sm-6 mb-4" >
                     <jet-label class="label form-label fs-base" value="Temática:" />
-                      <select class="form-control form-control-lg" :class="{'is-invalid':form.errors.thematic_id}" v-model="form.thematic_id">
+                      <select class="form-select form-select-lg" :class="{'is-invalid':form.errors.thematic_id}" v-model="form.thematic_id">
                         <option disabled value="">Seleccione un elemento</option>
-                        <option v-for="tema in tem"  v-bind:value="tema.id" v-bind:key="tema.id">{{ tema.name }}</option>
+                        <option v-for="tema in tematica"  v-bind:value="tema.id" v-bind:key="tema.id">{{ tema.name }}</option>
                       </select>
                   </div>
+
                   <div class="col-sm-6 mb-4" >
-                    <jet-label class="label form-label fs-base" value="Subtemática:" />
-                      <select class="form-control form-control-lg" :class="{'is-invalid':form.errors.subthematic_id}" v-model="form.subthematic_id">
+                    <jet-label v-if="form.thematic_id != ''" class="label form-label fs-base" for="name" value="*Subárea de conocimiento" />
+                      <select  class="form-select form-select-lg" v-if="form.thematic_id != ''" id="subareaconoc" :class="{'is-invalid':form.errors.subthematic_id}" v-model="form.subthematic_id">
                         <option disabled value="">Seleccione un elemento</option>
-                        <option v-for="sub in subtem" v-bind:value="sub.id" v-bind:key="sub.id">{{ sub.name }}</option>
+                        <option v-for="item in tematica[form.thematic_id-1].subtematica" :value="item.id" :key="item" >{{ item.name }}</option>
                       </select>
                   </div>
                   <div class="col-sm-12 mb-12" >
@@ -106,8 +107,8 @@ import Head from "@/Jetstream/Head.vue";
     props: {
       titulo: { type: String, required: true },
       routeName: { type: String, required: true },
-      tem: {type:Object, required:true},
-      subtem: {type:Object, required:true},
+      tematica: {type:Object, required:true},
+      subtematica: {type:Object, required:true},
       idlog: {type:Object, required:true},
       idinstlog: {type:Object, required:true}
     },
@@ -179,49 +180,6 @@ import Head from "@/Jetstream/Head.vue";
         .label{
           color: #092252;
         }
-  
-        
-  
-      form input[id="objetivo"], [id="requisitos"], [id="nombre"] {
-        display: inline;
-        border-color: rgba(3, 3, 3, 0.466);
-        background-color:#2b4f7400  ;
-        color: #000000;
-        width: 55rem;
-        padding: 11px;
-        margin: 17px;
-        margin-top: -28px;
-        border-radius: 6px;
-      }
-  
-      form select[id="tematica"], [id="subtematica"]{
-          display: inline;
-        border-color: rgba(3, 3, 3, 0.466);
-        background-color:#2b4f7400  ;
-        color: #000000;
-        width: 45%;
-        padding: 11px;
-        margin: 15px;
-        margin-top: -28px;
-        border-radius: 6px;
-      }
-  
-      form label[for="modalidad"],[for="Numero"], [for="objetivo"], [for="requisitos"], [for="nombre"], [for="tematica"], [for="subtematica"]{
-        font-weight:bold;
-        color: #092252;
-        font-size: 16px;
-      }
-  
-      form label[for="tematica"], [for="subtematica"]{
-        padding: 0px;
-        margin: 18px;
-        width: 30%;
-        margin-left: 20px;
-        margin-right: 155px;
-        font-weight:bold;
-        color: #092252;
-        font-size: 16px;
-      }
   
         .forma1{
         width: 65%;

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreDocumentoUsuarioRequest;
 use App\Http\Requests\UpdateDocumentoUsuarioRequest;
 use Symfony\Component\Routing\Matcher\RedirectableUrlMatcherInterface;
+use App\Notifications\Expediente;
 
 class DocumentoUsuarioController extends Controller
 {
@@ -46,6 +47,8 @@ class DocumentoUsuarioController extends Controller
     {
         $id = Auth::id();
         $curp = Auth::user()->curp;
+        $ins = Auth::user()->institution_id;
+        //dd($curp);
 
         
         if($request -> hasFile(key:'requestform') && !DocumentoUsuario::where('user_id',$id)->where('document_id', 1)->first()){
@@ -87,6 +90,8 @@ class DocumentoUsuarioController extends Controller
 
                 $file->storeAs('public/Expedientes/'.$curp, $filename);
             }
+        }else{
+            dd('Ya esta');
         }
 
 
@@ -108,6 +113,8 @@ class DocumentoUsuarioController extends Controller
 
                 $file->storeAs('public/Expedientes/'.$curp, $filename);
             }
+        }else{
+            dd('Ya esta');
         }
 
         if($request -> hasFile(key:'ine') && !DocumentoUsuario::where('user_id',$id)->where('document_id', 4)->first()){
@@ -128,6 +135,8 @@ class DocumentoUsuarioController extends Controller
 
                 $file->storeAs('public/Expedientes/'.$curp, $filename);
             }
+        }else{
+            dd('Ya esta');
         }
 
         if($request -> hasFile(key:'cvu') && !DocumentoUsuario::where('user_id',$id)->where('document_id', 5)->first()){
@@ -148,6 +157,8 @@ class DocumentoUsuarioController extends Controller
 
                 $file->storeAs('public/Expedientes/'.$curp, $filename);
             }
+        }else{
+            dd('Ya esta');
         }
 
 
@@ -169,7 +180,13 @@ class DocumentoUsuarioController extends Controller
 
                 $file->storeAs('public/Expedientes/'.$curp, $filename);
             }
+        }else{
+            dd('Ya esta');
         }
+
+        
+
+
     }
 
     /**

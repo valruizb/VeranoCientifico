@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Inertia\Inertia;
 use App\Models\documento;
 use App\Models\DocumentoUsuario;
+use App\Notifications\Expediente;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Notifications\Notification;
 use App\Http\Requests\StoredocumentoRequest;
 use App\Http\Requests\UpdatedocumentoRequest;
 
@@ -18,6 +21,7 @@ class DocumentoController extends Controller
     private string $source;
     private string $routeName;
     private string $module = 'documento';
+    private $disk = 'public';
 
     //Para proteger nuestras rutas
     public function __construct()
@@ -35,15 +39,104 @@ class DocumentoController extends Controller
 
     public function index()
     {
-        $curp = Auth::user()->curp;
         
-        //dd(asset('Expedientes/'.$curp.'/'.$doc1->name_doc));
+        $curp = Auth::user()->curp;
+        $name = Auth::user()->name.' '.Auth::user()->lastnamep.' '.Auth::user()->lastnamem;
+        $id = Auth::id();
+        $doc1 = '';
+        $doc2 = '';
+        $doc3 = '';
+        $doc4 = '';
+        $doc5 = '';
+        $doc6 = '';
+
+
+        /*
+        $ins = Auth::user()->institution_id;
+        $datos = [
+            'titulo' => 'Expediente Hola',
+            'contenido' => 'El alumno '.$name
+        ];
+
+        $revs = User::where('rol', 3)->where('institution_id', $ins)->get();
+        foreach ($revs as $rev) {
+            $rev->notify(new Expediente($datos));
+        }
+
+
+
+        
+        //return Storage::download('Expedientes/'.$curp.'/formato_solicitud'.$id.'.pdf');
+        */
+/*
+        
+
+        $doc = DocumentoUsuario::where('user_id', $id)->where('document_id', 1)->first();
+
+        $url = asset('storage/Expedientes/'.$curp.'/'.$doc->name_doc);
+        
+        dd($url);*/
+
+        if(DocumentoUsuario::where('user_id', $id)->where('document_id', 1)->first()){
+            $doc = DocumentoUsuario::where('user_id', $id)->where('document_id', 1)->first();
+            if(Storage::disk($this->disk)->exists('Expedientes/'.$curp.'/'.$doc->name_doc)){
+                $doc1 = asset('storage/Expedientes/'.$curp.'/'.$doc->name_doc);
+             
+            }
+        }
+
+        if(DocumentoUsuario::where('user_id', $id)->where('document_id', 2)->first()){
+            $doc = DocumentoUsuario::where('user_id', $id)->where('document_id', 2)->first();
+            if(Storage::disk($this->disk)->exists('Expedientes/'.$curp.'/'.$doc->name_doc)){
+                $doc2 = asset('storage/Expedientes/'.$curp.'/'.$doc->name_doc);
+                
+            }
+        }
+
+        if(DocumentoUsuario::where('user_id', $id)->where('document_id', 3)->first()){
+            $doc = DocumentoUsuario::where('user_id', $id)->where('document_id', 3)->first();
+            if(Storage::disk($this->disk)->exists('Expedientes/'.$curp.'/'.$doc->name_doc)){
+                $doc3 = asset('storage/Expedientes/'.$curp.'/'.$doc->name_doc);
+                
+            }
+        }
+
+        if(DocumentoUsuario::where('user_id', $id)->where('document_id', 4)->first()){
+            $doc = DocumentoUsuario::where('user_id', $id)->where('document_id', 4)->first();
+            if(Storage::disk($this->disk)->exists('Expedientes/'.$curp.'/'.$doc->name_doc)){
+                $doc4 = asset('storage/Expedientes/'.$curp.'/'.$doc->name_doc);
+             
+            }
+        }
+
+        if(DocumentoUsuario::where('user_id', $id)->where('document_id', 5)->first()){
+            $doc = DocumentoUsuario::where('user_id', $id)->where('document_id', 5)->first();
+            if(Storage::disk($this->disk)->exists('Expedientes/'.$curp.'/'.$doc->name_doc)){
+                $doc5 = asset('storage/Expedientes/'.$curp.'/'.$doc->name_doc);
+                
+            }
+        }
+
+        if(DocumentoUsuario::where('user_id', $id)->where('document_id', 6)->first()){
+            $doc = DocumentoUsuario::where('user_id', $id)->where('document_id', 6)->first();
+            if(Storage::disk($this->disk)->exists('Expedientes/'.$curp.'/'.$doc->name_doc)){
+                $doc6 = asset('storage/Expedientes/'.$curp.'/'.$doc->name_doc);
+                
+            }
+        }
+        
+        
         
         return Inertia::render("{$this->source}Index", [
             'documentos'   =>  $this->model::paginate(10),
             'titulo'          => 'Catálogo de Documentos Probatorios',
             'routeName'      => $this->routeName,
-            'loadingResults' => false,
+            'documento1' => $doc1,
+            'documento2' => $doc2,
+            'documento3' => $doc3,
+            'documento4' => $doc4,
+            'documento5' => $doc5,
+            'documento6' => $doc6,
 
         ]);
     }

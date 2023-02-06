@@ -44,7 +44,7 @@
             </div><br>
 
           <div class="table-responsive">
-            <table class="table table-bordered">
+            <table class="table table-bordered border-primary">
               <thead>
                 <tr>
                   <th class="col">No.</th>

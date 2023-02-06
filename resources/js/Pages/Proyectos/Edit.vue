@@ -10,7 +10,7 @@
                 </h2>
                 <div class="card-body border-right border-bottom p-3 h-100">
                   <form class="row g-3 needs-validation" @submit.prevent="guardar">
-                  <div class="col-sm-12 mb-12" >
+                  <div class="col-sm-12 mb-4" >
                     <jet-label class="label form-label fs-base" value="*Nombre del Proyecto:" />
                     <jet-input placeholder="Introduce el titulo"  type="text" id="sn" class="form-control form-control-lg" v-model="form.title"  :class="{ 'is-invalid': form.errors.title }" autocomplete="name"  required />
                     <jet-input-error :message="form.errors.title" />
@@ -22,7 +22,7 @@
                   </div>
                   <div class="col-sm-6 mb-4" >
                     <jet-label class="label form-label fs-base" value="Modalidad:" />
-                      <select class="form-control form-control-lg" :class="{'is-invalid':form.errors.modality}" v-model="form.modality">
+                      <select class="form-select form-select-lg" :class="{'is-invalid':form.errors.modality}" v-model="form.modality">
                         <option disabled value="">Seleccione un elemento</option>
                         <option value="Presencial">Presencial</option>
                         <option value="Virtual">Virtual</option>
@@ -31,30 +31,30 @@
                   </div>
                   <div class="col-sm-6 mb-4" >
                     <jet-label class="label form-label fs-base" value="Temática:" />
-                      <select class="form-control form-control-lg" :class="{'is-invalid':form.errors.thematic_id}" v-model="form.thematic_id">
+                      <select class="form-select form-select-lg" :class="{'is-invalid':form.errors.thematic_id}" v-model="form.thematic_id">
                         <option disabled value="">Seleccione un elemento</option>
-                        <option v-for="tema in tem"  v-bind:value="tema.id" v-bind:key="tema.id">{{ tema.name }}</option>
+                        <option v-for="tema in tematicas"  v-bind:value="tema.id" v-bind:key="tema.id">{{ tema.name }}</option>
                       </select>
                   </div>
                   <div class="col-sm-6 mb-4" >
-                    <jet-label class="label form-label fs-base" value="Subtemática:" />
-                      <select class="form-control form-control-lg" :class="{'is-invalid':form.errors.subthematic_id}" v-model="form.subthematic_id">
+                    <jet-label v-if="form.thematic_id != ''" class="label form-label fs-base" for="name" value="*Subárea de conocimiento" />
+                      <select  class="form-select form-select-lg" v-if="form.thematic_id != ''" id="subareaconoc" :class="{'is-invalid':form.errors.subthematic_id}" v-model="form.subthematic_id">
                         <option disabled value="">Seleccione un elemento</option>
-                        <option v-for="sub in subtem" v-bind:value="sub.id" v-bind:key="sub.id">{{ sub.name }}</option>
+                        <option v-for="item in tematicas[form.thematic_id-1].subtematica" :value="item.id" :key="item" >{{ item.name }}</option>
                       </select>
                   </div>
-                  <div class="col-sm-12 mb-12" >
+                  <div class="col-sm-12 mb-4" >
                     <jet-label class="label form-label fs-base" value="*Requisitos:" />
                     <jet-input placeholder="Introduce los requisitos" type="text" id="sn" class="form-control form-control-lg" v-model="form.requirements"  :class="{ 'is-invalid': form.errors.requirements }" autocomplete="name"  required />
                     <jet-input-error :message="form.errors.requirements" />
                   </div>
-                    <div class="col-sm-12 mb-12" >
+                    <div class="col-sm-12 mb-4" >
                       <jet-label class="label form-label fs-base" value="*Objetivo general:" />
-                      <jet-input type="text" v-model="form.generalobject" :class="{ 'is-invalid': form.errors.generalobject }"     
+                      <jet-input type="text" class="form-control form-control-lg" v-model="form.generalobject" :class="{ 'is-invalid': form.errors.generalobject }"     
                       required  placeholder="Introduce el objetivo general" />
                       <jet-input-error :message="form.errors.generalobject" />
                     </div>
-                    <div class="col-sm-12 mb-12" >
+                    <div class="col-sm-12 mb-4" >
                       <jet-label class="label form-label fs-base" value="*Palabras clave:" />
                       <jet-input placeholder="Introduce palabras claves de tu proyecto"  type="text" id="sn" class="form-control form-control-lg" v-model="form.keywords"  :class="{ 'is-invalid': form.errors.keywords }" autocomplete="name"  required />
                       <jet-input-error :message="form.errors.keywords" />
@@ -101,8 +101,8 @@
         titulo: { type: String, required: true },
         proyectos: { type: Object, required: true },
         routeName: { type: String, required: true },
-        tem: {type:Object, required:true},
-        subtem: {type:Object, required:true},
+        tematicas: {type:Object, required:true},
+        subtematica: {type:Object, required:true},
       },
       components: {
         AppLayout,
@@ -147,49 +147,6 @@
           color: #092252;
         }
   
-        
-  
-      form input[id="objetivo"], [id="requisitos"], [id="nombre"] {
-        display: inline;
-        border-color: rgba(3, 3, 3, 0.466);
-        background-color:#2b4f7400  ;
-        color: #000000;
-        width: 55rem;
-        padding: 11px;
-        margin: 17px;
-        margin-top: -28px;
-        border-radius: 6px;
-      }
-  
-      form select[id="tematica"], [id="subtematica"]{
-          display: inline;
-        border-color: rgba(3, 3, 3, 0.466);
-        background-color:#2b4f7400  ;
-        color: #000000;
-        width: 45%;
-        padding: 11px;
-        margin: 15px;
-        margin-top: -28px;
-        border-radius: 6px;
-      }
-  
-      form label[for="modalidad"],[for="Numero"], [for="objetivo"], [for="requisitos"], [for="nombre"], [for="tematica"], [for="subtematica"]{
-        font-weight:bold;
-        color: #092252;
-        font-size: 16px;
-      }
-  
-      form label[for="tematica"], [for="subtematica"]{
-        padding: 0px;
-        margin: 18px;
-        width: 30%;
-        margin-left: 20px;
-        margin-right: 155px;
-        font-weight:bold;
-        color: #092252;
-        font-size: 16px;
-      }
-  
         .forma1{
         width: 65%;
         border-radius: 20px;
@@ -199,12 +156,7 @@
         margin-left: 17%;
         box-shadow: 19px 14px 14px 20px #cbced1, -14px -14px 20px rgba(216, 213, 213, 0.137);
         }
-      
-        .contenido{
-          background-color: #ffffff;
-        }
-      
-      
+    
         [id="cuenta"]:hover{
           background-color: #c90c0cec;
           color: rgb(255, 255, 255);

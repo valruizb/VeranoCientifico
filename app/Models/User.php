@@ -12,6 +12,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
 use Spatie\Permission\Traits\HasRoles; 
+use App\Models\Instituciones;
 //implements MustVerifyEmail
 
 
@@ -125,6 +126,10 @@ class User extends Authenticatable
             return [$permission['name'] => true];
         });
     }
-
+    
+    public function institutions()
+    {
+        return $this->belongsTo(Instituciones::class, 'institution_id');
+    }
     
 }

@@ -12,25 +12,14 @@
         </h2><hr><br>
         <div class="col-md-12 pe-0">
           <div class="card-body border-right border-bottom p-3 h-100">
-            <div v-if="$page.props.flash.success" class="alert alert-success" role="alert">
-              {{ $page.props.flash.success }}
-            </div>
             <div class="mb-2 d-flex justify-content-start">
-              <Link
-                :href="route(`${routeName}create`)"
-                class="add btn btn btn-success btn-sm"
-              >
-              <i class="bi bi-plus-circle"></i>
-                 <p class="text-add">Agregar Proyecto</p>
+              <Link :href="route(`${routeName}create`)" class="add btn btn btn-success btn-sm">
+              <i class="bi bi-plus-circle"></i> <p class="text-add">Agregar Proyecto</p>
               </Link>
               <div class="input-group w-50 ml-2">
                 <input
                   type="text"
-                  class="
-                    busqueda form-control form-control-sm form-control
-                    bg-light
-                    shadow-sm
-                  "
+                  class="busqueda form-control form-control-sm form-control bg-light shadow-sm"
                   placeholder="Ingrese un parámetro de búsqueda"
                   v-model="filters.search"
                   @change="search"
@@ -51,7 +40,10 @@
                 <option :value="false">Eliminados</option>
               </select>
             </div><br>
-
+            <div v-if="$page.props.flash.success" class="alert d-flex alert-success" role="alert">
+                <i class="bx bx-check-circle lead me-3"></i>
+                <a href="#" class="alert-link">{{ $page.props.flash.success }}</a>
+            </div>
             <div class="table-responsive">
               <table class="table table-bordered">
                 <thead>

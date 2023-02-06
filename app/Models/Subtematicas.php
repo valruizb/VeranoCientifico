@@ -18,7 +18,13 @@ class Subtematicas extends Model
     protected $fillable = ['name', 'thematic_id'];
 
    
+    public function tematica(){
+        return $this->belongsTo(Tematicas::class, 'thematic_id');
+    }
 
+    public function proyectos(){
+        return $this->hasMany(Proyectos::class, 'subthematic_id', 'id');
+    }
 
 }
 

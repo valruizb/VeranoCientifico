@@ -5,9 +5,8 @@
   <Alumno v-if="$page.props.user.rol == 4"></Alumno>
   <Revisor v-if="$page.props.user.rol == 3"></Revisor>
 <body>
-
-<main class="page-wrapper">
-  <section class="container pt-5">
+  <main class="page-wrapper">
+   <section class="container pt-5">
         <div class="row">
           <aside class="col-lg-3 col-md-4 border-end pb-5 mt-n5">
             <div class="position-sticky top-0">
@@ -30,15 +29,15 @@
                     <i class="bx bx-cog fs-xl opacity-60 me-2"></i>
                     Bienvenido
                   </a>
-                  <a :href="route('registro.edit', $page.props.user.id )" class="list-group-item list-group-item-action d-flex align-items-center">
+                  <a :href="route('profile.show')" class="list-group-item list-group-item-action d-flex align-items-center">
                     <i class="bx bx-cog fs-xl opacity-60 me-2"></i>
                     Detalles de la cuenta
                   </a>
-                  <a :href="route('profile.show')" class="list-group-item list-group-item-action d-flex align-items-center">
+                  <a :href="route('registro.edit', $page.props.user.id)" class="list-group-item list-group-item-action d-flex align-items-center">
                     <i class="bx bx-lock-alt fs-xl opacity-60 me-2"></i>
                     Seguridad de la cuenta
                   </a>
-                  <a href="account-notifications.html" class="list-group-item list-group-item-action d-flex align-items-center">
+                  <a  class="list-group-item list-group-item-action d-flex align-items-center">
                     <i class="bx bx-bell fs-xl opacity-60 me-2"></i>
                     Notificaciones
                   </a>
@@ -52,12 +51,12 @@
           </aside>
           <div class="col-md-8 offset-lg-1 pb-5 mb-2 mb-lg-4 pt-md-5 mt-n3 mt-md-0">
             <div class="ps-md-3 ps-lg-0 mt-md-2 py-md-4">
-              <h1 class="h2 pt-xl-1 pb-3"><i class='bx bx-lock-open-alt bx-flashing' style='color:#07179a' ></i> B I E N V E N I D O</h1>
-          </div></div>
+              <h1 class="h2 pt-xl-1 pb-3"><i class='bx bx-lock-open-alt bx-flashing' style='color:#07179a'></i> B I E N V E N I D O</h1>
 
-
-          
+            
+          </div>
         </div>
+      </div>
 </section> 
 </main>
 </body>

@@ -37,9 +37,9 @@ return new class extends Migration
             $table->string('password');
             $table->string('password_confirmation')->nullable();
             $table->rememberToken();
-            $table->foreign('institution_id')->references('id')->on('institutions');
-            $table->foreign('thematic_id')->references('id')->on('thematics');
-            $table->foreign('subthematic_id')->references('id')->on('subthematics');
+            $table->foreign('institution_id')->references('id')->on('institutions')->onDelete('cascade');
+            $table->foreign('thematic_id')->references('id')->on('thematics')->onDelete('cascade');;
+            $table->foreign('subthematic_id')->references('id')->on('subthematics')->onDelete('cascade');;
             //$table->foreignId('current_team_id')->nullable();
             //$table->string('profile_photo_path', 2048)->nullable();
             $table->timestamps();

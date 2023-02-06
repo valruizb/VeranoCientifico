@@ -1,12 +1,10 @@
 <template>
-  <app-layout title="Catálogo de Usuarios">
-    <template #header>
-      <h2 class="h4 font-weight-bold">
-        <i class="bi bi-people-fill"></i> {{ titulo }}
-      </h2>
-    </template>
-    <div class="card shadow-sm">
-      <div class="row">
+  <Admin> </Admin>
+    <div class="contenido">
+      <div class="forma1">
+        <h2 class="h4 font-weight-bold">
+          <i class='boxi bx bx-book' style='color:#030664' ></i> {{ titulo }}
+        </h2><hr>
         <div class="col-md-12 pe-0">
           <div class="card-body border-right border-bottom p-3 h-100">
             <div v-if="$page.props.flash.success" class="alert alert-success" role="alert">
@@ -15,10 +13,9 @@
             <div class="mb-2 d-flex justify-content-start">
               <Link
                 :href="route(`${routeName}create`)"
-                class="btn btn-outline-secondary btn-sm"
-              >
-                <i class="bi bi-plus"></i>
-                Agregar Usuarios
+                class="add btn btn-sm" >
+              <i class="bi bi-plus-circle"></i> <p class="text-add">
+                Agregar Usuarios</p>
               </Link>
               <form @submit.prevent="filtrar" class="d-flex-row d-md-inline-flex flex-nowrap align-items-center flex-grow-1">
                     <select class="form-select form-select-sm" v-model="form.profile">
@@ -42,16 +39,18 @@
                         <i class="bi bi-eraser"></i>&nbsp;Limpiar
                     </button>
               </form>
-            </div>
+            </div><br>
 
-            <div class="d-flex flex-row bd-highlight pt-2">
-              <table class="table table-striped">
+            <div class="table-responsive">
+              <table class="table table-bordered border-primary">
                 <thead>
                     <tr>
                         <th>Nombre</th>
                         <th>Correo</th>
                         <th>Rol</th>
-                        <th>&nbsp;</th>
+                        <th>Ver</th>
+                        <th>Editar</th>
+                        <th>Eliminar</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -60,7 +59,7 @@
                       <Link
                         :href="route('usuarios.edit', item.id)"
                         class="d-flex text-decoration-none text-reset"
-                        >{{ item.name }}</Link
+                        >{{ item.name }} {{ item.lastnamep }} {{ item.lastnamem }}</Link
                       >
                     </td>
                     <td>
@@ -76,24 +75,30 @@
                         </Link>
                     </td>
                     <td>
-                      <Link
-                        :href="route('usuarios.edit', item.id)"
-                        class="d-flex text-decoration-none text-reset"
-                        >&nbsp;</Link>
+                      <button class="btn1 btn btn-warning btn-sm" >
+                        <a :href="route('instituciones.edit', item.id)">
+                          <i class="lapiz bi bi-eye"></i>
+                        </a></button> 
                     </td>
                     <td>
-                      <Link
-                        :href="route('perfiles.edit', item.id)"
-                        class="d-flex text-decoration-none text-reset"
-                      >
-                        <i class="bi bi-caret-right-fill"></i>
-                      </Link>
+                      <button class="btn1 btn btn-info btn-sm" >
+                        <a :href="route('usuarios.edit', item.id)">
+                        <i class="lapiz bi bi-pencil-fill">
+                        </i></a></button> 
                     </td>
+                    <td>
+                    <form action="">
+                      <button class="btn1 btn btn-danger btn-sm" type="button"  @click="eliminar(item.id)" >
+                          <i class="basura bi bi-trash-fill"></i>
+                      </button> 
+                    </form>
+                    </td>
+                  
                   </tr>
                 </tbody>
               </table>
             </div>
-            <pagination :links="usuarios.links" :total="usuarios.total" />
+            <pagination :links="usuarios.links" :total="usuarios.total" class="pagination" />
             <RecordsHelper
             :thereAreResults="thereAreResults"
             :loadingResults="loadingResults"
@@ -102,7 +107,7 @@
         </div>
       </div>
     </div>
-  </app-layout>
+
 </template>
 <script>
 import AppLayout from "@/Layouts/AppLayout.vue";
@@ -113,17 +118,20 @@ import { computed, onMounted, reactive, toRefs, watch } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 import Input from "@/Jetstream/Input.vue";
 import { ref } from "vue";
+import Admin from "@/Jetstream/Admin.vue";
+import 'sweetalert2/dist/sweetalert2.min.css';
+import Swal from 'sweetalert2';
 
 
 export default {
   name: "Index",
-  props: {
+  props:{ 
     titulo: { type: String, required: true },
     usuarios: {
       type: Object,
       default: {},
       required: true,
-    },
+    }, 
     profiles: {
       type: Object,
       default: {},
@@ -143,6 +151,8 @@ export default {
     Pagination,
     RecordsHelper,
     Input,
+    Admin,
+    Swal
   },
   setup(props) {
     const form = useForm({ ...props.filtro });
@@ -154,9 +164,26 @@ export default {
       Inertia.replace(route(`${props.routeName}index`, state.filters));
     };
 
+    const eliminar = (idel) => {
+              Swal.fire({
+              title: "¿Esta seguro?",
+              text: "Esta acción no se puede revertir",
+              icon: "warning",
+              showCancelButton: true,
+              cancelButtonColor: "#d33",
+              confirmButtonColor: "#3085d6",
+              confirmButtonText: "Si!, eliminar registro!",
+            }).then((res) => {
+              if (res.isConfirmed) {
+                form.delete(route("usuarios.destroy", idel));
+              }
+            });
+          };
+
     return {
       form,
       search,
+      eliminar,
       thereAreResults,
       thereAreFilter: () => computed(() => form.profile).value,
       filtrar,
@@ -166,9 +193,86 @@ export default {
                 filtrar();
             },
     };
+
+
   },
 };
 </script>
 
-<style>
+<style scoped>
+
+  h2{
+    font-size: 30px;
+    text-align: center;
+    font-weight: bolder;
+    color: rgb(5, 5, 107);
+    margin-top: -22px;
+    }
+
+  .boxi{
+    font-size: 30px;
+  }
+
+  table{
+    text-align: center;
+  }
+
+  .forma1{
+  width: 85%;
+  border-radius: 20px;
+  /*sizing: border-box;*/
+  background-color: #ffffff;
+  margin-top: 10%;
+  margin-left: 8%;
+  }
+
+  .contenido{
+    background-color: #ffffff;
+  }
+
+  /*Tabla */
+
+  .col{
+    text-align:center;
+  }
+
+  a{
+    text-decoration: none;
+  }
+
+  .lapiz{
+    font-size: 18px;
+    color: #ffffff;
+  }
+
+  .basura{
+    font-size: 18px;
+    color: #ffffff;
+  }
+
+  .add{
+    font-size: 15px;
+  }
+
+  .text-add{
+    font-size: 12px;
+    margin-left: 10px;
+  } 
+
+  .add{
+  background-color: rgb(3, 4, 112);
+  }
+
+.add:hover{
+  background-color: rgb(5, 7, 145);
+}
+
+.busqueda{
+  margin-left: 10px;
+}
+
+p{
+  margin-bottom: 0 ;
+  font-size: 18px;
+}
 </style>
