@@ -63,17 +63,17 @@
      <br>
      <div class="row">
        
-       <div v-for="proyecto in proyectos" :key="proyecto.id" class="cardproyectos prueba col-12 col-lg-4">
-         <aside class="ver"><p class="vertical">
+       <div v-for="proyecto in proyectos" :key="proyecto.id" class="cardproyectos prueba col-10 col-lg-4">
+         <aside class="ver"><p class="upper vertical">
           {{ proyecto.thematics.name }}
          </p></aside>
          <div class="info">
             <h3>{{ proyecto.title }}</h3>
-            <p>Institución que la imparte: CENIDET</p>
-            <p>Subtemática: </p>
-            <p>Número de Alumnos Permitidos: 2</p>
-            <p>Modalidad: Híbrida</p>
-            <p>Profesor: ALFREDO TERRAZAS PORCAYO</p>
+            <p>Institución que la imparte: {{ proyecto.institutions.name }}</p>
+            <p>Subtemática:  {{ proyecto.subthematics.name }} </p>
+            <p>Número de Alumnos Permitidos: {{ proyecto.studentnum}}</p>
+            <p>Modalidad: {{ proyecto.modality}} </p>
+            <p>Profesor: {{ proyecto.users.name }}</p>
          </div>
        </div>
      </div>
@@ -127,8 +127,12 @@
      height: 350px;
      margin-left: 50px;
      width: 400px;
-     
+     margin-bottom: 45px;
    }
+
+   .upper { 
+  text-transform: uppercase;
+}
  
    .info{
      background-color: blueviolet;

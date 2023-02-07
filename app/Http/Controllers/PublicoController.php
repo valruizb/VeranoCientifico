@@ -21,7 +21,7 @@ class PublicoController extends Controller
     public function index()
     {
         
-        $proyectos = Proyectos::with('thematics')->get();
+        $proyectos = Proyectos::with('thematics', 'subthematics', 'institutions', 'users')->get();
         //$proyectos = Proyectos::with('subthematics')->get();
         //dd($proyectos);
         return Inertia::render("Verano", ['proyectos' => $proyectos],[

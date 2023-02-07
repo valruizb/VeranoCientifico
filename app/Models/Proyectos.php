@@ -36,5 +36,16 @@ class Proyectos extends Model
         return $this->belongsTo(Subtematicas::class, 'subthematic_id');
     }
 
+    public function institutions()
+    {
+        return $this->belongsTo(Instituciones::class, 'institution_id');
+    }
+
+    public function users()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+
 
 }

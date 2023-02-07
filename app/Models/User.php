@@ -131,5 +131,10 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Instituciones::class, 'institution_id');
     }
+
+    public function proyectos()
+    {
+        return $this->hasMany(Proyectos::class, 'user_id');
+    }
     
 }

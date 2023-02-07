@@ -19,4 +19,8 @@ class Instituciones extends Model
     public function users(){
         return $this->hasMany(User::class, 'institution_id', 'id');
     }
+
+    public function proyectos(){
+        return $this->hasMany(Proyectos::class, 'institution_id', 'id');
+    }
 }

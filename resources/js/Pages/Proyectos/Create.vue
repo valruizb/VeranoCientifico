@@ -12,7 +12,7 @@
                   <form class="row g-3 needs-validation" @submit.prevent="guardar">
                   <div class="col-sm-12 mb-12" >
                     <jet-label class="label form-label fs-base" value="*Nombre del Proyecto:" />
-                    <jet-input placeholder="Introduce el titulo"  type="text" id="sn" class="form-control form-control-lg" v-model="form.title"  :class="{ 'is-invalid': form.errors.title }" autocomplete="name"  required />
+                    <jet-input placeholder="Introduce el titulo"  type="text"  class="upper form-control form-control-lg" v-model="form.title"  :class="{ 'is-invalid': form.errors.title }" autocomplete="name"  required />
                     <jet-input-error :message="form.errors.title" />
                   </div>
                   <div class="col-sm-6 mb-4" >
@@ -45,12 +45,12 @@
                       </select>
                   </div>
                   <div class="col-sm-12 mb-12" >
-                    <jet-label class="label form-label fs-base" value="*Requisitos:" />
+                    <jet-label v-capitalize class="label form-label fs-base" value="*Requisitos:" />
                     <jet-input placeholder="Introduce los requisitos" type="text" id="sn" class="form-control form-control-lg" v-model="form.requirements"  :class="{ 'is-invalid': form.errors.requirements }" autocomplete="name"  required />
                     <jet-input-error :message="form.errors.requirements" />
                   </div>
                     <div class="col-sm-12 mb-12" >
-                      <jet-label class="label form-label fs-base" value="*Objetivo general:" />
+                      <jet-label v-capitalize class="label form-label fs-base" value="*Objetivo general:" />
                       <jet-input type="text" v-model="form.generalobject" :class="{ 'is-invalid': form.errors.generalobject }"     
                       required  placeholder="Introduce el objetivo general" />
                       <jet-input-error :message="form.errors.generalobject" />
@@ -136,7 +136,7 @@ import Head from "@/Jetstream/Head.vue";
         institution_id:"",
         user_id: "",
       });
-  
+
       const guardar = () => {
         form.user_id = props.idlog;
         form.institution_id = props.idinstlog;
@@ -157,15 +157,9 @@ import Head from "@/Jetstream/Head.vue";
   </script>
   
   <style scoped>
-      
-        :root{
-          --main-color: rgb(23, 33, 123);
-          --second-color:rgba(29, 43, 172, 0.795);
-          --black: #000000;
-          --white: #ffffff;
-        }
-      
-        /* FORMULARIO */
+.upper { 
+  text-transform: uppercase;
+}
       
         .btncancelar{
           background-color: #920707;

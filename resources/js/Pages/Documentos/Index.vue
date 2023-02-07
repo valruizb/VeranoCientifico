@@ -1,18 +1,18 @@
 <template>
   <Head>   </Head>
 
-  <Alumno v-if="$page.props.user.rol == 1"> </Alumno>
+  <Alumno v-if="$page.props.user.rol == 4"> </Alumno>
  
 
 <body>
   <div class="forma1">
-    <div class="pestana">
-      PASO 1
+    <div v-bind:style="{ 'background-image': 'url(' + imageUrl + ')'}" class="pestana">
+      <iframe  :src="pdfPreview" style="width: 500px; height: 100%"></iframe>
     </div><br>
     <jet-validation-errors class="mb-3"/>
     <div class="formulario forma2"> 
     <form @submit.prevent="guardar" enctype="multipart/form-data">
-      <h2>Carga de documentos</h2><br>
+      <br><h2><i class='bx bxs-up-arrow-square bx-flashing' style='color:#04023f' ></i> Carga de documentos</h2><br>
       <p>A continuación se pide llenar el formulario con los respectivos documentos, lo más legible posible</p><br>
         <div class="col-sm-8 mb-5">
                   <jet-label class="label form-label fs-base" value="*Formato solicitud" />
@@ -72,7 +72,10 @@
     
     
 </div> 
-<div class="no2 col-sm-3 mb-5">
+
+</div>
+
+<div class="no1 col-sm-3 mb-5">
     <button title="Ver" v-on:click="ver('request')" class="btn btn-info btn-sm">
       <i class='boxi bi bi-eye-fill' style='color:#ffffff' ></i>
     </button>&nbsp;&nbsp; 
@@ -83,15 +86,76 @@
       <i class='boxi bi bi-trash-fill' style='color:#ffffff' ></i>
     </button> 
 </div>
+<div class="no2 col-sm-3 mb-5">
+    <button title="Ver" v-on:click="ver('academic')" class="btn btn-info btn-sm">
+      <i class='boxi bi bi-eye-fill' style='color:#ffffff' ></i>
+    </button>&nbsp;&nbsp; 
+    <button title="Ocultar" v-on:click="ocultar" class="btn btn-warning btn-sm">
+      <i class='boxi bi bi-eye-slash-fill' style='color:#ffffff' ></i>
+    </button>&nbsp;&nbsp;
+    <button title="Borrar" v-on:click="borrar('academic')" class="btn btn-danger btn-sm">
+      <i class='boxi bi bi-trash-fill' style='color:#ffffff'></i>
+    </button> 
 </div>
-
-
-<div class="no3">
-  hey
+<div class="no3 col-sm-3 mb-5">
+    <button title="Ver" v-on:click="ver('motivedoc')" class="btn btn-info btn-sm">
+      <i class='boxi bi bi-eye-fill' style='color:#ffffff' ></i>
+    </button>&nbsp;&nbsp; 
+    <button title="Ocultar" v-on:click="ocultar" class="btn btn-warning btn-sm">
+      <i class='boxi bi bi-eye-slash-fill' style='color:#ffffff' ></i>
+    </button>&nbsp;&nbsp;
+    <button title="Borrar" v-on:click="borrar('motivedoc')" class="btn btn-danger btn-sm">
+      <i class='boxi bi bi-trash-fill' style='color:#ffffff' ></i>
+    </button> 
 </div>
+<div class="no4 col-sm-3 mb-5">
+    <button title="Ver" v-on:click="ver('ine')" class="btn btn-info btn-sm">
+      <i class='boxi bi bi-eye-fill' style='color:#ffffff' ></i>
+    </button>&nbsp;&nbsp; 
+    <button title="Ocultar" v-on:click="ocultar" class="btn btn-warning btn-sm">
+      <i class='boxi bi bi-eye-slash-fill' style='color:#ffffff' ></i>
+    </button>&nbsp;&nbsp;
+    <button title="Borrar" v-on:click="borrar('ine')" class="btn btn-danger btn-sm">
+      <i class='boxi bi bi-trash-fill' style='color:#ffffff' ></i>
+    </button> 
+</div>
+<div class="no5 col-sm-3 mb-5">
+    <button title="Ver" v-on:click="ver('cvu')" class="btn btn-info btn-sm">
+      <i class='boxi bi bi-eye-fill' style='color:#ffffff' ></i>
+    </button>&nbsp;&nbsp; 
+    <button title="Ocultar" v-on:click="ocultar" class="btn btn-warning btn-sm">
+      <i class='boxi bi bi-eye-slash-fill' style='color:#ffffff' ></i>
+    </button>&nbsp;&nbsp;
+    <button title="Borrar" v-on:click="borrar('cvu')" class="btn btn-danger btn-sm">
+      <i class='boxi bi bi-trash-fill' style='color:#ffffff' ></i>
+    </button> 
+</div>
+<div class="no6 col-sm-3 mb-5">
+    <button title="Ver" v-on:click="ver('foto')" class="btn btn-info btn-sm">
+      <i class='boxi bi bi-eye-fill' style='color:#ffffff' ></i>
+    </button>&nbsp;&nbsp; 
+    <button title="Ocultar" v-on:click="ocultar" class="btn btn-warning btn-sm">
+      <i class='boxi bi bi-eye-slash-fill' style='color:#ffffff' ></i>
+    </button>&nbsp;&nbsp;
+    <button title="Borrar" v-on:click="borrar('foto')" class="btn btn-danger btn-sm">
+      <i class='boxi bi bi-trash-fill' style='color:#ffffff' ></i>
+    </button> 
+</div>
+<!----<div class="no7 col-sm-3 mb-5">
+    <button title="Ver" v-on:click="ver('request')" class="btn btn-info btn-sm">
+      <i class='boxi bi bi-eye-fill' style='color:#ffffff' ></i>
+    </button>&nbsp;&nbsp; 
+    <button title="Ocultar" v-on:click="ocultar" class="btn btn-warning btn-sm">
+      <i class='boxi bi bi-eye-slash-fill' style='color:#ffffff' ></i>
+    </button>&nbsp;&nbsp;
+    <button title="Borrar" v-on:click="borrar('request')" class="btn btn-danger btn-sm">
+      <i class='boxi bi bi-trash-fill' style='color:#ffffff' ></i>
+    </button> 
+</div>--->
+
 <!---<a :href="url" target="_blanck"><button class="ms-4 add btn btn-info" :src="url" >{{ documento1}}</button></a>-->
 
-<iframe  :src="pdfPreview" style="width: 20%; height: 200px;"></iframe>
+
 <!--<div>
   <jet-input type="file" @change="previewRequest"  /> <input type="text" v-model="form.requestform" />
   <jet-input type="file" @change="previewAca" @input="form.academicdoc = $event.target.files[0]" /> <input type="text" v-model="form.academicdoc" />
@@ -171,6 +235,7 @@ export default {
         ine:'',
         cvu:'',
         foto:'',
+        imageUrl: '../../../../public/assets/img/avatar/02.jpg',
       }
   },
 
@@ -349,14 +414,18 @@ export default {
 <style scoped>
 
 .forma1{
-width: 75%;
+width: 90%;
 border-radius: 20px;
 box-sizing: border-box;
 background-color: #ffffffef;
 margin-top: 10%;
-margin-left: 3%;
+margin-left: 5%;
 box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px rgba(216, 213, 213, 0.137);
 display: flex;
+}
+
+h2{
+text-align: center;
 }
 
 .formulario{
@@ -365,7 +434,6 @@ display: flex;
 
 body{
   margin: 0;
-  
 }
 
 p{
@@ -392,23 +460,42 @@ button[id="cuenta"]{
   font-size: 18px;
 }
 
-
 .info{
   padding: -10px 20px 0px 0px;
 }
 
 .pestana{
-  background-color: tomato;
-  width: 15%;
+  width: 40%;
   border-bottom: 1px solid rgb(12, 12, 12);
+  background-color:rgb(3, 3, 51); 
+}
+
+.no1{
+  margin-left: 75%;
+  margin-top: -57.5%;
 }
 
 .no2{
-  /*background-color: aqua;
-  margin-left: 55%;
-  margin-top: -57.5%;*/
+  margin-left: 75%;
+  margin-top: 2.5%;
 }
 
+.no3{
+  margin-left: 75%;
+  margin-top: 2.9%;
+}
 
+.no4{
+  margin-left: 75%;
+  margin-top: 2.6%;
+}
 
+.no5{
+  margin-left: 75%;
+  margin-top: 2.6%;
+}
+.no6{
+  margin-left: 75%;
+  margin-top: 2.6%;
+}
 </style>
