@@ -39,15 +39,13 @@
             <li class="dropdown drop" id="cont1">
                 <a href="#" class="nav-link" data-bs-toggle="dropdown">Gestión Usuarios</a>
                   <ul class="dropdown-menu">
-                    <li><a id="lista" :href="route('usuarios.index' )" class="nav-link">Usuarios</a></li>
+                    <li><a id="lista" :href="route('usuarios.index')" class="nav-link">Usuarios</a></li>
                   </ul>
             </li>
             <li class="dropdown drop1" id="cont">
-                <a href="#" class="nav-link" data-bs-toggle="dropdown">Seguridad</a>
+                <a href="#" class="nav-link" data-bs-toggle="dropdown">Proyectos</a>
                   <ul class="dropdown-menu">
-                    <li><a id="lista" :href="route('documento.index')" class="nav-link">Profesores</a></li>
-                    <li><a id="lista" :href="route('proyectos.index')" class="nav-link">Revisores</a></li>
-                    <li><a id="lista" :href="route('proyectos.index')" class="nav-link">Alumnos</a></li>
+                    <li><a id="lista" :href="route('indexadmin')" class="nav-link">Proyectos 2023</a></li>
                   </ul>
             </li>
           </ul>

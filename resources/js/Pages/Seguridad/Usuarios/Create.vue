@@ -260,8 +260,7 @@ export default{
     JetLabel,
     JetValidationErrors,
     Link,
-    Navbar,
-    Footer
+    Admin,
   },
 
   

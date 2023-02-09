@@ -2,16 +2,21 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Spatie\Permission\Traits\HasRoles;
+use App\Models\User;
 use App\Models\Tematicas;
+use App\Models\Subtematicas;
+use App\Models\Instituciones;
+use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Proyectos extends Model
 {
     use HasFactory;
     protected $table = 'proyectos';
     use HasRoles; 
+    use SoftDeletes;
 
     protected $fillable = [
         'title',

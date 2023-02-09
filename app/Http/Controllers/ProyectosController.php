@@ -40,27 +40,28 @@ class ProyectosController extends Controller
     public function index(Request $request)
     {
         $usid = Auth::id();
-       // $request->status = $request->status === null ? true : $request->status;
-        $records = $request->status == '0' ? $this->model->onlyTrashed() : $this->model;
-        $records= 
-        $records = $records->when($request->search, function ($query, $search) {
-            if ($search != '') {
-                $query->where('title', 'LIKE', '%' . $search . '%')
-                    ->orWhere('generalobject', 'LIKE', '%' . $search . '%');
-            }else{
-                $query->where('user_id', '=', '$usid' );
-            }
-        });
-        return Inertia::render("Proyectos/Index", [
-            'title '          => 'Proyectos',
-            'routeName'      => $this->routeName,
-            'proyectos'=>  $records->where('user_id', $usid)->paginate(3),
-            'loadingResults' => false,
-            'search'         => $request->search ?? '',
-            'status'         => (bool) $request->status,
-            
+        $request->status = $request->status === null ? true : $request->status;
+         $records = $request->status == '0' ? $this->model->onlyTrashed() : $this->model;
+         $records= 
+         $records = $records->when($request->search, function ($query, $search) {
+             if ($search != '') {
+                 $query->where('title', 'LIKE', '%' . $search . '%')
+                     ->orWhere('generalobject', 'LIKE', '%' . $search . '%');
+             }else{
+                 $query->where('user_id', '=', '$usid' );
+             }
+         });
+
+         return Inertia::render("Proyectos/Index", [
+             'title '          => 'Proyectos',
+             'routeName'      => $this->routeName,
+             'proyectos' => $records->where('user_id', $usid)->paginate(3),
+             'loadingResults' => false,
+             'search'         => $request->search ?? '',
+             'status'         => (bool) $request->status,
              
-        ]);
+              
+         ]);
     }
 
     /**
@@ -100,9 +101,9 @@ class ProyectosController extends Controller
      * @param  \App\Models\Proyectos  $proyectos
      * @return \Illuminate\Http\Response
      */
-    public function show(Proyectos $proyectos)
+    public function show()
     {
-        abort(405);
+
     }
 
     /**
@@ -148,5 +149,35 @@ class ProyectosController extends Controller
         //dd($proyectos);
         $proyectos->delete();
         return redirect()->route('proyectos.index')->with('success', 'Proyecto eliminado con éxito');
+    }
+
+    public function indexadmin(Request $request){
+        
+        if($request != ''){
+            //$proyectos = Proyectos::with('users','thematics', 'subthematics')->paginate(3);
+            $request->status = $request->status === null ? true : $request->status;
+            $records = $request->status == '0' ? $this->model->onlyTrashed() : $this->model;
+            $records= 
+            $records = $records->when($request->search, function ($query, $search) {
+                if ($search != '') {
+                    $query->where('title', 'LIKE', '%' . $search . '%')
+                        ->orWhere('generalobject', 'LIKE', '%' . $search . '%');
+                }
+            });
+            $proyectos = $records->orderBy('id')->with('users','thematics', 'subthematics')->paginate(3);
+        }else{
+            $proyectos = Proyectos::with('users','thematics', 'subthematics')->paginate(3);
+        }
+
+         return Inertia::render("Proyectos/IndexAdmin", [
+             'title '          => 'Proyectos',
+             'routeName'      => $this->routeName,
+             'proyectos' => $proyectos, 
+             'loadingResults' => false,
+             'search'         => $request->search ?? '',
+             'status'         => (bool) $request->status,
+             
+              
+         ]);
     }
 }

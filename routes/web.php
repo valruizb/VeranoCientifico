@@ -20,6 +20,7 @@ use App\Http\Controllers\InstitucionesController;
 use App\Http\Controllers\TematicasController;
 use App\Http\Controllers\SubtematicasController;
 use App\Http\Controllers\DocumentoUsuarioController;
+use App\Http\Controllers\ProyectoUsuarioController;
 use App\Http\Controllers\PublicoController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
@@ -52,19 +53,12 @@ Route::post('/email/verification-notification', function (Request $request) {
     return back()->with('message', 'Verification link sent!');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
-
-
-
-
-
-
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('registro.create'),
         'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+        'phpVersion' => PHP_VERSION,]);
 
 
 
@@ -93,7 +87,9 @@ Route::middleware([
     Route::resource('proyectos', ProyectosController::class)->parameters(['proyectos' => 'proyectos']);
     Route::resource('instituciones', InstitucionesController::class)->parameters(['instituciones' => 'instituciones']);
     Route::resource('tematicas', TematicasController::class)->parameters(['tematicas' => 'tematicas']);
-    Route::resource('subtematicas', SubtematicasController::class)->parameters(['subtematicas' => 'subtematicas']);    
+    Route::resource('subtematicas', SubtematicasController::class)->parameters(['subtematicas' => 'subtematicas']);
+    Route::resource('proyectospro', ProyectoUsuarioController::class)->parameters(['proyectospro' => 'proyectospro']);    
+    Route::get('/adminp', [ProyectosController::class, 'indexadmin'])->name('indexadmin');
 });
 
 

@@ -1,9 +1,6 @@
 <template>
-    
   <Head> </Head>
-  <Profe v-if="$page.props.user.rol == 2"> </Profe>
-
-  <Admin v-if="$page.props.user.rol == 1"> </Admin>
+    <Admin v-if="$page.props.user.rol == 1"> </Admin>
   
 <div class="contenido">
       <div class="forma1">
@@ -13,22 +10,17 @@
         <div class="col-md-12 pe-0">
           <div class="card-body border-right border-bottom p-3 h-100">
             <div class="mb-2 d-flex justify-content-start">
-              <Link :href="route(`${routeName}create`)" class="add btn btn btn-success btn-sm">
-              <i class="bi bi-plus-circle"></i> <p class="text-add">Agregar Proyecto</p>
-              </Link>
               <div class="input-group w-50 ml-2">
                 <input
                   type="text"
                   class="busqueda form-control form-control-sm form-control bg-light shadow-sm"
                   placeholder="Ingrese un parámetro de búsqueda"
                   v-model="filters.search"
-                  @change="search"
-                />
+                  @change="search"/>
                 <div class="input-group-append input-group-append-sm">
                   <button
                     @click="search"
-                    class="btn btn-outline-secondary btn-sm"
-                  >
+                    class="btn btn-primary btn-sm" >
                     <i class="buscar bi bi-search"></i>
                   </button>
                 </div>
@@ -49,32 +41,17 @@
                 <thead>
                   <tr>
                     <th class="col">Titulo</th>
-                    <th class="col">Descripción</th>
-                    <th class="col">Modalidad</th>
-                    <th width="10%" class="col">Editar</th>
-                    <th width="10%" class="col">Eliminar</th>
+                    <th class="col">Temática</th>
+                    <th class="col">Subtemática</th>
+                    <th width="20%" class="col">Profesor</th>
                   </tr>
                 </thead>
                 <tbody v-for="item in proyectos.data" :key="item.id">
                   <tr>
                     <td>{{ item.title  }}</td>
-                    <td>{{ item.generalobject }}</td>
-                    <td>{{ item.modality }}</td>
-                    <td><button class="btn btn btn-info btn-sm" >
-                      <a :href="route('proyectos.edit', item.id)">
-                      <i class="lapiz bi bi-pencil-fill">
-                      </i></a></button> 
-                    </td>
-                    <td>  
-                      <form action="">
-                    <button
-                    class="btn btn btn-danger btn-sm"
-                    type="button"
-                    @click="eliminar(item.id)">
-                    <i class="basura bi bi-trash-fill"></i>
-                  </button>
-                </form>
-                    </td>
+                    <td>{{ item.thematics.name }}</td>
+                    <td>{{ item.subthematics.name }}</td>
+                    <td>{{ item.users.name }} {{ item.users.lastnamep }} {{ item.users.lastnamem }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -82,9 +59,8 @@
             <RecordsHelper
             :thereAreResults="thereAreResults"
             :loadingResults="loadingResults"
-          />
+          /><br>
             <pagination :links="proyectos.links" :total="proyectos.total" />
-            
           </div>
         </div>
       </div>
@@ -101,16 +77,12 @@
     import { Inertia } from "@inertiajs/inertia";
     import Input from "@/Jetstream/Input.vue";
     import JetDropdownLink from '@/Jetstream/DropdownLink.vue';
-    import { ref } from "vue";
-    import Swal from 'sweetalert2';
     import { useForm } from "@inertiajs/inertia-vue3";
     import JetLabel from "@/Jetstream/Label.vue";
     import JetInput from "@/Jetstream/Input.vue";
     import JetInputError from "@/Jetstream/InputError.vue";
     import JetButton from "@/Jetstream/Button.vue";
-    import 'sweetalert2/dist/sweetalert2.min.css';
     import Admin from "@/Jetstream/Admin.vue";
-    import Profe from "@/Jetstream/Profe.vue";
     import Head from "@/Jetstream/Head.vue";
     
     export default {
@@ -135,7 +107,6 @@
             JetInputError,
             JetButton,
             Admin,
-            Profe,
         },
 
         methods: {
@@ -154,34 +125,16 @@
                     status: props.status ?? 1,
                 },
             });
-            
-
-            const eliminar = (idel) => {
-              Swal.fire({
-              title: "¿Esta seguro?",
-              text: "Esta acción no se puede revertir",
-              icon: "warning",
-              showCancelButton: true,
-              cancelButtonColor: "#d33",
-              confirmButtonColor: "#3085d6",
-              confirmButtonText: "Si!, eliminar registro!",
-            }).then((res) => {
-              if (res.isConfirmed) {
-                form.delete(route("proyectos.destroy", idel));
-              }
-            });
-          };
 
           const search = () => {
                 props.loadingResults = true;
-                Inertia.replace(route(`${props.routeName}index`, state.filters));
+                Inertia.replace(route(`indexadmin`, state.filters));
             };
 
           return {
                 ...toRefs(state),
                 search,
                 thereAreResults,
-                eliminar,
                 form
             };
         },
@@ -190,13 +143,6 @@
     
     
 <style scoped>
-
-  :root{
-    --main-color: rgb(23, 33, 123);
-    --second-color:rgba(29, 43, 172, 0.795);
-    --black: #000000;
-    --white: #ffffff;
-  }
 
   h2{
     font-size: 30px;

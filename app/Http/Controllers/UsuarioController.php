@@ -35,10 +35,10 @@ class UsuarioController extends Controller
         $this->routeName = "usuarios.";
         $this->source    = "Seguridad/Usuarios/";
         $this->model     = new User();
-        $this->middleware("permission:{$this->module}.index")->only(['index', 'show']);
+        /*$this->middleware("permission:{$this->module}.index")->only(['index', 'show']);
         $this->middleware("permission:{$this->module}.store")->only(['store', 'create']);
         $this->middleware("permission:{$this->module}.update")->only(['edit', 'update']);
-        $this->middleware("permission:{$this->module}.delete")->only(['destroy']);
+        $this->middleware("permission:{$this->module}.delete")->only(['destroy']);*/
     }
 
     public function index(Request $request): Response
@@ -49,7 +49,7 @@ class UsuarioController extends Controller
         $usuarios = $this->model::filtro($request->all('search', 'profile'))
             ->with('roles')
             ->orderBy('id')
-            ->paginate(10)
+            ->paginate(4)
             ->withQueryString();
            
         return Inertia::render('Seguridad/Usuarios/Index', [
@@ -62,7 +62,18 @@ class UsuarioController extends Controller
         ]);
 
     }
-    public function create(StoreUsuarioRequest $request): RedirectResponse
+    
+    public function create()
+    {
+        return Inertia::render("{$this->source}Create", [
+            'instituto' =>Instituciones::orderBy('id')->get(),
+            'roles'=> Role::with('permissions:id,name,description,module_key')->orderBy('name')->select('id', 'name', 'description')->where('id', '!=', '1')->get(),
+            'subtematica' => Subtematicas::get(),
+           
+        ]);
+        
+    }
+    public function store(StoreusuarioRequest $request): RedirectResponse
     {
         if($request -> hasFile(key:'requestform')){
             $file = $request->file('requestform');
@@ -158,17 +169,6 @@ class UsuarioController extends Controller
             event(new Registered($usuario));
             return redirect()->route('dashboard')->with('success', 'Usuario registrado!');
         }
-        
-    }
-    public function store(StoreusuarioRequest $request): RedirectResponse
-    {
-        $fields= $request->validated();
-        $fields['password'] = Hash::make($fields['password']);
-        $usuario = $this->model::create($fields);
-        $roles = Role::whereIn('id', $request->profiles)->get();
-        $usuario->syncRoles($roles);
-        return redirect()->route('usuarios.index')->with('success', 'Usuario creado con éxito!');
-
     }
     public function show($request)
     {

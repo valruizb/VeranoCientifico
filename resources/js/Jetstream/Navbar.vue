@@ -1,5 +1,4 @@
 <template>
-<Head> </Head>
   <header class="header navbar navbar-expand-lg navbar-light bg-light navbar-sticky">
     <div class="container px-3">
       <a href="index.html" class="navbar-brand pe-3" id="logo">
@@ -96,7 +95,6 @@ import Carousel from "../../../public/assets/carousel/Carousel.vue"
 import { defineComponent } from "vue"
 import { Link } from '@inertiajs/inertia-vue3';
 import { Swiper, SwiperSlide } from "swiper/vue";
-import Head from '@/Jetstream/Head.vue';
 
 export default defineComponent({
   components: {
@@ -104,7 +102,6 @@ export default defineComponent({
     Carousel,
     Swiper,
     SwiperSlide,
-    Head
   },
 
   props: {
