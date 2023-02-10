@@ -31,7 +31,7 @@
              <li class="dropdown drop" id="cont1">
                  <a href="#" class="nav-link" data-bs-toggle="dropdown">Proyecto</a>
                    <ul class="dropdown-menu">
-                     <li><a id="lista" :href="route('proyectos.index')" class="nav-link">Ver proyectos</a></li>
+                     <li><a id="lista" :href="route('proyectospro.index')" class="nav-link">Ver proyectos</a></li>
                    </ul>
              </li>
              <li class="dropdown drop" id="cont1">
