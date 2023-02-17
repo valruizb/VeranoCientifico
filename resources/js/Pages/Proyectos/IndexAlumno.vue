@@ -39,9 +39,11 @@
         <h2>Carrito de compras</h2>
           <div class="cart-items">
             <ul>
-            <div v-for="item in cart" :key="item.id" class="cart-item">
-                <li><h3>Proyecto: {{ item }}</h3></li>
-            </div>
+            <div >
+              <Draggable :list="cart" tag="ul" class="w-full max-w-md" ghost-class="moving-card" :animation="200">
+                <li v-for="item in cart" :key="item.id" class="cart-item"><h3>Proyecto: {{ item }}</h3></li>
+              </Draggable>
+              </div>
           </ul>
           </div>
         </div>
@@ -70,7 +72,7 @@
    import { useForm } from "@inertiajs/inertia-vue3";
    import Swal from 'sweetalert2';
    import { computed, onMounted, reactive, toRefs, watch } from "vue";
-   import draggable from 'vuedraggable';
+   import Draggable from 'vuedraggable';
      
      
      export default {
@@ -99,7 +101,7 @@
          JetButton,
          JetDropdownLink,
          Alumno,
-         draggable
+         Draggable
        },
 
        setup(props) {
@@ -173,6 +175,12 @@
      margin-bottom: 45px;
      /*padding-top: 45px;*/
    }
+
+   .moving-card {
+        opacity:50px;
+        background-color: gray 100;
+        border: blue;
+    }
 
    .upper { 
   text-transform: uppercase;
