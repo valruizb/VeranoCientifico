@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Notifications\Notification;
 use App\Http\Requests\StoredocumentoRequest;
 use App\Http\Requests\UpdatedocumentoRequest;
+use Illuminate\Support\Facades\Artisan;
 
 class DocumentoController extends Controller
 {
@@ -39,10 +40,9 @@ class DocumentoController extends Controller
 
     public function index()
     {
-        
-        $curp = Auth::user()->curp;
-        $name = Auth::user()->name.' '.Auth::user()->lastnamep.' '.Auth::user()->lastnamem;
         $id = Auth::id();
+        $curp = Auth::user()->curp;
+
         $doc1 = '';
         $doc2 = '';
         $doc3 = '';
@@ -52,6 +52,8 @@ class DocumentoController extends Controller
 
 
         /*
+        $name = Auth::user()->name.' '.Auth::user()->lastnamep.' '.Auth::user()->lastnamem;
+        $id = Auth::id();
         $ins = Auth::user()->institution_id;
         $datos = [
             'titulo' => 'Expediente Hola',

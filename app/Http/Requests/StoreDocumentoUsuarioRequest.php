@@ -25,7 +25,7 @@ class StoreDocumentoUsuarioRequest extends FormRequest
     {
         
         $rules = [
-
+            
         ];
 
         if ( $this->hasFile('requestform') ){

@@ -90,6 +90,7 @@ Route::middleware([
     Route::resource('subtematicas', SubtematicasController::class)->parameters(['subtematicas' => 'subtematicas']);
     Route::resource('proyectospro', ProyectoUsuarioController::class)->parameters(['proyectospro' => 'proyectospro']);    
     Route::get('/adminp', [ProyectosController::class, 'indexadmin'])->name('indexadmin');
+    Route::get('/reportes', [ProyectosController::class, 'reportespdf'])->name('reportespdf');
 });
 
 

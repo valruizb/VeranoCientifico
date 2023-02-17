@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('proyecto_id');
             $table->foreign('proyecto_id')->references('id')->on('proyectos');
             $table->string('status');
+            $table->Integer('priority');
             $table->timestamps();
         });
     }

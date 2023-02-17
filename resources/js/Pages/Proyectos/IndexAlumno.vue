@@ -11,7 +11,8 @@
         <button type="submit" class="btn btn-icon btn-primary rounded-3 ms-3" @click="search">
           <i class='busqueda bx bx-search'></i>
         </button>
-      </div> <button @click="guardar">Carrito</button>
+      </div> <button @click="showCart = !showCart">Carrito</button>
+      
       </div>
 
       </div><br>
@@ -27,13 +28,29 @@
             <p>Número de Alumnos Permitidos: {{ proyecto.studentnum}}</p>
             <p>Modalidad: {{ proyecto.modality}} </p>
             <p>Profesor: {{ proyecto.users.name }}</p>
-            <button>Detalles</button><input id="add" type="checkbox" @change="addItem" :value="proyecto.id" v-model="cart">
+            <button>Detalles</button><input id="add" type="checkbox" @change="addItem" :value="proyecto.title" v-model="cart">
          </div>
          
        </div>
      </div>
-
-     <h1  v-for="item in cart" :key="item">{{ item}}</h1>
+     <div class="cart-container" v-if="showCart">
+      <button class="close-button" @click="showCart = false">Cerrar</button>
+      <div v-if="cart.length">
+        <h2>Carrito de compras</h2>
+          <div class="cart-items">
+            <ul>
+            <div v-for="item in cart" :key="item.id" class="cart-item">
+                <li><h3>Proyecto: {{ item }}</h3></li>
+            </div>
+          </ul>
+          </div>
+        </div>
+      
+        <div v-else>
+          <p>No hay artículos en el carrito</p>
+        </div>
+        <Link class="add btn btn" :href="route('proyectospro.store')">Postularme</Link>
+      </div>
    </body>
  </main>
  </template>
@@ -53,13 +70,15 @@
    import { useForm } from "@inertiajs/inertia-vue3";
    import Swal from 'sweetalert2';
    import { computed, onMounted, reactive, toRefs, watch } from "vue";
+   import draggable from 'vuedraggable';
      
      
      export default {
        name: "Create",
        data() {
             return {
-                cart: []
+                cart: [],
+                showCart: false
             }
         },
        props: {
@@ -80,11 +99,15 @@
          JetButton,
          JetDropdownLink,
          Alumno,
+         draggable
        },
 
        setup(props) {
-            
-
+            const form = useForm({
+              proyecto1: '',
+              proyecto2: '',
+              proyecto3: ''
+            })
             const thereAreResults = computed(() => props.proyectos.total > 0);
             const state = reactive({
                 filters: {
@@ -96,15 +119,15 @@
 
             const search = () => {
                 props.loadingResults = true;
-                Inertia.replace(route(`verano.index`, state.filters));
+                Inertia.replace(route(`proyectospro.index`, state.filters));
             };
 
             const guardar = () => {
-                props.loadingResults = true;
-                Inertia.replace(route(`verano.index`, state.filters));
+                (route(`proyectospro.store`));
             };
 
             return {
+              guardar,
                 ...toRefs(state),
                 search,
                 thereAreResults,
@@ -115,7 +138,6 @@
         methods: {
             addItem() {
                 if (this.cart.length <= 3) {
-                    let timerInterval
                     Swal.fire({
                     icon: 'success',
                     title: 'Auto close alert!',
@@ -133,7 +155,8 @@
                     })
                     this.cart.pop();
                 }
-            }
+            },
+ 
         }
 
         
@@ -186,4 +209,21 @@
    background-color: #0fb3ff;
  }
 
+ .cart-container{
+  position: absolute;
+  top: 40%;
+  right: 39%;
+  width: 30%;
+  background-color: white;
+  border: 1px solid gray;
+  padding: 10px;
+ }
+
+ ul{
+  background-color: #0fb3ff;
+ }
+
+ li{
+  background-color:yellow ;
+ }
  </style>

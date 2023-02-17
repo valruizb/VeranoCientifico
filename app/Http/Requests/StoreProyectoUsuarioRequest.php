@@ -13,7 +13,7 @@ class StoreProyectoUsuarioRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,9 @@ class StoreProyectoUsuarioRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'user_id' => 'required',
+            'proyecto_id' => 'required',
+            'status'=> 'required',
         ];
     }
 }

@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Models\Tematicas;
 use App\Models\Subtematicas;
 use Illuminate\Support\Facades\Auth;
+use TCPDF;
 
 class ProyectosController extends Controller
 {
@@ -179,5 +180,12 @@ class ProyectosController extends Controller
              
               
          ]);
+    }
+
+    public function reportespdf(){
+    
+    
+
+    
     }
 }

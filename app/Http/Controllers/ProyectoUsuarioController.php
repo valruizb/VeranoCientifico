@@ -72,9 +72,11 @@ class ProyectoUsuarioController extends Controller
      * @param  \App\Http\Requests\StoreProyectoUsuarioRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreProyectoUsuarioRequest $request)
+    public function store($request)
     {
-        //
+        dd($request);
+        ProyectoUsuario::create($request->validated());    
+        return redirect()->route('dashboard')->with('success', 'Proyecto guardado con éxito!');
     }
 
     /**

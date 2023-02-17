@@ -109,7 +109,7 @@ class UsuarioController extends Controller
                 $usuario->syncRoles($roles);
                 $file->storeAs('public/DocumentosRevisores', $formatosolicitud);
                 event(new Registered($usuario));
-                return redirect()->route('dashboard')->with('success', 'Usuario registrado!');
+                return redirect()->route('usuarios.index')->with('success', 'Usuario registrado!');
             }else{
                 return 'Este documento ya fue subido';
             }
@@ -151,7 +151,7 @@ class UsuarioController extends Controller
                 $usuario->syncRoles($roles);
                 $file->storeAs('public/DocumentosProfesores', $constancia);
                 event(new Registered($usuario));
-                return redirect()->route('registro.create')->with('success', 'Usuario registrado!');
+                return redirect()->route('usuarios.index')->with('success', 'Usuario registrado!');
             }else{
                 return 'Este documento ya fue subido';
             }
@@ -167,7 +167,7 @@ class UsuarioController extends Controller
             $usuario->syncRoles($roles);
             //$file->storeAs('public/DocumentosProfesores', $constancia);
             event(new Registered($usuario));
-            return redirect()->route('dashboard')->with('success', 'Usuario registrado!');
+            return redirect()->route('usuarios.index')->with('success', 'Usuario registrado!');
         }
     }
     public function show($request)

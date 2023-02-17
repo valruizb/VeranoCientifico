@@ -20,6 +20,8 @@ return new class extends Migration
             $table->foreign('document_id')->references('id')->on('documents');
             $table->string('name_doc');
             $table->string('status');
+            $table->unsignedBigInteger('rev_id')->nullable();
+            $table->foreign('rev_id')->references('id')->on('users');
             $table->timestamps();
             $table->softDeletes();
         });

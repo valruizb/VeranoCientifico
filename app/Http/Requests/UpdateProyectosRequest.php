@@ -24,7 +24,7 @@ class UpdateProyectosRequest extends FormRequest
     public function rules()
     {
         return [
-            'title ' => 'required',
+            'title' => 'required',
             'studentnum' => 'required',
             'thematic_id'=> "required",
             'subthematic_id'=> "required",
