@@ -29,13 +29,13 @@
          <hr class="d-lg-none mt-3 mb-2">
            <ul class="navbar-nav me-auto">
              <li class="dropdown drop" id="cont1">
-                 <a href="#" class="nav-link" data-bs-toggle="dropdown">Proyecto</a>
+                 <a href="#" class="nav-link" data-bs-toggle="dropdown">Proyectos</a>
                    <ul class="dropdown-menu">
                      <li><a id="lista" :href="route('proyectospro.index')" class="nav-link">Ver proyectos</a></li>
                    </ul>
              </li>
              <li class="dropdown drop" id="cont1">
-                 <a href="#" class="nav-link" data-bs-toggle="dropdown">Documentos</a>
+                 <a href="#" class="nav-link" data-bs-toggle="dropdown">Mis solicitudes</a>
                    <ul class="dropdown-menu">
                      <li><a id="lista" :href="route('documento.index')" class="nav-link">Mis solicitudes</a></li>
                      <li><a id="lista" :href="route('docuser.index')" class="nav-link">Mis solicitudes</a></li>
@@ -168,12 +168,12 @@
  
    li[id="cont1"]::after{
      transform: rotate(45deg);
-     left:71%;
+     left:75%;
    }
  
    li[id="cont1"]::before{
      transform: rotate(-45deg);
-     left:75%;
+     left:79%;
    }
  
    li[id="cont1"]:hover::after{

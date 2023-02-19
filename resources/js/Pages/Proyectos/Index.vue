@@ -13,7 +13,7 @@
         <div class="col-md-12 pe-0">
           <div class="card-body border-right border-bottom p-3 h-100">
             <div class="mb-2 d-flex justify-content-start">
-              <Link :href="route(`${routeName}create`)" class="add btn btn btn-success btn-sm">
+              <Link :href="route(`${routeName}create`)" class="add btn btn-sm">
               <i class="bi bi-plus-circle"></i> <p class="text-add">Agregar Proyecto</p>
               </Link>
               <div class="input-group w-50 ml-2">
@@ -27,18 +27,18 @@
                 <div class="input-group-append input-group-append-sm">
                   <button
                     @click="search"
-                    class="btn btn-outline-secondary btn-sm"
+                    class="btn btn-primary" type="button"
                   >
                     <i class="buscar bi bi-search"></i>
                   </button>
                 </div>
               </div>
-              <select @change="search"
+              <!---<select @change="search"
                 class="custom-select-sm custom-select bg-light shadow-sm border-0 w-25 ml-2"
                 v-model="filters.status">
                 <option :value="true">Activos</option>
                 <option :value="false">Eliminados</option>
-              </select>
+              </select>-->
             </div><br>
             <div v-if="$page.props.flash.success" class="alert d-flex alert-success" role="alert">
                 <i class="bx bx-check-circle lead me-3"></i>
@@ -284,7 +284,6 @@
     font-size: 18px;
     color: #ffffff;
   }
-
   .add{
     font-size: 15px;
   }
@@ -294,9 +293,13 @@
     margin-left: 10px;
   } 
 
-  .buscar{
-   
+  .add{
+  background-color: rgb(3, 4, 112);
   }
+
+.add:hover{
+  background-color: rgb(5, 7, 145);
+}
 
   .busqueda{
     margin-left: 10px;

@@ -6,7 +6,7 @@
   <Revisor v-if="$page.props.user.rol == 3"></Revisor>
 <body>
   <main class="page-wrapper">
-   <section class="container pt-5">
+   <section class="container pt-3">
         <div class="row">
           <aside class="col-lg-3 col-md-4 border-end pb-5 mt-n5">
             <div class="position-sticky top-0">
@@ -26,27 +26,23 @@
                 </button>
                 <div id="account-menu" class="list-group list-group-flush collapse d-md-block">
                   <a href="account-details.html" class="list-group-item list-group-item-action d-flex align-items-center active">
-                    <i class="bx bx-cog fs-xl opacity-60 me-2"></i>
+                    <i class="bi bi-house fs-xl opacity-60 me-2"></i> &nbsp;
                     Bienvenido
                   </a>
                   <a :href="route('profile.show')" class="list-group-item list-group-item-action d-flex align-items-center">
-                    <i class="bx bx-cog fs-xl opacity-60 me-2"></i>
+                    <i class="bi bi-person-gear fs-xl opacity-60 me-2"></i>&nbsp;
                     Detalles de la cuenta
                   </a>
                   <a :href="route('registro.edit', $page.props.user.id)" class="list-group-item list-group-item-action d-flex align-items-center">
-                    <i class="bx bx-lock-alt fs-xl opacity-60 me-2"></i>
+                    <i class="bi bi-file-earmark-lock fs-xl opacity-60 me-2"></i>&nbsp;
                     Seguridad de la cuenta
                   </a>
-                  <a  class="list-group-item list-group-item-action d-flex align-items-center">
-                    <i class="bx bx-bell fs-xl opacity-60 me-2"></i>
-                    Notificaciones
-                  </a>
-                  <a :href="route('reportespdf')" class="list-group-item list-group-item-action d-flex align-items-center">
-                    <i class="bx bx-lock-alt fs-xl opacity-60 me-2"></i>
+                  <a v-if="$page.props.user.rol == 1" :href="route('reportespdf')" class="list-group-item list-group-item-action d-flex align-items-center">
+                    <i class="bi bi-archive fs-xl opacity-60 me-2"></i> &nbsp;
                     Reportes PDF
                   </a>
                   <a href="account-signin.html" class="list-group-item list-group-item-action d-flex align-items-center">
-                    <i class="bx bx-log-out fs-xl opacity-60 me-2"></i>
+                    <i class="bi bi-box-arrow-left fs-xl opacity-60 me-2"></i>&nbsp;
                     Cerrar sesión
                   </a>
                 </div>
@@ -55,8 +51,9 @@
           </aside>
           <div class="col-md-8 offset-lg-1 pb-5 mb-2 mb-lg-4 pt-md-5 mt-n3 mt-md-0">
             <div class="ps-md-3 ps-lg-0 mt-md-2 py-md-4">
-              <h1 class="h2 pt-xl-1 pb-3"><i class='bx bx-lock-open-alt bx-flashing'  style='color:#07179a'></i> B I E N V E N I D O</h1>
-          </div>
+              <h1 class="h2 pt-xl-1 pb-1"><i class='bx bx-lock-open-alt bx-flashing' style='color:#07179a'></i> B I E N V E N I D O</h1>
+              <img src="../../../public/assets/img/services/single/map.png" alt="Map">
+            </div>
         </div>
       </div>
 </section> 
@@ -102,9 +99,12 @@ export default defineComponent({
 
 });
 
-
-
-
 </script>
+
+<style>
+h1{
+  text-align: center;
+}
+</style>
 
 

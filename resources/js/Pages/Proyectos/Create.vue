@@ -157,9 +157,6 @@ import Head from "@/Jetstream/Head.vue";
   </script>
   
   <style scoped>
-.upper { 
-  text-transform: uppercase;
-}
       
         .btncancelar{
           background-color: #920707;
