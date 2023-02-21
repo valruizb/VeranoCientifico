@@ -38,7 +38,7 @@
                  <a href="#" class="nav-link" data-bs-toggle="dropdown">Mis solicitudes</a>
                    <ul class="dropdown-menu">
                      <li><a id="lista" :href="route('documento.index')" class="nav-link">Mis solicitudes</a></li>
-                     <li><a id="lista" :href="route('docuser.index')" class="nav-link">Mis solicitudes</a></li>
+                     <li><a id="lista" :href="route('docuser.index')" class="nav-link">Estado de mis solicitud</a></li>
                    </ul>
              </li>
            </ul>

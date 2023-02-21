@@ -40,9 +40,9 @@
           <div class="cart-items">
             <ul>
             <div >
-              <Draggable :list="cart" tag="ul" class="w-full max-w-md" ghost-class="moving-card" :animation="200">
+               
                 <li v-for="item in cart" :key="item.id" class="cart-item"><h3>Proyecto: {{ item }}</h3></li>
-              </Draggable>
+              
               </div>
           </ul>
           </div>

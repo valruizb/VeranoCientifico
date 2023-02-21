@@ -1,29 +1,30 @@
 <?php
 
-use App\Actions\Fortify\UpdateUserPassword;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
+use App\Http\Controllers\EventoController;
 use App\Http\Controllers\ModuloController;
-use App\Http\Controllers\AcercaVeranoController;
-use App\Http\Controllers\RegistroController;
+use App\Actions\Fortify\UpdateUserPassword;
+use App\Http\Controllers\PublicoController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\PerfilesController;
 use App\Http\Controllers\PermisosController;
-use App\Http\Controllers\PermissionController;
-use App\Http\Controllers\ProyectosController;
-use App\Http\Controllers\ConvocatoriaController;
-use App\Http\Controllers\EventoController;
-use App\Http\Controllers\CalendarioConvocatoriaController;
+use App\Http\Controllers\RegistroController;
+use App\Http\Controllers\ReportesController;
 use App\Http\Controllers\DocumentoController;
-use App\Http\Controllers\InstitucionesController;
+use App\Http\Controllers\ProyectosController;
 use App\Http\Controllers\TematicasController;
+use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\AcercaVeranoController;
+use App\Http\Controllers\ConvocatoriaController;
 use App\Http\Controllers\SubtematicasController;
-use App\Http\Controllers\DocumentoUsuarioController;
+use App\Http\Controllers\InstitucionesController;
 use App\Http\Controllers\ProyectoUsuarioController;
-use App\Http\Controllers\PublicoController;
+use App\Http\Controllers\DocumentoUsuarioController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
-use Illuminate\Http\Request;
+use App\Http\Controllers\CalendarioConvocatoriaController;
 
 
 /*
@@ -90,7 +91,8 @@ Route::middleware([
     Route::resource('subtematicas', SubtematicasController::class)->parameters(['subtematicas' => 'subtematicas']);
     Route::resource('proyectospro', ProyectoUsuarioController::class)->parameters(['proyectospro' => 'proyectospro']);    
     Route::get('/adminp', [ProyectosController::class, 'indexadmin'])->name('indexadmin');
-    Route::get('/reportes', [ProyectosController::class, 'reportespdf'])->name('reportespdf');
+    //Route::get('/reportes', [ProyectosController::class, 'reportespdf'])->name('reportespdf');
+    Route::resource('reportes', ReportesController::class)->parameters(['reportes' => 'reportes']);    
 });
 
 

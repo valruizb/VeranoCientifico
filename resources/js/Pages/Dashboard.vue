@@ -37,7 +37,7 @@
                     <i class="bi bi-file-earmark-lock fs-xl opacity-60 me-2"></i>&nbsp;
                     Seguridad de la cuenta
                   </a>
-                  <a v-if="$page.props.user.rol == 1" :href="route('reportespdf')" class="list-group-item list-group-item-action d-flex align-items-center">
+                  <a v-if="$page.props.user.rol == 1" :href="route('reportes.index')" class="list-group-item list-group-item-action d-flex align-items-center">
                     <i class="bi bi-archive fs-xl opacity-60 me-2"></i> &nbsp;
                     Reportes PDF
                   </a>
