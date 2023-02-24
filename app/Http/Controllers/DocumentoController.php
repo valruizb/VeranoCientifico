@@ -50,85 +50,40 @@ class DocumentoController extends Controller
         $doc5 = '';
         $doc6 = '';
 
-
-        /*
-        $name = Auth::user()->name.' '.Auth::user()->lastnamep.' '.Auth::user()->lastnamem;
-        $id = Auth::id();
-        $ins = Auth::user()->institution_id;
-        $datos = [
-            'titulo' => 'Expediente Hola',
-            'contenido' => 'El alumno '.$name
-        ];
-
-        $revs = User::where('rol', 3)->where('institution_id', $ins)->get();
-        foreach ($revs as $rev) {
-            $rev->notify(new Expediente($datos));
+        if(Storage::disk($this->disk)->exists('Expedientes/'.$curp.'/formato_solicituD'.$id.'.pdf')){
+            $doc1 = asset('storage/Expedientes/'.$curp.'/formato_solicituD'.$id.'.pdf');
         }
 
+        if(Storage::disk($this->disk)->exists('Expedientes/'.$curp.'/carta_academicA'.$id.'.pdf')){
+            $doc2 = asset('storage/Expedientes/'.$curp.'/carta_academicA'.$id.'.pdf');
+        }
 
+        if(Storage::disk($this->disk)->exists('Expedientes/'.$curp.'/carta_motivos'.$id.'.pdf')){
+            $doc3 = asset('storage/Expedientes/'.$curp.'/carta_motivos'.$id.'.pdf');
+        }
 
-        
-        //return Storage::download('Expedientes/'.$curp.'/formato_solicitud'.$id.'.pdf');
-        */
-/*
-        
+        if(Storage::disk($this->disk)->exists('Expedientes/'.$curp.'/ine'.$id.'.pdf')){
+            $doc4 = asset('storage/Expedientes/'.$curp.'/ine'.$id.'.pdf');
+        }
 
-        $doc = DocumentoUsuario::where('user_id', $id)->where('document_id', 1)->first();
+        if(Storage::disk($this->disk)->exists('Expedientes/'.$curp.'/cvu'.$id.'.pdf')){
+            $doc5 = asset('storage/Expedientes/'.$curp.'/cvu'.$id.'.pdf');
+        }
 
-        $url = asset('storage/Expedientes/'.$curp.'/'.$doc->name_doc);
-        
-        dd($url);*/
-
-        if(DocumentoUsuario::where('user_id', $id)->where('document_id', 1)->first()){
-            $doc = DocumentoUsuario::where('user_id', $id)->where('document_id', 1)->first();
-            if(Storage::disk($this->disk)->exists('Expedientes/'.$curp.'/'.$doc->name_doc)){
-                $doc1 = asset('storage/Expedientes/'.$curp.'/'.$doc->name_doc);
-             
+        if(Storage::disk($this->disk)->exists('Expedientes/'.$curp.'/fotografia'.$id.'.jpeg')){
+            $doc6 = asset('storage/Expedientes/'.$curp.'/fotografia'.$id.'.jpeg');
+        }else{
+            if(Storage::disk($this->disk)->exists('Expedientes/'.$curp.'/fotografia'.$id.'.jpg')){
+                $doc6 = asset('storage/Expedientes/'.$curp.'/fotografia'.$id.'.jpg');
+            }else{
+                if(Storage::disk($this->disk)->exists('Expedientes/'.$curp.'/fotografia'.$id.'.png')){
+                    $doc6 = asset('storage/Expedientes/'.$curp.'/fotografia'.$id.'.png');
+                }
             }
         }
 
-        if(DocumentoUsuario::where('user_id', $id)->where('document_id', 2)->first()){
-            $doc = DocumentoUsuario::where('user_id', $id)->where('document_id', 2)->first();
-            if(Storage::disk($this->disk)->exists('Expedientes/'.$curp.'/'.$doc->name_doc)){
-                $doc2 = asset('storage/Expedientes/'.$curp.'/'.$doc->name_doc);
-                
-            }
-        }
 
-        if(DocumentoUsuario::where('user_id', $id)->where('document_id', 3)->first()){
-            $doc = DocumentoUsuario::where('user_id', $id)->where('document_id', 3)->first();
-            if(Storage::disk($this->disk)->exists('Expedientes/'.$curp.'/'.$doc->name_doc)){
-                $doc3 = asset('storage/Expedientes/'.$curp.'/'.$doc->name_doc);
-                
-            }
-        }
 
-        if(DocumentoUsuario::where('user_id', $id)->where('document_id', 4)->first()){
-            $doc = DocumentoUsuario::where('user_id', $id)->where('document_id', 4)->first();
-            if(Storage::disk($this->disk)->exists('Expedientes/'.$curp.'/'.$doc->name_doc)){
-                $doc4 = asset('storage/Expedientes/'.$curp.'/'.$doc->name_doc);
-             
-            }
-        }
-
-        if(DocumentoUsuario::where('user_id', $id)->where('document_id', 5)->first()){
-            $doc = DocumentoUsuario::where('user_id', $id)->where('document_id', 5)->first();
-            if(Storage::disk($this->disk)->exists('Expedientes/'.$curp.'/'.$doc->name_doc)){
-                $doc5 = asset('storage/Expedientes/'.$curp.'/'.$doc->name_doc);
-                
-            }
-        }
-
-        if(DocumentoUsuario::where('user_id', $id)->where('document_id', 6)->first()){
-            $doc = DocumentoUsuario::where('user_id', $id)->where('document_id', 6)->first();
-            if(Storage::disk($this->disk)->exists('Expedientes/'.$curp.'/'.$doc->name_doc)){
-                $doc6 = asset('storage/Expedientes/'.$curp.'/'.$doc->name_doc);
-                
-            }
-        }
-        
-        
-        
         return Inertia::render("{$this->source}Index", [
             'documentos'   =>  $this->model::paginate(10),
             'titulo'          => 'Catálogo de Documentos Probatorios',
@@ -158,10 +113,14 @@ class DocumentoController extends Controller
         documento::create($request->validated());
         return redirect()->route('documento.index')->with('success', 'Documento guardado con éxito!');
     }
+
+
     public function show(documento $documento)
     {
-        abort(405);
+        //
     }
+
+
     public function edit(documento $documento)
     {
         return Inertia::render("{$this->source}Edit", [

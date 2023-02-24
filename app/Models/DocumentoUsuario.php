@@ -11,5 +11,5 @@ class DocumentoUsuario extends Model
     use HasFactory;
     use SoftDeletes;
     protected $table = 'documents_user';
-    protected $fillable = ['user_id', 'document_id','name_doc', 'status'];
+    protected $fillable = ['user_id', 'document_id','name_doc', 'path'];
 }

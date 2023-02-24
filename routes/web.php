@@ -25,6 +25,9 @@ use App\Http\Controllers\ProyectoUsuarioController;
 use App\Http\Controllers\DocumentoUsuarioController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\CalendarioConvocatoriaController;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 
 /*
@@ -60,9 +63,36 @@ Route::get('/', function () {
         'canRegister' => Route::has('registro.create'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,]);
+});
 
+Route::post('/guardar-archivo', function (Request $request) {
+    $curp = $request->input('curp');
+    $id = $request->input('id');
 
+    if(!File::isDirectory(public_path('Expedientes/'.$curp))){
+        Storage::makeDirectory('public/Expedientes/'.$curp);
+    }
+    $nombreDoc = $request->input('namedoc');
+    $file = $request->file('archivo');
+    $filename = $nombreDoc.$id.".". $file->guessExtension();
+    if(!Storage::disk('public')->exists('Expedientes/'.$curp.'/'.$filename)){
+        $rutaArchivo = Storage::putFileAs('public/Expedientes/'.$curp, $file, $filename);
+        $urlArchivo = asset('storage/Expedientes/'.$curp.'/'.$filename);
+    }else{
+        Storage::delete('Expedientes/'.$curp.'/'.$filename);
+        $rutaArchivo = Storage::putFileAs('public/Expedientes/'.$curp, $file, $filename);
+        $urlArchivo = asset('storage/Expedientes/'.$curp.'/'.$filename);
 
+    }
+    return response()->json(['url' => $urlArchivo]);
+});
+
+Route::post('/eliminar-archivo', function (Request $request) {
+    $path = $request->input('path');
+    $ruta = Str::after($path, "storage/");
+    $url = 'public/'.$ruta;
+    Storage::delete($url);
+    return response('El archivo se ha eliminado exitosamente');
 });
 
 Route::middleware([

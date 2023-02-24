@@ -2,54 +2,60 @@
   <Head>   </Head>
 
   <Alumno v-if="$page.props.user.rol == 4"> </Alumno>
- 
+
 
 <body>
   <div class="forma1">
-    <div v-bind:style="{ 'background-image': 'url(' + imageUrl + ')'}" class="pestana">
-      <iframe  :src="pdfPreview" style="width: 500px; height: 100%"></iframe>
-    </div><br>
+    <br>
+    {{ $mensaje }}
     <jet-validation-errors class="mb-3"/>
-    <div class="formulario forma2"> 
+    <div class="formulario forma2">
     <form @submit.prevent="guardar" enctype="multipart/form-data">
+
       <br><h2><i class='bx bxs-up-arrow-square bx-flashing' style='color:#04023f' ></i> Carga de documentos</h2><br>
       <p>A continuación se pide llenar el formulario con los respectivos documentos, lo más legible posible</p><br>
         <div class="col-sm-8 mb-5">
-                  <jet-label class="label form-label fs-base" value="*Formato solicitud" />
-                  <jet-input  id="request" type="file"  @change="previewRequest" class="form-control form-control-lg" required  :class="{ 'is-invalid': form.errors.requestform }" />
-                  <jet-input-error :message="form.errors.requestform" />
+            <jet-label class="label form-label fs-base" value="*Formato solicitud" />
+            <jet-input v-if="requestform === ''" id="request" type="file" ref="request" @change="saveStorage($event, 'request')" class="form-control form-control-lg" :class="{ 'is-invalid': form.errors.requestform }" />
+            <jet-input v-if="requestform != ''" id="request" type="text" v-model="form.requestform" />
+            <jet-input-error :message="form.errors.requestform" />
+
 
         </div>
 
         <div class="col-sm-8 mb-5">
-                  <jet-label class="label form-label fs-base" value="*Carta academica" />
-                  <jet-input id="academic" type="file" @change="previewAca" class="form-control form-control-lg" required  :class="{ 'is-invalid': form.errors.academicdoc }" />
-                  <jet-input-error :message="form.errors.academicdoc" />
+            <jet-label class="label form-label fs-base" value="*Carta academica" />
+            <jet-input v-if="academicdoc === ''" id="academic" type="file" @change="saveStorage($event, 'academicdoc')" class="form-control form-control-lg" required  :class="{ 'is-invalid': form.errors.academicdoc }" />
+            <jet-input v-if="academicdoc != ''" id="request" type="text" v-model="form.academicdoc" />
+            <jet-input-error :message="form.errors.academicdoc" />
         </div>
 
         <div class="col-sm-8 mb-5">
-                  <jet-label class="label form-label fs-base" value="*Carta motivos" />
-                  <jet-input id="motive" type="file" @change="previewMotive" class="form-control form-control-lg" required  :class="{ 'is-invalid': form.errors.motivedoc }" />
-                  <jet-input-error :message="form.errors.motivedoc" />
+            <jet-label class="label form-label fs-base" value="*Carta motivos" />
+            <jet-input v-if="motivedoc === ''" id="motivedoc" type="file" @change="saveStorage($event, 'motivedoc')" class="form-control form-control-lg" required  :class="{ 'is-invalid': form.errors.motivedoc }" />
+            <jet-input v-if="motivedoc != ''" id="motivedoc" type="text" v-model="form.motivedoc" />
+            <jet-input-error :message="form.errors.motivedoc" />
         </div>
 
         <div class="col-sm-8 mb-5">
-                  <jet-label class="label form-label fs-base" value="*INE" />
-                  <jet-input id="ine" type="file" @change="previewIne" class="form-control form-control-lg" required  :class="{ 'is-invalid': form.errors.ine }" />
-                  <jet-input-error :message="form.errors.ine" />
-
+            <jet-label class="label form-label fs-base" value="*INE" />
+            <jet-input v-if="ine === ''" id="ine" type="file" @change="saveStorage($event, 'ine')" class="form-control form-control-lg" required  :class="{ 'is-invalid': form.errors.ine }" />
+            <jet-input v-if="ine != ''" id="ine" type="text" v-model="form.ine" />
+            <jet-input-error :message="form.errors.ine" />
         </div>
 
         <div class="col-sm-8 mb-5">
                   <jet-label class="label form-label fs-base" value="*CVU" />
-                  <jet-input id="cvu" type="file" @change="previewCvu" class="form-control form-control-lg" required  :class="{ 'is-invalid': form.errors.cvu }" />
+                  <jet-input v-if="cvu === ''" id="cvu" type="file" @change="saveStorage($event, 'cvu')" class="form-control form-control-lg" required  :class="{ 'is-invalid': form.errors.cvu }" />
+                  <jet-input v-if="cvu != ''" id="cvu" type="text" v-model="form.cvu" />
                   <jet-input-error :message="form.errors.cvu" />
         </div>
-        
+
         <div class="col-sm-8 mb-2">
-                  <jet-label class="label form-label fs-base" value="*Fotografía" />
-                  <jet-input id="foto" type="file" @change="previewFoto" class="form-control form-control-lg" required  :class="{ 'is-invalid': form.errors.foto }" />
-                  <jet-input-error :message="form.errors.foto" />
+            <jet-label class="label form-label fs-base" value="*Fotografía" />
+            <jet-input v-if="foto === ''" id="foto" type="file" @change="saveStorage($event, 'foto')" class="form-control form-control-lg" required  :class="{ 'is-invalid': form.errors.foto }" />
+            <jet-input v-if="foto != ''" id="foto" type="text" v-model="form.foto" />
+            <jet-input-error :message="form.errors.foto" />
         </div>
   </form>
     <div class="info">
@@ -58,99 +64,81 @@
           <button id="guardar" class="ms-4 add btn btn-primary" :class="{ 'text-white-50': form.processing }">
             <div v-show="form.processing" class="spinner-border spinner-border-sm" role="status">
                <span class="visually-hidden">Loading...</span>
-             </div>  
+             </div>
             <i id="boxi3" class="bi bi-save"></i> Guardar
           </button>
 
           <button @click="guardar" id="enviar" class="ms-4 add btn btn-info" :class="{ 'text-white-50': form.processing }">
             <div v-show="form.processing" class="spinner-border spinner-border-sm" role="status">
                <span class="visually-hidden">Loading...</span>
-             </div>  
+             </div>
              <i id="boxi3" class='bx bx-send' style='color:#ffffff' ></i> Enviar
-          </button> 
+          </button>
     </div><br>
-    
-    
-</div> 
+
+
+</div>
 
 </div>
 
 <div class="no1 col-sm-3 mb-5">
-    <button title="Ver" v-on:click="ver('request')" class="btn btn-info btn-sm">
+    <a :href="requestform" target="_blank"><button title="Ver" class="btn btn-info btn-sm">
       <i class='boxi bi bi-eye-fill' style='color:#ffffff' ></i>
-    </button>&nbsp;&nbsp; 
-    <button title="Ocultar" v-on:click="ocultar" class="btn btn-warning btn-sm">
-      <i class='boxi bi bi-eye-slash-fill' style='color:#ffffff' ></i>
-    </button>&nbsp;&nbsp;
-    <button title="Borrar" v-on:click="borrar('request')" class="btn btn-danger btn-sm">
+    </button></a>&nbsp;&nbsp;
+    <button title="Borrar" v-on:click="borrar(requestform, 'request')" class="btn btn-danger btn-sm">
       <i class='boxi bi bi-trash-fill' style='color:#ffffff' ></i>
-    </button> 
+    </button>
 </div>
 <div class="no2 col-sm-3 mb-5">
-    <button title="Ver" v-on:click="ver('academic')" class="btn btn-info btn-sm">
+    <a :href="academicdoc" target="_blank"><button title="Ver" class="btn btn-info btn-sm">
       <i class='boxi bi bi-eye-fill' style='color:#ffffff' ></i>
-    </button>&nbsp;&nbsp; 
-    <button title="Ocultar" v-on:click="ocultar" class="btn btn-warning btn-sm">
-      <i class='boxi bi bi-eye-slash-fill' style='color:#ffffff' ></i>
-    </button>&nbsp;&nbsp;
-    <button title="Borrar" v-on:click="borrar('academic')" class="btn btn-danger btn-sm">
+    </button></a>&nbsp;&nbsp;
+    <button title="Borrar" v-on:click="borrar(academicdoc, 'academicdoc')" class="btn btn-danger btn-sm">
       <i class='boxi bi bi-trash-fill' style='color:#ffffff'></i>
-    </button> 
+    </button>
 </div>
 <div class="no3 col-sm-3 mb-5">
-    <button title="Ver" v-on:click="ver('motivedoc')" class="btn btn-info btn-sm">
+    <a :href="motivedoc" target="_blank"><button title="Ver" class="btn btn-info btn-sm">
       <i class='boxi bi bi-eye-fill' style='color:#ffffff' ></i>
-    </button>&nbsp;&nbsp; 
-    <button title="Ocultar" v-on:click="ocultar" class="btn btn-warning btn-sm">
-      <i class='boxi bi bi-eye-slash-fill' style='color:#ffffff' ></i>
-    </button>&nbsp;&nbsp;
-    <button title="Borrar" v-on:click="borrar('motivedoc')" class="btn btn-danger btn-sm">
+    </button></a>&nbsp;&nbsp;
+    <button title="Borrar" v-on:click="borrar(motivedoc, 'motivedoc')" class="btn btn-danger btn-sm">
       <i class='boxi bi bi-trash-fill' style='color:#ffffff' ></i>
-    </button> 
+    </button>
 </div>
 <div class="no4 col-sm-3 mb-5">
-    <button title="Ver" v-on:click="ver('ine')" class="btn btn-info btn-sm">
+    <a :href="ine" target="_blank"><button title="Ver" class="btn btn-info btn-sm">
       <i class='boxi bi bi-eye-fill' style='color:#ffffff' ></i>
-    </button>&nbsp;&nbsp; 
-    <button title="Ocultar" v-on:click="ocultar" class="btn btn-warning btn-sm">
-      <i class='boxi bi bi-eye-slash-fill' style='color:#ffffff' ></i>
-    </button>&nbsp;&nbsp;
-    <button title="Borrar" v-on:click="borrar('ine')" class="btn btn-danger btn-sm">
+    </button></a>&nbsp;&nbsp;
+    <button title="Borrar" v-on:click="borrar(ine, 'ine')" class="btn btn-danger btn-sm">
       <i class='boxi bi bi-trash-fill' style='color:#ffffff' ></i>
-    </button> 
+    </button>
 </div>
 <div class="no5 col-sm-3 mb-5">
-    <button title="Ver" v-on:click="ver('cvu')" class="btn btn-info btn-sm">
+    <a :href="cvu" target="_blank"><button title="Ver" class="btn btn-info btn-sm">
       <i class='boxi bi bi-eye-fill' style='color:#ffffff' ></i>
-    </button>&nbsp;&nbsp; 
-    <button title="Ocultar" v-on:click="ocultar" class="btn btn-warning btn-sm">
-      <i class='boxi bi bi-eye-slash-fill' style='color:#ffffff' ></i>
-    </button>&nbsp;&nbsp;
-    <button title="Borrar" v-on:click="borrar('cvu')" class="btn btn-danger btn-sm">
+    </button></a>&nbsp;&nbsp;
+    <button title="Borrar" v-on:click="borrar(cvu, 'cvu')" class="btn btn-danger btn-sm">
       <i class='boxi bi bi-trash-fill' style='color:#ffffff' ></i>
-    </button> 
+    </button>
 </div>
 <div class="no6 col-sm-3 mb-5">
-    <button title="Ver" v-on:click="ver('foto')" class="btn btn-info btn-sm">
+    <a :href="foto" target="_blank"><button title="Ver" class="btn btn-info btn-sm">
       <i class='boxi bi bi-eye-fill' style='color:#ffffff' ></i>
-    </button>&nbsp;&nbsp; 
-    <button title="Ocultar" v-on:click="ocultar" class="btn btn-warning btn-sm">
-      <i class='boxi bi bi-eye-slash-fill' style='color:#ffffff' ></i>
-    </button>&nbsp;&nbsp;
-    <button title="Borrar" v-on:click="borrar('foto')" class="btn btn-danger btn-sm">
+    </button></a>&nbsp;&nbsp;
+    <button title="Borrar" v-on:click="borrar(foto, 'foto')" class="btn btn-danger btn-sm">
       <i class='boxi bi bi-trash-fill' style='color:#ffffff' ></i>
-    </button> 
+    </button>
 </div>
 <!----<div class="no7 col-sm-3 mb-5">
     <button title="Ver" v-on:click="ver('request')" class="btn btn-info btn-sm">
       <i class='boxi bi bi-eye-fill' style='color:#ffffff' ></i>
-    </button>&nbsp;&nbsp; 
+    </button>&nbsp;&nbsp;
     <button title="Ocultar" v-on:click="ocultar" class="btn btn-warning btn-sm">
       <i class='boxi bi bi-eye-slash-fill' style='color:#ffffff' ></i>
     </button>&nbsp;&nbsp;
     <button title="Borrar" v-on:click="borrar('request')" class="btn btn-danger btn-sm">
       <i class='boxi bi bi-trash-fill' style='color:#ffffff' ></i>
-    </button> 
+    </button>
 </div>--->
 
 <!---<a :href="url" target="_blanck"><button class="ms-4 add btn btn-info" :src="url" >{{ documento1}}</button></a>-->
@@ -159,12 +147,12 @@
 <!--<div>
   <jet-input type="file" @change="previewRequest"  /> <input type="text" v-model="form.requestform" />
   <jet-input type="file" @change="previewAca" @input="form.academicdoc = $event.target.files[0]" /> <input type="text" v-model="form.academicdoc" />
-  
+
 </div>
 
 <button v-on:click="ver('request')" id="enviar" class="ms-4 add btn btn-info">
   <i id="boxi3" class='bx bx-send' style='color:#ffffff' ></i> Ver
-</button> 
+</button>
 
 <button v-on:click="ocultar" id="enviar" class="ms-4 add btn btn-info">
   <i id="boxi3" class='bx bx-send' style='color:#ffffff' ></i> Ocultar
@@ -173,7 +161,7 @@
 
 <button v-on:click="ver('academic')" id="enviar" class="ms-4 add btn btn-info">
   <i id="boxi3" class='bx bx-send' style='color:#ffffff' ></i> Ver
-</button> 
+</button>
 
 <button v-on:click="ocultar" id="enviar" class="ms-4 add btn btn-info">
   <i id="boxi3" class='bx bx-send' style='color:#ffffff' ></i> Ocultar
@@ -199,6 +187,7 @@ import JetButton from "@/Jetstream/Button.vue";
 import 'sweetalert2/dist/sweetalert2.min.css';
 import Alumno from "@/Jetstream/Alumno.vue";
 import Head from '@/Jetstream/Head.vue';
+import axios from 'axios';
 export default {
 
   props: {
@@ -226,29 +215,19 @@ export default {
           JetButton,
     },
 
-    data() {
-      return {
-        pdfPreview: '',
-        requestform:'',
-        academicdoc:'',
-        motivedoc:'',
-        ine:'',
-        cvu:'',
-        foto:'',
-        imageUrl: '../../../../public/assets/img/avatar/02.jpg',
-      }
-  },
+
 
   setup(props) {
-    const form = useForm({ 
-      requestform: "",
-      academicdoc: "",
-      motivedoc: "",
-      ine: "",
-      cvu: "",
-      foto: "",
+    const form = useForm({
+      requestform: props.documento1,
+      academicdoc: props.documento2,
+      motivedoc: props.documento3,
+      ine: props.documento4,
+      cvu: props.documento5,
+      foto: props.documento6,
       ver:"",
     });
+
 
     const guardar = () => {
       form.post(route("docuser.store"));
@@ -257,158 +236,191 @@ export default {
     return {guardar, form};
   },
 
+  data() {
+      return {
+
+        requestform: this.documento1,
+        academicdoc: this.documento2,
+        motivedoc: this.documento3,
+        ine: this.documento4,
+        cvu: this.documento5,
+        foto: this.documento6,
+        curp: this.user.curp,
+        id: this.user.id,
+        imageUrl: '../../../../public/assets/img/avatar/02.jpg',
+      }
+  },
+
 
   methods: {
-    ver: function (archivo) {
-      if(archivo == 'request'){
-        
-        if(this.documento1 != ''){
-          this.pdfPreview = this.documento1
-        }else{
-          this.pdfPreview = this.requestform
-        }
-        
-      }
-
-      if(archivo == 'academic'){
-        this.pdfPreview = this.academicdoc
-      }
-
-      if(archivo == 'motive'){
-        this.pdfPreview = this.motivedoc
-      }
-
-      if(archivo == 'ine'){
-        this.pdfPreview = this.ine
-      }
-
-      if(archivo == 'cvu'){
-        if(this.documento1 != ''){
-          this.pdfPreview = this.documento5
-        }else{
-          this.pdfPreview = this.cvu
+    saveStorage(event, doc) {
+        let formData = new FormData();
+        const archivo = event.target.files[0];
+        if(doc == 'request'){
+            formData.append('namedoc', 'formato_solicituD');
+            formData.append('curp', this.curp);
+            formData.append('id', this.id);
+            formData.append('archivo', archivo);
+            axios.post('/guardar-archivo', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+            })
+            .then(response => {
+                console.log(this.requestform);
+                this.requestform = response.data.url;
+                this.form.requestform = this.requestform;
+            })
+            .catch(error => {
+            // Manejar el error
+            });
         }
 
-      }
+        if(doc == 'academicdoc'){
+            formData.append('namedoc', 'carta_academicA');
+            formData.append('curp', this.curp);
+            formData.append('id', this.id);
+            formData.append('archivo', archivo);
+            axios.post('/guardar-archivo', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+            })
+            .then(response => {
+                console.log(this.requestform);
+                this.academicdoc = response.data.url;
+                this.form.academicdoc = this.academicdoc
 
-      if(archivo == 'foto'){
-        this.pdfPreview = this.foto
-      }
-      this.form.ver = 'mostrar'
+            })
+            .catch(error => {
+            // Manejar el error
+            });
+        }
+
+        if(doc == 'motivedoc'){
+            formData.append('namedoc', 'carta_motivos');
+            formData.append('curp', this.curp);
+            formData.append('id', this.id);
+            formData.append('archivo', archivo);
+            axios.post('/guardar-archivo', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+            })
+            .then(response => {
+                console.log(this.requestform);
+                this.motivedoc = response.data.url;
+                this.form.motivedoc = this.motivedoc;
+            })
+            .catch(error => {
+            // Manejar el error
+            });
+        }
+
+        if(doc == 'ine'){
+            formData.append('namedoc', 'INE');
+            formData.append('curp', this.curp);
+            formData.append('id', this.id);
+            formData.append('archivo', archivo);
+            axios.post('/guardar-archivo', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+            })
+            .then(response => {
+                console.log(this.requestform);
+                this.ine = response.data.url;
+                this.form.ine = this.ine;
+            })
+            .catch(error => {
+            // Manejar el error
+            });
+        }
+
+        if(doc == 'cvu'){
+            formData.append('namedoc', 'CVU');
+            formData.append('curp', this.curp);
+            formData.append('id', this.id);
+            formData.append('archivo', archivo);
+            axios.post('/guardar-archivo', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+            })
+            .then(response => {
+                console.log(this.requestform);
+                this.cvu = response.data.url;
+                this.form.cvu = this.cvu;
+            })
+            .catch(error => {
+            // Manejar el error
+            });
+        }
+
+        if(doc == 'foto'){
+            formData.append('namedoc', 'fotografia');
+            formData.append('curp', this.curp);
+            formData.append('id', this.id);
+            formData.append('archivo', archivo);
+            axios.post('/guardar-archivo', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+            })
+            .then(response => {
+                console.log(this.requestform);
+                this.foto = response.data.url;
+                this.form.foto = this.foto;
+            })
+            .catch(error => {
+            // Manejar el error
+            });
+        }
+
+
 
     },
 
-    ocultar: function (event) {
-      this.form.ver = ''
-      this.pdfPreview = ''
-      
+    borrar: function (path, archivo) {
+        let formData = new FormData();
+        let inputId = '#' + archivo;
+        const $elemento = document.querySelector(inputId);
+
+        formData.append('path', path);
+        axios.post('/eliminar-archivo', formData, {
+        })
+        .then(response => {
+            if(archivo == 'request'){
+                this.requestform = '';
+                $elemento.value = ""
+            }
+            if(archivo == 'academicdoc'){
+                this.academicdoc = '';
+                $elemento.value = ""
+            }
+            if(archivo == 'motivedoc'){
+                this.motivedoc = '';
+                $elemento.value = ""
+            }
+            if(archivo == 'ine'){
+                this.ine = '';
+                $elemento.value = ""
+            }
+            if(archivo == 'cvu'){
+                this.cvu = '';
+                $elemento.value = ""
+            }
+            if(archivo == 'foto'){
+                this.foto = '';
+                $elemento.value = ""
+            }
+        })
+        .catch(error => {
+            // Manejar el error
+        });
     },
 
-    borrar: function (archivo) {
-      if(archivo == 'request'){
-        const $elemento = document.querySelector("#request");
-        $elemento.value = ""
-        this.form.requestform = ""
-        this.requestform = ""
-        this.pdfPreview = ""
-      }
-
-      if(archivo == 'academic'){
-        const $elemento = document.querySelector("#academic");
-        $elemento.value = ""
-        this.form.academicdoc = ""
-        this.academicdoc = ""
-        this.pdfPreview = ""
-      }
-
-      if(archivo == 'motive'){
-        const $elemento = document.querySelector("#motive");
-        $elemento.value = ""
-        this.form.motivedoc = ""
-        this.motivedoc = ""
-        this.pdfPreview = ""
-      }
-
-      if(archivo == 'ine'){
-        const $elemento = document.querySelector("#ine");
-        $elemento.value = ""
-        this.form.ine = ""
-        this.ine = ""
-        this.pdfPreview = ""
-      }
-
-      if(archivo == 'cvu'){
-        const $elemento = document.querySelector("#cvu");
-        $elemento.value = ""
-        this.form.cvu = ""
-        this.cvu = ""
-        this.pdfPreview = ""
-      }
-
-      if(archivo == 'foto'){
-        const $elemento = document.querySelector("#foto");
-        $elemento.value = ""
-        this.form.foto = ""
-        this.foto = ""
-        this.pdfPreview = ""
-      }
-
-    },
-
-    previewRequest(event) {
-      const reader = new FileReader()
-      reader.readAsDataURL(event.target.files[0])
-      reader.onload = (e) => {
-        this.requestform = e.target.result
-        this.form.requestform = event.target.files[0]
-      }
-    },
-
-    previewAca(event) {
-      const reader = new FileReader()
-      reader.readAsDataURL(event.target.files[0])
-      reader.onload = (e) => {
-        this.academicdoc = e.target.result
-        this.form.academicdoc = event.target.files[0]
-      }
-    },
-
-    previewMotive(event) {
-      const reader = new FileReader()
-      reader.readAsDataURL(event.target.files[0])
-      reader.onload = (e) => {
-        this.motivedoc = e.target.result
-        this.form.motivedoc = event.target.files[0]
-      }
-    },
-
-    previewIne(event) {
-      const reader = new FileReader()
-      reader.readAsDataURL(event.target.files[0])
-      reader.onload = (e) => {
-        this.ine = e.target.result
-        this.form.ine = event.target.files[0]
-      }
-    },
-
-    previewCvu(event) {
-      const reader = new FileReader()
-      reader.readAsDataURL(event.target.files[0])
-      reader.onload = (e) => {
-        this.cvu = e.target.result
-        this.form.cvu = event.target.files[0]
-      }
-    },
-
-    previewFoto(event) {
-      const reader = new FileReader()
-      reader.readAsDataURL(event.target.files[0])
-      reader.onload = (e) => {
-        this.foto = e.target.result
-        this.form.foto = event.target.files[0]
-      }
-    }
-  }
+}
 }
 </script>
 <style scoped>
@@ -467,7 +479,7 @@ button[id="cuenta"]{
 .pestana{
   width: 40%;
   border-bottom: 1px solid rgb(12, 12, 12);
-  background-color:rgb(3, 3, 51); 
+  background-color:rgb(3, 3, 51);
 }
 
 .no1{

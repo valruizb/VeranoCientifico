@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Documento;
+use Illuminate\Http\Request;
 use App\Models\DocumentoUsuario;
 use App\Notifications\Expediente;
 use Illuminate\Support\Facades\DB;
@@ -18,9 +19,9 @@ use Symfony\Component\Routing\Matcher\RedirectableUrlMatcherInterface;
 
 class DocumentoUsuarioController extends Controller
 {
-   
 
-    
+
+
     private $disk = 'public';
 
     /**
@@ -33,41 +34,41 @@ class DocumentoUsuarioController extends Controller
         $userId = Auth::id();
         $us = User::where('id', $userId)->first();
         $docs = DocumentoUsuario::where('user_id', $userId)->get();
-        
+
         $alldocs = [
             [
-                'name' => 'Formato Solicitud', 
-                'name_doc' => $docs[0]->name_doc, 
+                'name' => 'Formato Solicitud',
+                'name_doc' => $docs[0]->name_doc,
                 'status' => $docs[0]->status,
                 'url' => asset('storage/Expedientes/'.$us->curp.'/'.$docs[0]->name_doc)
             ],
             [
-                'name' => 'Carta Academica', 
-                'name_doc' => $docs[1]->name_doc, 
+                'name' => 'Carta Academica',
+                'name_doc' => $docs[1]->name_doc,
                 'status' => $docs[1]->status,
                 'url' => asset('storage/Expedientes/'.$us->curp.'/'.$docs[1]->name_doc)
             ],
             [
-                'name' => 'Carta Motivos', 
-                'name_doc' => $docs[2]->name_doc, 
+                'name' => 'Carta Motivos',
+                'name_doc' => $docs[2]->name_doc,
                 'status' => $docs[2]->status,
                 'url' => asset('storage/Expedientes/'.$us->curp.'/'.$docs[2]->name_doc)
             ],
             [
-                'name' => 'INE', 
-                'name_doc' => $docs[3]->name_doc, 
+                'name' => 'INE',
+                'name_doc' => $docs[3]->name_doc,
                 'status' => $docs[3]->status,
                 'url' => asset('storage/Expedientes/'.$us->curp.'/'.$docs[3]->name_doc)
             ],
             [
-                'name' => 'CVU', 
-                'name_doc' => $docs[4]->name_doc, 
+                'name' => 'CVU',
+                'name_doc' => $docs[4]->name_doc,
                 'status' => $docs[4]->status,
                 'url' => asset('storage/Expedientes/'.$us->curp.'/'.$docs[4]->name_doc)
             ],
             [
-                'name' => 'Foto', 
-                'name_doc' => $docs[5]->name_doc, 
+                'name' => 'Foto',
+                'name_doc' => $docs[5]->name_doc,
                 'status' => $docs[5]->status,
                 'url' => asset('storage/Expedientes/'.$us->curp.'/'.$docs[5]->name_doc)
             ],
@@ -84,9 +85,9 @@ class DocumentoUsuarioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+
     }
 
     /**
@@ -100,145 +101,39 @@ class DocumentoUsuarioController extends Controller
         $id = Auth::id();
         $curp = Auth::user()->curp;
         $ins = Auth::user()->institution_id;
-        
 
-        
-        if($request -> hasFile(key:'requestform') && !DocumentoUsuario::where('user_id',$id)->where('document_id', 1)->first()){
-            $file = $request->file('requestform');
-            
-            $filename = 'formato_solicitud' .$id.".". $file->guessExtension();
-            if(!File::isDirectory(public_path('Expedientes/'.$curp))){
-                Storage::makeDirectory('public/Expedientes/'.$curp);
-            }
-
-            if (!Storage::disk($this->disk)->exists('Expedientes/'.$curp.'/'.$filename)){
-                DocumentoUsuario::create([
-                    'user_id' => $id,
-                    'document_id' => 1,
-                    'name_doc' => $filename,
-                    'status' => 'Cargado'
-                ] );
-
-                $file->storeAs('public/Expedientes/'.$curp, $filename);
-            }
-        }else{
-            //return redirect()->route('documento.index')->with('success', 'Institución guardado con éxito!');
+        if(!DocumentoUsuario::where('user_id', $id)->where('document_id', 1)->first()){
+            DocumentoUsuario::create(['user_id' => $id, 'document_id' => 1,'path' => $request->requestform]);
         }
 
-        if($request -> hasFile(key:'academicdoc') && !DocumentoUsuario::where('user_id',$id)->where('document_id', 2)->first()){
-            $file = $request->file('academicdoc');
-            $filename = 'carta_academica' .$id.".". $file->guessExtension();
-            if(!File::isDirectory(public_path('Expedientes/'.$curp))){
-                Storage::makeDirectory('public/Expedientes/'.$curp);
-                
-            }
-
-            if (!Storage::disk($this->disk)->exists('Expedientes/'.$curp.'/'.$filename)){
-                DocumentoUsuario::create([
-                    'user_id' => $id,
-                    'document_id' => 2,
-                    'name_doc' => $filename,
-                    'status' => 'Cargado'
-                ] );
-
-                $file->storeAs('public/Expedientes/'.$curp, $filename);
-            }
-        }else{
-            //dd('Ya esta');
+        if(!DocumentoUsuario::where('user_id', $id)->where('document_id', 2)->first()){
+            DocumentoUsuario::create(['user_id' => $id,'document_id' => 2,'path' => $request->academicdoc]);
         }
 
-
-        if($request -> hasFile(key:'motivedoc') && !DocumentoUsuario::where('user_id',$id)->where('document_id', 3)->first()){
-            $file = $request->file('motivedoc');
-            $filename = 'carta_motivos' .$id.".". $file->guessExtension();
-            if(!File::isDirectory(public_path('Expedientes/'.$curp))){
-                Storage::makeDirectory('public/Expedientes/'.$curp);
-                
-            }
-
-            if (!Storage::disk($this->disk)->exists('Expedientes/'.$curp.'/'.$filename)){
-                DocumentoUsuario::create([
-                    'user_id' => $id,
-                    'document_id' => 3,
-                    'name_doc' => $filename,
-                    'status' => 'Cargado'
-                ] );
-
-                $file->storeAs('public/Expedientes/'.$curp, $filename);
-            }
-        }else{
-            //dd('Ya esta');
+        if(!DocumentoUsuario::where('user_id', $id)->where('document_id', 3)->first()){
+            DocumentoUsuario::create(['user_id' => $id,'document_id' => 3,'path' => $request->motivedoc]);
         }
 
-        if($request -> hasFile(key:'ine') && !DocumentoUsuario::where('user_id',$id)->where('document_id', 4)->first()){
-            $file = $request->file('ine');
-            $filename = 'INE' .$id.".". $file->guessExtension();
-            if(!File::isDirectory(public_path('Expedientes/'.$curp))){
-                Storage::makeDirectory('public/Expedientes/'.$curp);
-                
-            }
-
-            if (!Storage::disk($this->disk)->exists('Expedientes/'.$curp.'/'.$filename)){
-                DocumentoUsuario::create([
-                    'user_id' => $id,
-                    'document_id' => 4,
-                    'name_doc' => $filename,
-                    'status' => 'Cargado'
-                ] );
-
-                $file->storeAs('public/Expedientes/'.$curp, $filename);
-            }
-        }else{
-            //dd('Ya esta');
+        if(!DocumentoUsuario::where('user_id', $id)->where('document_id', 4)->first()){
+            DocumentoUsuario::create(['user_id' => $id,'document_id' => 4,'path' => $request->ine,]);
         }
 
-        if($request -> hasFile(key:'cvu') && !DocumentoUsuario::where('user_id',$id)->where('document_id', 5)->first()){
-            $file = $request->file('cvu');
-            $filename = 'CVU' .$id.".". $file->guessExtension();
-            if(!File::isDirectory(public_path('Expedientes/'.$curp))){
-                Storage::makeDirectory('public/Expedientes/'.$curp);
-                
-            }
-
-            if (!Storage::disk($this->disk)->exists('Expedientes/'.$curp.'/'.$filename)){
-                DocumentoUsuario::create([
-                    'user_id' => $id,
-                    'document_id' => 5,
-                    'name_doc' => $filename,
-                    'status' => 'Cargado'
-                ] );
-
-                $file->storeAs('public/Expedientes/'.$curp, $filename);
-            }
-        }else{
-            //dd('Ya esta');
+        if(!DocumentoUsuario::where('user_id', $id)->where('document_id', 5)->first()){
+            DocumentoUsuario::create(['user_id' => $id,'document_id' => 5,'path' => $request->cvu,]);
         }
 
-
-        if($request -> hasFile(key:'foto') && !DocumentoUsuario::where('user_id',$id)->where('document_id', 6)->first()){
-            $file = $request->file('foto');
-            $filename = 'fotografia' .$id.".". $file->guessExtension();
-            if(!File::isDirectory(public_path('Expedientes/'.$curp))){
-                Storage::makeDirectory('public/Expedientes/'.$curp);
-                
-            }
-
-            if (!Storage::disk($this->disk)->exists('Expedientes/'.$curp.'/'.$filename)){
-                DocumentoUsuario::create([
-                    'user_id' => $id,
-                    'document_id' => 6,
-                    'name_doc' => $filename,
-                    'status' => 'Cargado'
-                ] );
-
-                $file->storeAs('public/Expedientes/'.$curp, $filename);
-            }
-        }else{
-            //dd('Ya esta');
+        if(!DocumentoUsuario::where('user_id', $id)->where('document_id', 6)->first()){
+            DocumentoUsuario::create(['user_id' => $id,'document_id' => 6,'path' => $request->foto,]);
         }
 
         if(DocumentoUsuario::where('user_id', $id)->count() == 6){
-            
+
+        DB::table('records')->insert([
+            'student_id' => $id,
+            'status' => 'Cargado',
+            'created_at' => now(),
+        ]);
+
             $name = Auth::user()->name.' '.Auth::user()->lastnamep.' '.Auth::user()->lastnamem;
 
             $datos = [
@@ -248,7 +143,7 @@ class DocumentoUsuarioController extends Controller
             ];
 
             $revs = User::where('rol', 3)->where('institution_id', $ins)->get();
-            
+
             foreach ($revs as $rev) {
                 $rev->notify(new Expediente($datos));
             }
@@ -257,7 +152,7 @@ class DocumentoUsuarioController extends Controller
 
 
 
-        
+
 
 
     }
@@ -280,44 +175,44 @@ class DocumentoUsuarioController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($userId)
-    {   
+    {
         $us = User::where('id', $userId)->first();
         $docs = DocumentoUsuario::where('user_id', $userId)->get();
-        
+
         $alldocs = [
             [
-                'name' => 'Formato Solicitud', 
-                'name_doc' => $docs[0]->name_doc, 
+                'name' => 'Formato Solicitud',
+                'name_doc' => $docs[0]->name_doc,
                 'status' => $docs[0]->status,
                 'url' => asset('storage/Expedientes/'.$us->curp.'/'.$docs[0]->name_doc)
             ],
             [
-                'name' => 'Carta Academica', 
-                'name_doc' => $docs[1]->name_doc, 
+                'name' => 'Carta Academica',
+                'name_doc' => $docs[1]->name_doc,
                 'status' => $docs[1]->status,
                 'url' => asset('storage/Expedientes/'.$us->curp.'/'.$docs[1]->name_doc)
             ],
             [
-                'name' => 'Carta Motivos', 
-                'name_doc' => $docs[2]->name_doc, 
+                'name' => 'Carta Motivos',
+                'name_doc' => $docs[2]->name_doc,
                 'status' => $docs[2]->status,
                 'url' => asset('storage/Expedientes/'.$us->curp.'/'.$docs[2]->name_doc)
             ],
             [
-                'name' => 'INE', 
-                'name_doc' => $docs[3]->name_doc, 
+                'name' => 'INE',
+                'name_doc' => $docs[3]->name_doc,
                 'status' => $docs[3]->status,
                 'url' => asset('storage/Expedientes/'.$us->curp.'/'.$docs[3]->name_doc)
             ],
             [
-                'name' => 'CVU', 
-                'name_doc' => $docs[4]->name_doc, 
+                'name' => 'CVU',
+                'name_doc' => $docs[4]->name_doc,
                 'status' => $docs[4]->status,
                 'url' => asset('storage/Expedientes/'.$us->curp.'/'.$docs[4]->name_doc)
             ],
             [
-                'name' => 'Foto', 
-                'name_doc' => $docs[5]->name_doc, 
+                'name' => 'Foto',
+                'name_doc' => $docs[5]->name_doc,
                 'status' => $docs[5]->status,
                 'url' => asset('storage/Expedientes/'.$us->curp.'/'.$docs[5]->name_doc)
             ],

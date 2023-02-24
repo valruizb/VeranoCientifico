@@ -37,23 +37,21 @@
       <button class="close-button" @click="showCart = false">Cerrar</button>
       <div v-if="cart.length">
         <h2>Carrito de compras</h2>
-        <draggable :list="cart" :options="{handle:'.drag-handle', animation:150}" @end="onDragEnd">
-  <div class="cart-items">
-    <div v-for="(item, index) in cart" :key="item.id" class="cart-item">
-      <div class="drag-handle">☰</div>
-      <h3>Proyecto: {{ item.nombre }}</h3>
-      <input type="range" min="1" max="3" v-model="item.prioridad">
-      <span>Prioridad: {{ item.prioridad }}</span>
-    </div>
-  </div>
-</draggable>
-
+          <div class="cart-items">
+            <ul>
+            <div>
+                <li v-if="cart[0] != null" class="cart-item"><h3>Proyecto: {{ cart[0] }}</h3></li>
+                <li v-if="cart[1] != null" class="cart-item"><h3>Proyecto: {{ cart[1] }}</h3></li><button @click="up(cart[1])">UP</button>
+                <li v-if="cart[2] != null" class="cart-item"><h3>Proyecto: {{ cart[2] }}</h3></li><button @click="up(cart[2])">UP</button>
+            </div>
+          </ul>
+          </div>
         </div>
       
         <div v-else>
           <p>No hay artículos en el carrito</p>
         </div>
-        <Link class="add btn btn" :href="route('proyectospro.store')">Postularme</Link>
+        <button class="add btn btn" @click="guardar">Postularme</button>
       </div>
    </body>
  </main>
@@ -111,7 +109,8 @@
               proyecto1: '',
               proyecto2: '',
               proyecto3: ''
-            })
+            });
+            
             const thereAreResults = computed(() => props.proyectos.total > 0);
             const state = reactive({
                 filters: {
@@ -127,7 +126,7 @@
             };
 
             const guardar = () => {
-                (route(`proyectospro.store`));
+                form.post(route("proyectospro.store"));
             };
 
             return {
@@ -142,6 +141,18 @@
         methods: {
             addItem() {
                 if (this.cart.length <= 3) {
+                  if(this.cart.length == 1){
+                    this.form.proyecto1 = this.cart[0];
+                  }
+                  if(this.cart.length == 2){
+                    this.form.proyecto1 = this.cart[0];
+                    this.form.proyecto2 = this.cart[1];
+                  }
+                  if(this.cart.length == 3){
+                    this.form.proyecto1 = this.cart[0];
+                    this.form.proyecto2 = this.cart[1];
+                    this.form.proyecto3 = this.cart[2];
+                  }
                     Swal.fire({
                     icon: 'success',
                     title: 'Auto close alert!',
@@ -160,6 +171,47 @@
                     this.cart.pop();
                 }
             },
+
+            up(proy) {
+              let aux = '';
+              if(this.cart[1] == proy){
+                aux = this.cart[0];
+                this.cart[0] = this.cart[1];
+                this.cart [1] = aux;
+                this.form.proyecto1 = this.cart[0];
+                this.form.proyecto2 = this.cart[1];
+                if(this.cart.length <= 3){
+                  this.form.proyecto3 = this.cart[2];
+                }
+                
+              }
+
+              if(this.cart[2] == proy){
+                aux = this.cart[1];
+                this.cart[1] = this.cart[2];
+                this.cart [2] = aux;
+                this.form.proyecto1 = this.cart[0];
+                this.form.proyecto2 = this.cart[1];
+                this.form.proyecto3 = this.cart[2];
+              }
+
+
+            },
+
+            down(proy) {
+              let aux = '';
+              if(this.cart[0] == proy){
+                aux = this.cart[1];
+                this.cart[1] = this.cart[0];
+                this.cart [0] = aux;
+              }
+
+              if(this.cart[1] == proy){
+                aux = this.cart[2];
+                this.cart[2] = this.cart[1];
+                this.cart [1] = aux;
+              }
+            }
  
         }
 
@@ -209,6 +261,10 @@
      width: 25px;
      margin-left: 8px ;
      text-align: center;
+ }
+
+ .add{
+  background-color:green; 
  }
  
  .ver{

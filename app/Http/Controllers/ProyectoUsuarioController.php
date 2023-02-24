@@ -72,7 +72,7 @@ class ProyectoUsuarioController extends Controller
      * @param  \App\Http\Requests\StoreProyectoUsuarioRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store($request)
+    public function store(Request $request)
     {
         dd($request);
         ProyectoUsuario::create($request->validated());    

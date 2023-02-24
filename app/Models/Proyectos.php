@@ -27,6 +27,7 @@ class Proyectos extends Model
         'modality',
         'requirements',
         'keywords',
+        'students',
         'institution_id',
         'user_id',
     ];
