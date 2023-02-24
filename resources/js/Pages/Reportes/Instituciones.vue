@@ -22,7 +22,7 @@ export default {
       return;
     }
 
-    const thematic_name = this.proyectos.map(project => project.thematic_name);
+    const institution = this.proyectos.map(project => project.institution);
     const counts = this.proyectos.map(project => project.total);
 
     const ctx = canvas.getContext('2d');
@@ -30,7 +30,7 @@ export default {
     const myChart = new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: thematic_name,
+        labels: institution,
         datasets: [{
           label: 'Proyectos por tema',
           data: counts,

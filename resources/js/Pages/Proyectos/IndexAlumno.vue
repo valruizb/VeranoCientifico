@@ -37,15 +37,17 @@
       <button class="close-button" @click="showCart = false">Cerrar</button>
       <div v-if="cart.length">
         <h2>Carrito de compras</h2>
-          <div class="cart-items">
-            <ul>
-            <div >
-               
-                <li v-for="item in cart" :key="item.id" class="cart-item"><h3>Proyecto: {{ item }}</h3></li>
-              
-              </div>
-          </ul>
-          </div>
+        <draggable :list="cart" :options="{handle:'.drag-handle', animation:150}" @end="onDragEnd">
+  <div class="cart-items">
+    <div v-for="(item, index) in cart" :key="item.id" class="cart-item">
+      <div class="drag-handle">☰</div>
+      <h3>Proyecto: {{ item.nombre }}</h3>
+      <input type="range" min="1" max="3" v-model="item.prioridad">
+      <span>Prioridad: {{ item.prioridad }}</span>
+    </div>
+  </div>
+</draggable>
+
         </div>
       
         <div v-else>
@@ -72,7 +74,7 @@
    import { useForm } from "@inertiajs/inertia-vue3";
    import Swal from 'sweetalert2';
    import { computed, onMounted, reactive, toRefs, watch } from "vue";
-   import Draggable from 'vuedraggable';
+   import draggable from 'vuedraggable';
      
      
      export default {
@@ -101,7 +103,7 @@
          JetButton,
          JetDropdownLink,
          Alumno,
-         Draggable
+         draggable
        },
 
        setup(props) {
@@ -168,12 +170,17 @@
  <style scoped>
  .cardproyectos{
      border-color: black;
-     background-color: aqua;
+     background-color: rgb(149, 155, 155);
      height: 350px;
      margin-left: 50px;
      width: 400px;
      margin-bottom: 45px;
      /*padding-top: 45px;*/
+   }
+
+   h3{
+    font-size: 18px;
+    text-align: center;
    }
 
    .moving-card {
@@ -187,7 +194,7 @@
 }
  
    .info{
-     background-color: blueviolet;
+    
      margin-left: 30px;
      width: 357px;
      margin-top: -340px;

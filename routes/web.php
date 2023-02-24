@@ -92,7 +92,8 @@ Route::middleware([
     Route::resource('proyectospro', ProyectoUsuarioController::class)->parameters(['proyectospro' => 'proyectospro']);    
     Route::get('/adminp', [ProyectosController::class, 'indexadmin'])->name('indexadmin');
     //Route::get('/reportes', [ProyectosController::class, 'reportespdf'])->name('reportespdf');
-    Route::resource('reportes', ReportesController::class)->parameters(['reportes' => 'reportes']);    
+    Route::resource('reportes', ReportesController::class)->parameters(['reportes' => 'reportes']);  
+    Route::post('reportes/pdf', [ReportesController::class, 'pdf'])->name('pdf');  
 });
 
 

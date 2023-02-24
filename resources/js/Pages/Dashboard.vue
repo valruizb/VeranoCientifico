@@ -54,6 +54,7 @@
               <h1 class="h2 pt-xl-1 pb-1"><i class='bx bx-lock-open-alt bx-flashing' style='color:#07179a'></i> B I E N V E N I D O</h1>
               <img src="../../../public/assets/img/services/single/map.png" alt="Map">
             </div>
+            
         </div>
       </div>
 </section> 

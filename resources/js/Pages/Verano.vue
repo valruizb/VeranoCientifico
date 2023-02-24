@@ -102,7 +102,7 @@
  <style scoped>
  .cardproyectos{
      border-color: black;
-     background-color: aqua;
+     background-color: rgb(182, 190, 190);
      height: 350px;
      margin-left: 50px;
      width: 400px;
@@ -115,7 +115,7 @@
 }
  
    .info{
-     background-color: blueviolet;
+     
      margin-left: 30px;
      width: 357px;
      margin-top: -340px;
@@ -142,7 +142,7 @@
  aside{
    margin: 0;
    padding: 0;
-   background-color: #0fb3ff;
+   
  }
 
  </style>
