@@ -10,9 +10,10 @@
       </h2><hr><br>
       <div class="col-md-12 pe-0">
         <div class="card-body border-right border-bottom p-3 h-100">
-          <div v-if="$page.props.flash.success" class="alert alert-success" role="alert">
-            {{ $page.props.flash.success }}
-          </div>
+          <div v-if="$page.props.flash.success" class="alert d-flex alert-success" role="alert">
+                <i class="bx bx-check-circle lead me-3"></i>
+                <a href="#" class="alert-link">{{ $page.props.flash.success }}</a>
+            </div>
           <div class="mb-3 d-flex justify-content-start">
               <Link
                 :href="route(`${routeName}create`)"

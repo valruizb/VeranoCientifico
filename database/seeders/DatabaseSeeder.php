@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
             EventoSeeder::class,
             CalendarioConvocatoriaSeeder::class,
             DocumentoSeeder::class,
-            
+            ProyectosSeeder::class,
         ]);
     }
 }

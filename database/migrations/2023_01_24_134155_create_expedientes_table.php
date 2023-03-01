@@ -13,16 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('proyecto_usuarios', function (Blueprint $table) {
+        Schema::create('Records', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->unsignedBigInteger('proyecto_id');
-            $table->foreign('proyecto_id')->references('id')->on('proyectos');
+            $table->unsignedBigInteger('student_id');
+            $table->foreign('student_id')->references('id')->on('users');
+            $table->unsignedBigInteger('rev_id')->nullable();
+            $table->foreign('rev_id')->references('id')->on('users');
             $table->string('status');
-            $table->Integer('priority');
+            $table->text('comments')->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -33,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('proyecto_usuarios');
+        Schema::dropIfExists('expedientes');
     }
 };

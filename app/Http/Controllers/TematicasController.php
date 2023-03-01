@@ -62,7 +62,7 @@ class TematicasController extends Controller
     {
         //dd(Auth::user());
         return Inertia::render("{$this->source}Create", [
-            'titulo'=>'Agregar Institución',
+            'titulo'=>'Agregar Temática',
             'routeName'=>$this->routeName,
             'tematicas'=>tematicas::orderBy('id')->get(),
         ]);
@@ -101,7 +101,7 @@ class TematicasController extends Controller
     {
         
         return Inertia::render("{$this->source}Edit", [
-            'titulo'          => 'Editar Institución',
+            'titulo'          => 'Editar Temática',
             'routeName'      => $this->routeName,
             'tematicas' => $tematicas
         ]);

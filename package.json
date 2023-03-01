@@ -65,6 +65,7 @@
         "sweetalert2": "^11.5.2",
         "swiper": "^7.4.1",
         "vanilla-tilt": "^1.7.2",
+        "vee-validate": "^4.7.4",
         "vue-chartjs": "^5.2.0",
         "vue-pdf": "^4.3.0",
         "vuedraggable": "^2.24.3"

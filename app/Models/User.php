@@ -136,5 +136,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(Proyectos::class, 'user_id');
     }
+
+    
     
 }

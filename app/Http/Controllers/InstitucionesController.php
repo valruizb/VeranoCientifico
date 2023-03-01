@@ -115,7 +115,7 @@ class InstitucionesController extends Controller
     {
         //dd($request);
         $instituciones->update($request->validated());
-        return redirect()->route('instituciones.index')->with('success', 'Institución actualizado correctamente!');
+        return redirect()->route('instituciones.index')->with('success', 'Institución actualizada correctamente!');
     }
 
     /**

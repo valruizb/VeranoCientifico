@@ -14,7 +14,10 @@ class ProyectoUsuario extends Model
     protected $fillable = [
         'user_id',
         'proyecto_id',
-        'status'
+        'status',
+        'priority'
     ];
+
+    
 
 }

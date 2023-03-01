@@ -124,6 +124,7 @@ Route::middleware([
     //Route::get('/reportes', [ProyectosController::class, 'reportespdf'])->name('reportespdf');
     Route::resource('reportes', ReportesController::class)->parameters(['reportes' => 'reportes']);  
     Route::post('reportes/pdf', [ReportesController::class, 'pdf'])->name('pdf');  
+    Route::get('Alumnos/Postulados', [ProyectoUsuarioController::class, 'studentsproject'])->name('postulados');  
 });
 
 

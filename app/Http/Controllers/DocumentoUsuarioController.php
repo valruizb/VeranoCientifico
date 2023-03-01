@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Documento;
+use App\Models\Expedientes;
 use Illuminate\Http\Request;
 use App\Models\DocumentoUsuario;
 use App\Notifications\Expediente;
@@ -101,45 +102,44 @@ class DocumentoUsuarioController extends Controller
         $id = Auth::id();
         $curp = Auth::user()->curp;
         $ins = Auth::user()->institution_id;
+        if(!Expedientes::where('student_id', $id)->first()){
+            Expedientes::create(['student_id' => $id,'status' => 'Cargado']);
 
+        }
+        $record = Expedientes::where('student_id', $id)->first();
         if(!DocumentoUsuario::where('user_id', $id)->where('document_id', 1)->first()){
-            DocumentoUsuario::create(['user_id' => $id, 'document_id' => 1,'path' => $request->requestform]);
+            DocumentoUsuario::create(['user_id' => $id, 'document_id' => 1,'path' => $request->requestform, 'record_id' => $record->id]);
         }
 
         if(!DocumentoUsuario::where('user_id', $id)->where('document_id', 2)->first()){
-            DocumentoUsuario::create(['user_id' => $id,'document_id' => 2,'path' => $request->academicdoc]);
+            DocumentoUsuario::create(['user_id' => $id,'document_id' => 2,'path' => $request->academicdoc, 'record_id' => $record->id]);
         }
 
         if(!DocumentoUsuario::where('user_id', $id)->where('document_id', 3)->first()){
-            DocumentoUsuario::create(['user_id' => $id,'document_id' => 3,'path' => $request->motivedoc]);
+            DocumentoUsuario::create(['user_id' => $id,'document_id' => 3,'path' => $request->motivedoc, 'record_id' => $record->id]);
         }
 
         if(!DocumentoUsuario::where('user_id', $id)->where('document_id', 4)->first()){
-            DocumentoUsuario::create(['user_id' => $id,'document_id' => 4,'path' => $request->ine,]);
+            DocumentoUsuario::create(['user_id' => $id,'document_id' => 4,'path' => $request->ine, 'record_id' => $record->id]);
         }
 
         if(!DocumentoUsuario::where('user_id', $id)->where('document_id', 5)->first()){
-            DocumentoUsuario::create(['user_id' => $id,'document_id' => 5,'path' => $request->cvu,]);
+            DocumentoUsuario::create(['user_id' => $id,'document_id' => 5,'path' => $request->cvu, 'record_id' => $record->id]);
         }
 
         if(!DocumentoUsuario::where('user_id', $id)->where('document_id', 6)->first()){
-            DocumentoUsuario::create(['user_id' => $id,'document_id' => 6,'path' => $request->foto,]);
+            DocumentoUsuario::create(['user_id' => $id,'document_id' => 6,'path' => $request->foto, 'record_id' => $record->id]);
         }
 
         if(DocumentoUsuario::where('user_id', $id)->count() == 6){
 
-        DB::table('records')->insert([
-            'student_id' => $id,
-            'status' => 'Cargado',
-            'created_at' => now(),
-        ]);
 
             $name = Auth::user()->name.' '.Auth::user()->lastnamep.' '.Auth::user()->lastnamem;
 
             $datos = [
                 'titulo' => 'Expediente Hola',
                 'contenido' => 'El alumno '.$name,
-                'id' => $id
+                'ruta' => 'docuser/'.$id.'/edit'
             ];
 
             $revs = User::where('rol', 3)->where('institution_id', $ins)->get();
@@ -178,49 +178,39 @@ class DocumentoUsuarioController extends Controller
     {
         $us = User::where('id', $userId)->first();
         $docs = DocumentoUsuario::where('user_id', $userId)->get();
+        $exp = Expedientes::where('student_id', $userId)->first();
 
         $alldocs = [
             [
                 'name' => 'Formato Solicitud',
-                'name_doc' => $docs[0]->name_doc,
-                'status' => $docs[0]->status,
-                'url' => asset('storage/Expedientes/'.$us->curp.'/'.$docs[0]->name_doc)
+                'url' => $docs[0]->path,
             ],
             [
                 'name' => 'Carta Academica',
-                'name_doc' => $docs[1]->name_doc,
-                'status' => $docs[1]->status,
-                'url' => asset('storage/Expedientes/'.$us->curp.'/'.$docs[1]->name_doc)
+                'url' => $docs[1]->path,
             ],
             [
                 'name' => 'Carta Motivos',
-                'name_doc' => $docs[2]->name_doc,
-                'status' => $docs[2]->status,
-                'url' => asset('storage/Expedientes/'.$us->curp.'/'.$docs[2]->name_doc)
+                'url' => $docs[2]->path,
             ],
             [
                 'name' => 'INE',
-                'name_doc' => $docs[3]->name_doc,
-                'status' => $docs[3]->status,
-                'url' => asset('storage/Expedientes/'.$us->curp.'/'.$docs[3]->name_doc)
+                'url' => $docs[3]->path,
             ],
             [
                 'name' => 'CVU',
-                'name_doc' => $docs[4]->name_doc,
-                'status' => $docs[4]->status,
-                'url' => asset('storage/Expedientes/'.$us->curp.'/'.$docs[4]->name_doc)
+                'url' => $docs[4]->path,
             ],
             [
                 'name' => 'Foto',
-                'name_doc' => $docs[5]->name_doc,
-                'status' => $docs[5]->status,
-                'url' => asset('storage/Expedientes/'.$us->curp.'/'.$docs[5]->name_doc)
+                'url' => $docs[5]->path,
             ],
         ];
         //dd($us[0]->curp);
         return Inertia::render("Documentos/IndexRevisor", [
             'docs' => $alldocs,
             'alumn' => $userId,
+            'status' => $exp->status,
         ]);
 
     }
@@ -237,35 +227,21 @@ class DocumentoUsuarioController extends Controller
         $id = Auth::id();
         //dd($request);
 
-        DB::table('documents_user')
-              ->where('user_id', $userId)
-              ->where('document_id', 1)
-              ->update(['status' => $request->requestform, 'rev_id' => $id]);
+        DB::table('records')
+              ->where('student_id', $userId)
+              ->update(['status' => $request->status, 'rev_id' => $id, 'comments' => $request->comments
+            ]
+        );
+        $name = Auth::user()->name.' '.Auth::user()->lastnamep.' '.Auth::user()->lastnamem;
 
-        DB::table('documents_user')
-              ->where('user_id', $userId)
-              ->where('document_id', 2)
-              ->update(['status' => $request->academicdoc, 'rev_id' => $id]);
+        $datos = [
+            'titulo' => 'Expediente Hola',
+            'contenido' => 'El alumno '.$name,
+            'ruta' => 'documento'
+        ];
+        $alum = User::where('id', $userId)->first();
+        $alum->notify(new Expediente($datos));
 
-        DB::table('documents_user')
-              ->where('user_id', $userId)
-              ->where('document_id', 3)
-              ->update(['status' => $request->motivedoc, 'rev_id' => $id]);
-
-        DB::table('documents_user')
-              ->where('user_id', $userId)
-              ->where('document_id', 4)
-              ->update(['status' => $request->ine, 'rev_id' => $id]);
-
-        DB::table('documents_user')
-              ->where('user_id', $userId)
-              ->where('document_id', 5)
-              ->update(['status' => $request->cvu, 'rev_id' => $id]);
-
-        DB::table('documents_user')
-              ->where('user_id', $userId)
-              ->where('document_id', 6)
-              ->update(['status' => $request->foto, 'rev_id' => $id]);
     }
 
     /**

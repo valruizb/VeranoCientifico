@@ -12,7 +12,7 @@
           <i class='busqueda bx bx-search'></i>
         </button>
       </div> <button @click="showCart = !showCart">Carrito</button>
-      
+
       </div>
 
       </div><br>
@@ -28,9 +28,9 @@
             <p>Número de Alumnos Permitidos: {{ proyecto.studentnum}}</p>
             <p>Modalidad: {{ proyecto.modality}} </p>
             <p>Profesor: {{ proyecto.users.name }}</p>
-            <button>Detalles</button><input id="add" type="checkbox" @change="addItem" :value="proyecto.title" v-model="cart">
+            <button>Detalles</button><input id="add" type="checkbox" @change="addItem(proyecto.id)" :value="proyecto.title" v-model="cart">
          </div>
-         
+
        </div>
      </div>
      <div class="cart-container" v-if="showCart">
@@ -43,47 +43,52 @@
                 <li v-if="cart[0] != null" class="cart-item"><h3>Proyecto: {{ cart[0] }}</h3></li>
                 <li v-if="cart[1] != null" class="cart-item"><h3>Proyecto: {{ cart[1] }}</h3></li><button @click="up(cart[1])">UP</button>
                 <li v-if="cart[2] != null" class="cart-item"><h3>Proyecto: {{ cart[2] }}</h3></li><button @click="up(cart[2])">UP</button>
+                <input v-model="form.proyecto1">
+                <input v-model="form.proyecto2">
+                <input v-model="form.proyecto3">
             </div>
           </ul>
           </div>
         </div>
-      
+
         <div v-else>
           <p>No hay artículos en el carrito</p>
         </div>
         <button class="add btn btn" @click="guardar">Postularme</button>
       </div>
+
+      <input v-model="form.proyecto3">
    </body>
  </main>
  </template>
- 
+
  <script>
-  import { Link } from '@inertiajs/inertia-vue3'
-   import 'sweetalert2/dist/sweetalert2.min.css';
-   import AppLayout from "@/Layouts/AppLayout.vue";
-   import JetLabel from "@/Jetstream/Label.vue";
-   import JetInput from "@/Jetstream/Input.vue";
-   import JetInputError from "@/Jetstream/InputError.vue";
-   import JetButton from "@/Jetstream/Button.vue";
-   import JetDropdownLink from '@/Jetstream/DropdownLink.vue';
-   import Head from '@/Jetstream/Head.vue';
-   import Alumno from '@/Jetstream/Alumno.vue';
-   import { Inertia } from "@inertiajs/inertia";
-   import { useForm } from "@inertiajs/inertia-vue3";
-   import Swal from 'sweetalert2';
-   import { computed, onMounted, reactive, toRefs, watch } from "vue";
-   import draggable from 'vuedraggable';
-     
-     
-     export default {
-       name: "Create",
-       data() {
+    import { Link } from '@inertiajs/inertia-vue3'
+    import 'sweetalert2/dist/sweetalert2.min.css';
+    import AppLayout from "@/Layouts/AppLayout.vue";
+    import JetLabel from "@/Jetstream/Label.vue";
+    import JetInput from "@/Jetstream/Input.vue";
+    import JetInputError from "@/Jetstream/InputError.vue";
+    import JetButton from "@/Jetstream/Button.vue";
+    import JetDropdownLink from '@/Jetstream/DropdownLink.vue';
+    import Head from '@/Jetstream/Head.vue';
+    import Alumno from '@/Jetstream/Alumno.vue';
+    import { Inertia } from "@inertiajs/inertia";
+    import { useForm } from "@inertiajs/inertia-vue3";
+    import Swal from 'sweetalert2';
+    import { computed, onMounted, reactive, toRefs, watch } from "vue";
+    import draggable from 'vuedraggable';
+
+
+    export default {
+        name: "Create",
+        data() {
             return {
                 cart: [],
                 showCart: false
             }
         },
-       props: {
+        props: {
             title: { type: String, required: true },
             routeName: { type: String, required: true },
             proyectos: { type: Object, required: true },
@@ -91,26 +96,27 @@
             search: { type: String, required: true },
             status: { type: Boolean, required: true, default: true },
         },
-       components: {
-         AppLayout,
-         Head,
-         Link,
-         JetLabel,
-         JetInput,
-         JetInputError,
-         JetButton,
-         JetDropdownLink,
-         Alumno,
-         draggable
+        components: {
+            AppLayout,
+            Head,
+            Link,
+            JetLabel,
+            JetInput,
+            JetInputError,
+            JetButton,
+            JetDropdownLink,
+            Alumno,
+            draggable
        },
 
-       setup(props) {
+        setup(props) {
             const form = useForm({
-              proyecto1: '',
-              proyecto2: '',
-              proyecto3: ''
+                proyecto1: '',
+                proyecto2: '',
+                proyecto3: ''
             });
-            
+
+
             const thereAreResults = computed(() => props.proyectos.total > 0);
             const state = reactive({
                 filters: {
@@ -130,29 +136,30 @@
             };
 
             return {
-              guardar,
+                guardar,
                 ...toRefs(state),
                 search,
                 thereAreResults,
-               
+                form
             };
         },
 
         methods: {
-            addItem() {
+            addItem(id) {
+                let aux = '';
+                if(this.cart.length <= 1){
+                    this.form.proyecto1 = id;
+                }
+                if(this.cart.length > 1 && this.cart.length < 3 ){
+
+                    this.form.proyecto2 = id;
+                }
+                if(this.cart.length > 2){
+
+                    this.form.proyecto3 = id;
+                }
+
                 if (this.cart.length <= 3) {
-                  if(this.cart.length == 1){
-                    this.form.proyecto1 = this.cart[0];
-                  }
-                  if(this.cart.length == 2){
-                    this.form.proyecto1 = this.cart[0];
-                    this.form.proyecto2 = this.cart[1];
-                  }
-                  if(this.cart.length == 3){
-                    this.form.proyecto1 = this.cart[0];
-                    this.form.proyecto2 = this.cart[1];
-                    this.form.proyecto3 = this.cart[2];
-                  }
                     Swal.fire({
                     icon: 'success',
                     title: 'Auto close alert!',
@@ -173,29 +180,23 @@
             },
 
             up(proy) {
-              let aux = '';
-              if(this.cart[1] == proy){
-                aux = this.cart[0];
-                this.cart[0] = this.cart[1];
-                this.cart [1] = aux;
-                this.form.proyecto1 = this.cart[0];
-                this.form.proyecto2 = this.cart[1];
-                if(this.cart.length <= 3){
-                  this.form.proyecto3 = this.cart[2];
+                let aux = '';
+                if(this.cart[1] == proy){
+                    aux = this.cart[0];
+                    this.cart[0] = this.cart[1];
+                    this.cart [1] = aux;
+                    aux = this.form.proyecto1;
+                    this.form.proyecto1 = this.form.proyecto2;
+                    this.form.proyecto2 = aux;
                 }
-                
-              }
-
-              if(this.cart[2] == proy){
-                aux = this.cart[1];
-                this.cart[1] = this.cart[2];
-                this.cart [2] = aux;
-                this.form.proyecto1 = this.cart[0];
-                this.form.proyecto2 = this.cart[1];
-                this.form.proyecto3 = this.cart[2];
-              }
-
-
+                if(this.cart[2] == proy){
+                    aux = this.cart[1];
+                    this.cart[1] = this.cart[2];
+                    this.cart [2] = aux;
+                    aux = this.form.proyecto2;
+                    this.form.proyecto2 = this.form.proyecto3;
+                    this.form.proyecto3 = aux;
+                }
             },
 
             down(proy) {
@@ -212,22 +213,22 @@
                 this.cart [1] = aux;
               }
             }
- 
+
         }
 
-        
+
      };
  </script>
- 
+
  <style scoped>
  .cardproyectos{
      border-color: black;
-     background-color: rgb(149, 155, 155);
+     
      height: 350px;
      margin-left: 50px;
      width: 400px;
      margin-bottom: 45px;
-     /*padding-top: 45px;*/
+     /padding-top: 45px;
    }
 
    h3{
@@ -241,17 +242,17 @@
         border: blue;
     }
 
-   .upper { 
+   .upper {
   text-transform: uppercase;
 }
- 
+
    .info{
-    
+
      margin-left: 30px;
      width: 357px;
      margin-top: -340px;
    }
- 
+
    .vertical {
      writing-mode: vertical-lr;
      transform: rotate(180deg);
@@ -264,16 +265,16 @@
  }
 
  .add{
-  background-color:green; 
+  background-color:green;
  }
- 
+
  .ver{
    background-color: red;
    height: 350px;
    width: 40px;
    margin-left: -12px;
  }
- 
+
  aside{
    margin: 0;
    padding: 0;
@@ -291,10 +292,10 @@
  }
 
  ul{
-  background-color: #0fb3ff;
+ 
  }
 
  li{
-  background-color:yellow ;
+ 
  }
  </style>

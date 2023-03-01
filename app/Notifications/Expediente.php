@@ -45,12 +45,12 @@ class Expediente extends Notification
     {
         $titulo = $this->datos['titulo'];
         $contenido = $this->datos['contenido'];
-        $id = $this->datos['id'];
+        $ruta = $this->datos['ruta'];
 
         return (new MailMessage)
                     ->subject($titulo)
                     ->line($contenido)
-                    ->action('Notification Action', url('docuser/'.$id.'/edit'))
+                    ->action('Notification Action', url($ruta))
                     ->line($notifiable->contenido);
     }
 

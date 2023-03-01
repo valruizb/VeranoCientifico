@@ -24,7 +24,7 @@ class StoreInstitucionesRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'max:255|unique',
+            'name' => 'max:255',
         ];
     }
 

@@ -37,7 +37,7 @@ class SubtematicasController extends Controller
     public function index(Request $request)
     {
         
-
+        if($request != ''){
         $request->status = $request->status === null ? true : $request->status;
         $records = $request->status == '0' ? $this->model->onlyTrashed() : $this->model;
         $records = $records->when($request->search, function ($query, $search) {
@@ -45,11 +45,13 @@ class SubtematicasController extends Controller
                 $query->where('name', 'LIKE', '%' . $search . '%');
             }
         });
+            $subtematicas = $records->orderBy('id')->with('thematics')->paginate(3);
+        }
 
          return Inertia::render("Subtematica/Index", [
              'titulo '          => 'Subtemáticas Registradas',
              'routeName'      => $this->routeName,
-             'subtematicas'=>  $records->orderBy('id') -> paginate(6),
+             'subtematicas'=>  $subtematicas,
              'loadingResults' => false,
              'search'         => $request->search ?? '',
              'status'         => (bool) $request->status, 

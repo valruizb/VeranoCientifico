@@ -38,7 +38,7 @@ class UsuarioSeeder extends Seeder
             'lastnamep' => 'Hernandez', 
             'lastnamem' => 'Gomez', 
             'rol' => '2', 
-            'email' => 'kike@gmail.com',
+            'email' => 'rbvo190695@upemor.edu.mx',
             'curp' => 'HEGE011031HMSRMNA5',
             'emailcon' => 'ehg.06320@gmail.com',
             'phone' => '7773415872',

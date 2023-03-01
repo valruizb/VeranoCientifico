@@ -20,7 +20,7 @@ class Tematicas extends Model
 
     protected $fillable = ['name'];
 
-    public function subtematica(){
+    public function subthematics(){
         return $this->hasMany(Subtematicas::class, 'thematic_id');
     }
 

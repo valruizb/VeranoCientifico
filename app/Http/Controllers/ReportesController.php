@@ -5,20 +5,32 @@ use Inertia\Inertia;
 use App\Models\Proyectos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Instituciones;
 
 class ReportesController extends Controller
 {
     public function index(){
-    return Inertia::render("Reportes/Reporte");
+    return Inertia::render("Reportes/Reporte",[
+        'instituto' => Instituciones::orderBy('id')->get(),
+    ]);
+    
 }
 
     public function pdf(Request $request){
-    
+        //dd($request->tipo2);
         if($request->tipo==1){
-            $proyectos = Proyectos::select('thematics.name as thematic_name', DB::raw('count(*) as total'))
+            if($request->tipo2!=null){
+                $proyectos = Proyectos::select('thematics.name as thematic_name', DB::raw('count(*) as total'))
                 ->join('thematics', 'proyectos.thematic_id', '=', 'thematics.id')
+                ->where('institution_id', $request->tipo2)
                 ->groupBy('thematics.name')
                 ->get();
+            }else{
+                $proyectos = Proyectos::select('thematics.name as thematic_name', DB::raw('count(*) as total'))
+                ->join('thematics', 'proyectos.thematic_id', '=', 'thematics.id')
+                ->groupBy('thematics.name')
+                ->get(); 
+            }
             return Inertia::render('Reportes/Tematicas', [
                 'proyectos' => $proyectos
             ]);

@@ -52,10 +52,15 @@
               </div>
               <form >
               <select class="col-sm-6 mb-4"  id="tipo" v-model="form.tipo" autofocus required>
-                    <option value="">Selecciona tipo</option>
+                    <option disabled value="">Selecciona tipo</option>
                     <option value="1">Proyecto - Tematica</option>
-                    <option value="2">p</option>
-                    <option value="3">p</option>
+                    <option value="2">Proyecto - Institución</option>
+                    <option value="3">Proyecto - Usuario</option>
+            </select>
+            <select v-if="form.tipo != '' "  v-model="form.tipo2" class="col-sm-6 mb-4"  id="tipo" autofocus required>
+                    <option disabled value="">Seleccione un elemento </option>
+                    <option value="">Todas las instituciones</option>
+                    <option v-for="item in instituto" v-bind:value="item.id" v-bind:key="item.id">{{ item.name }}</option>
             </select>
             <jet-button @click="guardar" class="ml-4 text-xl" :class="{ 'text-white': form.processing }"
                             :disabled="form.processing">
@@ -89,10 +94,6 @@
     props: {
       user:{type: Object, required: true},
       instituto: { type: Object, required: true },
-      subtematicas: { type: Object, required: true },
-      tematicas: { type: Object, required: true },
-      tematica: { type: Object, required: true },
-      instituciones: { type: Object, required: true },
     },
     components: {
       Main, 
@@ -109,7 +110,7 @@
       JetButton
     },
     setup(props) {
-        const form = useForm({  tipo: "" });
+        const form = useForm({  tipo: "", tipo2: "" , tipo3: "" });
 
         const guardar = () => {
             form.post(route('pdf'));

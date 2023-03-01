@@ -16,14 +16,14 @@ return new class extends Migration
         Schema::create('proyectos', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->int('studentnum');
+            $table->integer('studentnum');
             $table->unsignedBigInteger('thematic_id');
             $table->string('subthematic_id');
             $table->string('generalobject');
             $table->string('modality');
             $table->string('requirements');
             $table->string('keywords');
-            $table->int('students')->nullable();
+            $table->integer('students')->nullable();
             $table->unsignedBigInteger('institution_id');
             $table->unsignedBigInteger('user_id');
             $table->foreign('thematic_id')->references('id')->on('thematics');

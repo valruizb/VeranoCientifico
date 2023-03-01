@@ -37,9 +37,7 @@
              <li class="dropdown drop" id="cont1">
                  <a href="#" class="nav-link" data-bs-toggle="dropdown">Alumnos-Proyectos</a>
                    <ul class="dropdown-menu">
-                     <li><a id="lista" :href="route('proyectos.index')" class="nav-link">Profesores</a></li>
-                     <li><a id="lista" :href="route('proyectos.index')" class="nav-link">Revisores</a></li>
-                     <li><a id="lista" :href="route('proyectos.index')" class="nav-link">Alumnos</a></li>
+                     <li><a id="lista" :href="route('postulados')" class="nav-link">Profesores</a></li>
                    </ul>
              </li>
            </ul>

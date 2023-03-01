@@ -10,9 +10,10 @@
       </h2><hr><br>
       <div class="col-md-12 pe-0">
         <div class="card-body border-right border-bottom p-3 h-100">
-          <div v-if="$page.props.flash.success" class="alert alert-success" role="alert">
-            {{ $page.props.flash.success }}
-          </div>
+          <div v-if="$page.props.flash.success" class="alert d-flex alert-success" role="alert">
+                <i class="bx bx-check-circle lead me-3"></i>
+                <a href="#" class="alert-link">{{ $page.props.flash.success }}</a>
+            </div>
           <div class="mb-3 d-flex justify-content-start divbus">
             <Link :href="route(`${routeName}create`)" class="add btn btn" >
               <i class="bi bi-plus-circle"></i> <p class="text-add">Agregar Subtemática</p>
@@ -49,7 +50,7 @@
                 <tr>
                   <td>{{ item.id  }}</td>
                   <td>{{ item.name }}</td>
-                  <td>{{ item.thematic_id }}</td>
+                  <td>{{ item.thematics.name }}</td>
                   
                   <td><button class="btn1 btn btn-info btn-sm" >
                     <a :href="route('subtematicas.edit', item.id)">
