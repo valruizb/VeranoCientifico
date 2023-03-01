@@ -25,7 +25,7 @@ class StoreSubtematicasRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'max:255',
+            'name' => 'max:255|unique:subthematics',
             'thematic_id' => ''
         ];
     }
